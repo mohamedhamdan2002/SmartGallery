@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
+using NuGet.Common;
 using SmartGallery.Shared;
 
 namespace SmartGallery.Server.Services;
@@ -59,36 +60,44 @@ public class UserService : IUserService
 
     public async Task<UserManagerResponse> LoginUserAsync(LoginViewModel model)
     {
-
-
         SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password,
             model.RememberMe, false);
 
-        if (result.Succeeded)
+        var user = _userManager.FindByEmailAsync(model.Email);
+
+        if (!result.Succeeded)
         {
-            var claims = new[]
-            {
-            new Claim("Email",model.Email),
-            new Claim(ClaimTypes.NameIdentifier,user.Id)
-            };
-
-            var keyBuffer = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["AuthSettings:Key"]));
-
-            var token = new JwtSecurityToken(issuer: _configuration["AuthSettings:Issuer"],
-                audience: _configuration["AuthSettings:Audience"],
-                claims: claims,
-                expires: DateTime.Now.AddDays(30),
-                signingCredentials: new SigningCredentials(keyBuffer, SecurityAlgorithms.HmacSha256)
-                );
-
-            string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
             return new UserManagerResponse
             {
-                Message = tokenAsString,
-                IsSuccess = true,
-                ExpireDate = token.ValidTo
+                Message = "Invalid Login Attempt",
+                IsSuccess = false,
             };
         }
+
+
+        var claims = new[]
+         {
+                new Claim("Email", model.Email),
+               new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+            };
+
+        var keyBuffer = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["AuthSettings:Key"]));
+
+        var token = new JwtSecurityToken(issuer: _configuration["AuthSettings:Issuer"],
+            audience: _configuration["AuthSettings:Audience"],
+            claims: claims,
+            expires: DateTime.Now.AddDays(30),
+            signingCredentials: new SigningCredentials(keyBuffer, SecurityAlgorithms.HmacSha256)
+            );
+
+        string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
+        return new UserManagerResponse
+        {
+            Message = tokenAsString,
+            IsSuccess = true,
+            ExpireDate = token.ValidTo
+        };
+
     }
 }
 

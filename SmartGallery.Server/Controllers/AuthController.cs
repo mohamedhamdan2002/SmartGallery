@@ -11,12 +11,12 @@ public class AuthController : ControllerBase
 {
     private readonly IUserService _userService;
 
-    private readonly IMailService _mailService;
+    //private readonly IMailService _mailService;
 
-    public AuthController(IUserService userService,IMailService mailService)
+    public AuthController(IUserService userService)
     {
         _userService = userService;
-        _mailService = mailService;
+        //_mailService = mailService;
     }
 
     [HttpPost("Register")]
@@ -43,7 +43,7 @@ public class AuthController : ControllerBase
 
         if (result.IsSuccess)
         {
-            await _mailService.SendEmailAsync(model.Email, "New Login", $"<h1>Hey New Login to your Account Noticed</h1> <p>New Login To Your Account At {DateTime.Now}</p>",);
+            //await _mailService.SendEmailAsync(model.Email, "New Login", $"<h1>Hey New Login to your Account Noticed</h1> <p>New Login To Your Account At {DateTime.Now}</p>",);
             return Ok(result);
         }
 

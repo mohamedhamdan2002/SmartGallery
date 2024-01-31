@@ -13,6 +13,5 @@ public class AppDbContext:IdentityDbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
-    public DbSet<Employee> Employees { get; set; }
 }
 
