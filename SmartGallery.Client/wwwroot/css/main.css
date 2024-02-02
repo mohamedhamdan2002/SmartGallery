@@ -1,0 +1,695 @@
+﻿:root {
+    --blue: #0080ff;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: poppins, sans-serif;
+    box-sizing: border-box;
+    text-transform: capitalize;
+    border: none;
+    text-decoration: none;
+    transition: all 0.5s linear;
+}
+
+html {
+    font-size: 62%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+a{
+    text-decoration:none;
+}
+body {
+    background-color: #eee;
+}
+
+::selection {
+    background-color: var(--blue);
+    color: #fff;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+    padding: 2rem 9%;
+}
+
+    header .logo {
+        font-size: 2.5rem;
+        font-weight: bolder;
+        color: #fff;
+        text-transform: uppercase;
+    }
+
+        header .logo span {
+            color: var(--blue);
+        }
+
+    header .navbar a {
+        color: #fff;
+        font-size: 2rem;
+        margin: 0 0.8rem;
+    }
+
+        header .navbar a:hover {
+            color: var(--blue);
+        }
+
+    header .icon i {
+        font-size: 2.5rem;
+        color: #fff;
+        cursor: pointer;
+        margin-right: 2rem;
+    }
+
+        header .icon i:hover {
+            color: var(--blue);
+        }
+
+    header .search-form {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #333;
+        display: flex;
+        align-items: center;
+        z-index: 99;
+        padding: 1.5rem 2rem;
+        border-top: 0.5rem solid rgba(255, 255, 255, 2);
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+
+        header .search-form.active {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        header .search-form #search-bar {
+            width: 100%;
+            padding: 1rem;
+            color: #333;
+            font-size: 1.7rem;
+            border-radius: 4rem;
+        }
+
+            header .search-form #search-bar:focus {
+                outline: none;
+            }
+
+        header .search-form label {
+            color: #fff;
+            cursor: pointer;
+            font-size: 3rem;
+            margin-left: 1.5rem;
+        }
+
+            header .search-form label:hover {
+                color: var(--blue);
+            }
+
+.login-form {
+    position: fixed;
+    top: -120%;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+    .login-form.active {
+        top: 0;
+    }
+
+    .login-form #form-close {
+        position: absolute;
+        top: 2rem;
+        right: 3rem;
+        font-size: 5rem;
+        color: rgb(254 63 63);
+        cursor: pointer;
+    }
+
+    .login-form form {
+        margin: 2rem;
+        padding: 6rem 2rem;
+        border-radius: 0.5rem;
+        background-color: #fff;
+        width: 50rem;
+    }
+
+        .login-form form h3 {
+            font-size: 3rem;
+            color: #444;
+            text-transform: uppercase;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        .login-form form .box {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.7rem;
+            color: #333;
+            margin: 0.6rem 0;
+            border: 0.1rem solid rgba(0, 0, 0, 0.3);
+            text-transform: none;
+        }
+
+.btn {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--blue);
+    padding: 0.8rem 3rem;
+    border: 0.2rem solid var(--blue);
+    cursor: pointer;
+    font-size: 1.7rem;
+    background: rgba(255, 165, 0, 0.2);
+}
+
+    .btn:hover {
+        color: #fff;
+        background: var(--blue);
+    }
+
+.login-form form .btn {
+    display: block;
+    width: 100%;
+}
+
+.login-form form #remeber {
+    margin: 2rem 0;
+}
+
+.login-form form label {
+    font-size: 1.5rem;
+}
+
+.login-form form p {
+    padding: 0.5rem 0;
+    font-size: 1.5rem;
+    color: #666;
+}
+
+    .login-form form p a {
+        color: var(--blue);
+    }
+
+#menu-bar {
+    color: #fff;
+    border: 0.1rem solid #fff;
+    border-radius: 0.5rem;
+    font-size: 3rem;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    display: none;
+}
+
+@media (max-width: 1070px) {
+    #menu-bar {
+        display: initial;
+    }
+
+    header .navbar {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #333;
+        border-top: 0.1rem solid rgba(255, 255, 255, 0.2);
+        padding: 1rem 2rem;
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+
+        header .navbar.active {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        header .navbar a {
+            display: block;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background-color: #222;
+        }
+
+    html {
+        font-size: 50%;
+    }
+}
+
+section {
+    padding: 2rem 5%;
+}
+
+.home {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    position: relative;
+    z-index: 0;
+}
+
+    .home .content {
+        text-align: center;
+    }
+
+        .home .content h3 {
+            font-size: 4.5rem;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.1);
+        }
+
+        .home .content p {
+            font-size: 2.5rem;
+            color: #fff;
+            padding: 0.5rem;
+        }
+
+    .home .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
+
+    .home .controls {
+        padding: 1rem;
+        border-radius: 5rem;
+        background: rgba(0, 0, 0, 0.7);
+        position: relative;
+        top: 10rem;
+    }
+
+        .home .controls .video-btn {
+            height: 2rem;
+            width: 2rem;
+            border-radius: 50%;
+            background: #fff;
+            display: inline-block;
+            cursor: pointer;
+            margin: 0 0.5rem;
+        }
+
+            .home .controls .video-btn.blue {
+                background: var(--blue);
+            }
+
+.book {
+    background-color: #fff;
+}
+
+.heading {
+    text-align: center;
+    padding: 2.5rem 0;
+    margin-bottom: 25px;
+}
+
+    .heading span:hover {
+        background-color: rgba(255, 165, 0, 0.2);
+        color: var(--blue);
+    }
+
+    .heading span {
+        font-size: 3.5rem;
+        background: var(--blue);
+        color: #fff;
+        border-radius: 0.5rem;
+        padding: 0.2rem 1rem;
+    }
+
+.customrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+    .customrow .image img {
+        width: 450px;
+        height: 550px;
+    }
+
+.article {
+    text-align: center;
+    width: calc(100%-50%)-20px;
+    padding: 1rem 0.5rem;
+}
+
+    .article h2 {
+        font-size: 3.5rem;
+        font-weight: bold;
+    }
+
+    .article p {
+        text-align: left;
+        font-size: 2rem;
+        line-height: 3rem;
+        text-indent: 10%;
+        color: #666;
+        padding: 0.5rem;
+        box-shadow: 6px 5px 5px 1px rgba(128, 128, 128, 0.37);
+    }
+
+@media (max-width: 990px) {
+    .article h2 {
+        font-size: 3rem;
+    }
+
+    .customrow .image img {
+        width: 250px;
+        height: 350px;
+    }
+
+    .article p {
+        font-size: 1.7rem;
+        line-height: 2.3rem;
+    }
+}
+
+@media (max-width: 770px) {
+    .customrow {
+        flex-direction: column;
+    }
+
+    .article h2 {
+        font-size: 2rem;
+    }
+
+    .article p {
+        text-align: center;
+        text-indent: 0;
+        font-size: 1.2rem;
+        line-height: 1.9rem;
+    }
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(33rem, 1fr));
+    gap: 20px;
+    padding: 0.5rem 5%;
+    overflow: hidden;
+}
+
+    .container .box img {
+        width: 100%;
+        height: 55%;
+    }
+
+    .container .box h3 {
+        font-size: 2.5rem;
+        margin: 0.5rem 0;
+    }
+
+        .container .box h3 i {
+            margin-right: 1rem;
+        }
+
+    .container .box p {
+        font-size: 16px;
+        color: #666;
+        padding: 1rem 0;
+    }
+
+    .container .box .star {
+        font-size: 13px;
+    }
+
+        .container .box .star i:not(:last-child) {
+            color: yellow;
+        }
+
+.services {
+    background-color: #fff;
+}
+
+    .services .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+        .services .container .box {
+            flex: 1 1 30rem;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+            .services .container .box i {
+                padding: 1rem;
+                font-size: 4rem;
+                color: var(--blue);
+            }
+
+            .services .container .box h3 {
+                font-size: 2rem;
+                color: #333;
+            }
+
+            .services .container .box p {
+                font-size: 1.5rem;
+                color: #666;
+                padding: 1rem 0;
+            }
+
+            .services .container .box:hover {
+                box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.3);
+            }
+
+.gallary .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+    .gallary .container .box {
+        overflow: hidden;
+        flex: 1 1 30rem;
+        height: 25rem;
+        border-radius: 0.5rem;
+        border: 1rem solid #fff;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+        .gallary .container .box img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .gallary .container .box .content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 4rem 2rem 2rem;
+            top: -100%;
+            left: 0;
+        }
+
+        .gallary .container .box:hover .content {
+            top: 0;
+        }
+
+        .gallary .container .box .content h3 {
+            font-size: 2.5rem;
+            color: var(--blue);
+            margin: 0 0 0.5rem;
+        }
+
+        .gallary .container .box .content p {
+            font-size: 1.5rem;
+            color: #fff;
+            padding: 0.3rem 0;
+        }
+
+.review {
+    background-color: #fff;
+}
+
+    .review .box {
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 1 2rem rgba(0, 0, 0, 0.1);
+        border-radius: 0.5rem;
+    }
+
+        .review .box img {
+            height: 13rem;
+            width: 13rem;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .review .box h3 {
+            color: #333;
+            font-size: 3rem;
+        }
+
+        .review .box p {
+            color: #666;
+            font-size: 2rem;
+            padding: 1rem 0;
+        }
+
+        .review .box .stars i {
+            color: var(--blue);
+            font-size: 1.7rem;
+        }
+
+.contect {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1.5rem 0;
+}
+
+    .contect .box-1 {
+        position: relative;
+    }
+
+        .contect .box-1 h3,
+        .contect .box-2 h3,
+        .contect .box-3 h3,
+        .contect .box-4 h3 {
+            font-size: 3rem;
+        }
+
+        .contect .box-1 p {
+            font-size: 2rem;
+            color: #666;
+            width: 30rem;
+            padding: 2rem 0.5rem;
+        }
+
+        .contect .box-1 input {
+            width: 25rem;
+            height: 3.5rem;
+            border-radius: 1.5rem;
+            outline: none;
+            cursor: pointer;
+            border: 0.1rem solid #ccc;
+            padding: 0.2rem;
+        }
+
+            .contect .box-1 input:hover + label i {
+                color: var(--blue);
+            }
+
+        .contect .box-1 label {
+            position: absolute;
+            right: 60px;
+            bottom: 2px;
+            font-size: 2rem;
+        }
+
+    .contect .box-2 div p {
+        font-size: 1.9rem;
+        padding: 0.4rem 0;
+    }
+
+    .contect .box-3 {
+        text-align: center;
+    }
+
+        .contect .box-3 .navbar {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .contect .box-3 .navbar a {
+                color: #000;
+                cursor: pointer;
+                font-size: 2rem;
+                padding: 0.5rem 0.2rem;
+                border-bottom: 0.1rem solid #333;
+                width: 100%;
+                text-align: center;
+            }
+
+                .contect .box-3 .navbar a:hover {
+                    color: #fff;
+                    background-color: var(--blue);
+                    border-color: var(--blue);
+                }
+
+    .contect .box-4 p a {
+        color: #000;
+        font-size: 2rem;
+    }
+
+    .contect .box-4 p i {
+        margin: 1rem;
+        font-size: 2rem;
+    }
+
+    .contect .box-4 p a.one:hover + i {
+        color: var(--blue);
+    }
+
+    .contect .box-4 p a.two:hover + i {
+        color: rgba(220, 20, 113, 0.801);
+    }
+
+    .contect .box-4 p a.three:hover + i {
+        color: #0080ff;
+    }
+
+    .contect .box-4 p a.four:hover + i {
+        color: #0011ff;
+    }
+
+@media (max-width: 768px) {
+    .footer .contect .box-1 {
+        display: none;
+    }
+
+    .contect .box-1 h3,
+    .contect .box-2 h3,
+    .contect .box-3 h3,
+    .contect .box-4 h3 {
+        font-size: 2rem;
+    }
+
+    .contect .box-1 p,
+    .contect .box-2 p,
+    .contect .box-3 p,
+    .contect .box-4 p {
+        font-size: 1.2rem;
+    }
+}
+
+.footer .Developed {
+    text-align: center;
+}
+
+    .footer .Developed p {
+        font-size: 1.5rem;
+    }
+
+        .footer .Developed p span {
+            color: var(--blue);
+        }
