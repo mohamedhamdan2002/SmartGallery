@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartGallery.Server.Services;
+using SmartGallery.Server.Services.Contracts;
 using SmartGallery.Shared;
 
 namespace SmartGallery.Server.Controllers;
@@ -43,7 +44,7 @@ public class AuthController : ControllerBase
 
         if (result.IsSuccess)
         {
-            await _mailService.SendEmailAsync(model.Email, "New Login", $"<h1>Hey New Login to your Account Noticed</h1> <p>New Login To Your Account At {DateTime.Now}</p>",);
+            await _mailService.SendEmailAsync(model.Email, "New Login", $"<h1>Hey New Login to your Account Noticed</h1> <p>New Login To Your Account At {DateTime.Now}</p>");
             return Ok(result);
         }
 
