@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace SmartGallery.Server.Models;
 
 public class AppDbContext:IdentityDbContext
-{ 
+{
 	public AppDbContext(DbContextOptions options) :base(options){}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

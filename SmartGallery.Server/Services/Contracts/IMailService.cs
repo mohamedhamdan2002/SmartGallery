@@ -1,4 +1,4 @@
-﻿namespace SmartGallery.Server.Services;
+namespace SmartGallery.Server.Services.Contracts;
 
 public interface IMailService
 {
