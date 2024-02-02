@@ -31,9 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Configurations\" />
-    <Folder Include="Models\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Repositories\Contracts\" />
     <Folder Include="Services\" />
     <Folder Include="Services\Contracts\" />
   </ItemGroup>

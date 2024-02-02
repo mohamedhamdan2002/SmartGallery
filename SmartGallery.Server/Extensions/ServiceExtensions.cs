@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SmartGallery.Server.Models;
+using SmartGallery.Server.Repositories;
+using SmartGallery.Server.Repositories.Contracts;
 using SmartGallery.Server.Services;
 
 namespace SmartGallery.Server;
@@ -12,7 +14,7 @@ public static class ServiceExtensions
     private static void ConfigureEfCore(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(
-            options=> options.UseSqlServer(
+            options => options.UseSqlServer(
                 configuration.GetConnectionString(Constants.DefaultConnection)
             )
         );
@@ -49,12 +51,14 @@ public static class ServiceExtensions
     }
     private static void ConfigureUserService(this IServiceCollection services)
         => services.AddScoped<IUserService, UserService>();
-
+    private static void ConfigureIRepositoryManager(this IServiceCollection services)
+            => services.AddScoped<IRepositoryManager, RepositoryManager>();
     public static void ConfigureAllRequiredServices(this IServiceCollection services, IConfiguration configuration) 
     {
         services.ConfigureEfCore(configuration);
         services.ConfigureIdentity();
         services.ConfigureAuthenticationSchema(configuration);
         services.ConfigureUserService();
+        services.ConfigureIRepositoryManager();
     }
 }
