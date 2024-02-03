@@ -21,7 +21,7 @@ public static class ServiceExtensions
     }
     private static void ConfigureIdentity(this IServiceCollection services)
     {
-        services.AddIdentity<IdentityUser, IdentityRole>(options =>
+        services.AddIdentity<Customer, IdentityRole>(options =>
         {
             options.Password.RequireDigit = true;
             options.Password.RequireLowercase = true;
@@ -37,14 +37,14 @@ public static class ServiceExtensions
             auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
-            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ValidAudience = configuration["AuthSettings:Audience"],
-                ValidIssuer = configuration["AuthSettings:Issuer"],
+                ValidAudience = configuration[Constants.Audience],
+                ValidIssuer = configuration[Constants.Issuer],
                 RequireExpirationTime = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AuthSettings:Key"])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[Constants.Key])),
                 ValidateIssuerSigningKey = true
             };
         });

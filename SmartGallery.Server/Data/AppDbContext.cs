@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartGallery.Server.Models;
 
-public class AppDbContext:IdentityDbContext
+public class AppDbContext:IdentityDbContext<Customer>
 {
 	public AppDbContext(DbContextOptions options) :base(options){}
 

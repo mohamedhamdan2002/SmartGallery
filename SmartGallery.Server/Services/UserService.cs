@@ -2,21 +2,19 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
-using NuGet.Common;
+using SmartGallery.Server.Models;
 using SmartGallery.Shared;
 
 namespace SmartGallery.Server.Services;
 
 public class UserService : IUserService
 {
-    private readonly SignInManager<IdentityUser> _signInManager;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly SignInManager<Customer> _signInManager;
+    private readonly UserManager<Customer> _userManager;
     private readonly IConfiguration _configuration;
 
-    public UserService( UserManager<IdentityUser> userManager , SignInManager<IdentityUser> signInManager,IConfiguration configuration)
+    public UserService( UserManager<Customer> userManager , SignInManager<Customer> signInManager,IConfiguration configuration)
     {
         _userManager = userManager;
         _configuration = configuration;
@@ -35,15 +33,15 @@ public class UserService : IUserService
                 IsSuccess = false
             };
 
-        var identityUser = new IdentityUser()
+        var identityUser = new Customer()
         {
             Email = model.Email,
             UserName = model.Email,
+            Address = model.Address
         };
-        var result = await _userManager.CreateAsync(identityUser, model.Password);
+        var result = await _userManager.CreateAsync(identityUser,model.Password);
         if(result.Succeeded)
         {
-            //TODO: Send a Confirmation Message
             return new UserManagerResponse
             {
                 Message = "User Created Successfully ",
@@ -81,10 +79,10 @@ public class UserService : IUserService
                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
             };
 
-        var keyBuffer = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["AuthSettings:Key"]));
+        var keyBuffer = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration[Constants.Key]));
 
-        var token = new JwtSecurityToken(issuer: _configuration["AuthSettings:Issuer"],
-            audience: _configuration["AuthSettings:Audience"],
+        var token = new JwtSecurityToken(issuer: _configuration[Constants.Issuer],
+            audience: _configuration[Constants.Audience],
             claims: claims,
             expires: DateTime.Now.AddDays(30),
             signingCredentials: new SigningCredentials(keyBuffer, SecurityAlgorithms.HmacSha256)
@@ -98,6 +96,16 @@ public class UserService : IUserService
             ExpireDate = token.ValidTo
         };
 
+    }
+
+    public async Task<UserManagerResponse> LogoutUserAsync()
+    {
+        await _signInManager.SignOutAsync();
+        return new UserManagerResponse
+        {
+            Message = "User Logged Out Successfully",
+            IsSuccess = true,
+        };
     }
 }
 
