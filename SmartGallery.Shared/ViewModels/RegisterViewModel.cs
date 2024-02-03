@@ -17,6 +17,9 @@ namespace SmartGallery.Shared
         [Compare("Password",
             ErrorMessage = "Password and confirmation password do not match.")]
         public string? ConfirmPassword { get; set; }
+        [Required]
+        [StringLength(200)]
+        public string? Address { get; set; }
     }
 }
 

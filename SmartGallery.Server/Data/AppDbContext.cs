@@ -5,7 +5,7 @@ using SmartGallery.Server.Models;
 
 namespace SmartGallery.Server.Data;
 
-public class AppDbContext : IdentityDbContext
+public class AppDbContext:IdentityDbContext<Customer>
 {
     public DbSet<Service> Services { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
