@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using SmartGallery.Server.Models;
+using SmartGallery.Server.Data;
 using SmartGallery.Server.Repositories;
 using SmartGallery.Server.Repositories.Contracts;
 using SmartGallery.Server.Services;
@@ -49,8 +49,8 @@ public static class ServiceExtensions
             };
         });
     }
-    private static void ConfigureUserService(this IServiceCollection services)
-        => services.AddScoped<IUserService, UserService>();
+    // private static void ConfigureUserService(this IServiceCollection services)
+        // => services.AddScoped<IUserService, UserService>();
     private static void ConfigureIRepositoryManager(this IServiceCollection services)
             => services.AddScoped<IRepositoryManager, RepositoryManager>();
     public static void ConfigureAllRequiredServices(this IServiceCollection services, IConfiguration configuration) 
@@ -58,7 +58,7 @@ public static class ServiceExtensions
         services.ConfigureEfCore(configuration);
         services.ConfigureIdentity();
         services.ConfigureAuthenticationSchema(configuration);
-        services.ConfigureUserService();
+        // services.ConfigureUserService();
         services.ConfigureIRepositoryManager();
     }
 }

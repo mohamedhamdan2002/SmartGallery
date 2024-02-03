@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using SmartGallery.Server.Data;
 using SmartGallery.Server.Models;
 using SmartGallery.Server.Repositories.Contracts;
 
