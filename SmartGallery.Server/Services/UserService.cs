@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using SmartGallery.Server.Models;
+using SmartGallery.Server.Services.Contracts;
 using SmartGallery.Shared;
 
 namespace SmartGallery.Server.Services;

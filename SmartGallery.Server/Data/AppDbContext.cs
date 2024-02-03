@@ -9,7 +9,8 @@ public class AppDbContext:IdentityDbContext<Customer>
 {
     public DbSet<Service> Services { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
-	public AppDbContext(DbContextOptions options) :base(options){}
+	public DbSet<Review> Reviews { get; set; }
+    public AppDbContext(DbContextOptions options) :base(options){}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,4 +1,4 @@
-﻿using SmartGallery.Server;
+﻿using SmartGallery.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
