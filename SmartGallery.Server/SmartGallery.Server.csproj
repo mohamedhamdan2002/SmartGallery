@@ -28,11 +28,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.15" />
     <PackageReference Include="SendGrid" Version="9.29.1" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Services\Contracts\" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartGallery.Shared\SmartGallery.Shared.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>

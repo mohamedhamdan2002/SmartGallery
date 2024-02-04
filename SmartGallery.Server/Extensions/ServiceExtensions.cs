@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SmartGallery.Server.Data;
+using SmartGallery.Server.Middlewares;
 using SmartGallery.Server.Models;
 using SmartGallery.Server.Repositories;
 using SmartGallery.Server.Repositories.Contracts;
@@ -51,16 +52,16 @@ public static class ServiceExtensions
             };
         });
     }
-    private static void ConfigureUserService(this IServiceCollection services)
-        => services.AddScoped<IUserService, UserService>();
-    private static void ConfigureIRepositoryManager(this IServiceCollection services)
-            => services.AddScoped<IRepositoryManager, RepositoryManager>();
     public static void ConfigureAllRequiredServices(this IServiceCollection services, IConfiguration configuration) 
     {
         services.ConfigureEfCore(configuration);
         services.ConfigureIdentity();
         services.ConfigureAuthenticationSchema(configuration);
-        services.ConfigureUserService();
-        services.ConfigureIRepositoryManager();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IServiceService, ServiceService>();
+        services.AddScoped<IServiceRepository, ServiceRepository>();
+        services.AddScoped<IRepositoryManager, RepositoryManager>();
+        // this to configure the IMiddleware interface
+        services.AddTransient<GlobalErrorHandlerMiddleware>();
     }
 }

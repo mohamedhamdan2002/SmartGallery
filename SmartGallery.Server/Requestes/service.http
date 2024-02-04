@@ -1,0 +1,5 @@
+@hostRunOnHttp = http://localhost:5294/api
+
+GET {{hostRunOnHttp}}/Services/
+###
+GET {{hostRunOnHttp}}/services/3
