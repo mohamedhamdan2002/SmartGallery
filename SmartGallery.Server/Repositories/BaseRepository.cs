@@ -28,4 +28,6 @@ public abstract class BaseRepository<T> : IRepository where T : BaseEntity
             query = query.AsNoTracking();
         return query;
     }
+    public async Task<bool> CheckIfExistByConditionAsync(Expression<Func<T, bool>> predicate)
+        => await _context.Set<T>().AnyAsync(predicate);
 }
