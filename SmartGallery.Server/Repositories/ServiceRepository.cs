@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartGallery.Server.Data;
 using SmartGallery.Server.Models;
-using SmartGallery.Server.Repositories;
+using SmartGallery.Server.Repositories.Contracts;
 
-namespace SmartGallery.Server;
+namespace SmartGallery.Server.Repositories;
 
 public class ServiceRepository : BaseRepository<Service>, IServiceRepository
 {

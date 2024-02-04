@@ -12,7 +12,7 @@ using SmartGallery.Server.Data;
 namespace SmartGallery.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240203164707_initial")]
+    [Migration("20240204145346_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -238,8 +238,16 @@ namespace SmartGallery.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("ReservationDate")
+                        .HasColumnType("date");
+
+                    b.Property<TimeSpan>("ReservationTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("VARCHAR");
 
                     b.HasKey("CustomerId", "ServiceId");
 
@@ -284,7 +292,7 @@ namespace SmartGallery.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

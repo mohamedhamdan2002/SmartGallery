@@ -235,8 +235,16 @@ namespace SmartGallery.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("ReservationDate")
+                        .HasColumnType("date");
+
+                    b.Property<TimeSpan>("ReservationTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("VARCHAR");
 
                     b.HasKey("CustomerId", "ServiceId");
 
@@ -281,7 +289,7 @@ namespace SmartGallery.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

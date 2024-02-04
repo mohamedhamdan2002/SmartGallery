@@ -52,7 +52,7 @@ public static class ServiceExtensions
             };
         });
     }
-    public static void ConfigureAllRequiredServices(this IServiceCollection services, IConfiguration configuration) 
+    public static void ConfigureAllRequiredServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.ConfigureEfCore(configuration);
         services.ConfigureIdentity();

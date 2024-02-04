@@ -7,7 +7,7 @@ using SmartGallery.Server.Repositories.Contracts;
 
 namespace SmartGallery.Server.Repositories;
 
-public abstract class BaseRepository<T> : IRepository where T : BaseEntity
+public abstract class BaseRepository<T> : IRepository where T : class
 {
     protected readonly AppDbContext _context;
     public BaseRepository(AppDbContext context)

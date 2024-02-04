@@ -9,6 +9,6 @@ public class Reservation
     public Customer Customer { get; set; } = null!;
     public string ProblemDescription { get; set; } = null!;
     public StatusEnum Status { get; set; } = StatusEnum.Pending;
-    // public TimeOnly ReservationTime { get; set; }
-    // public DateOnly ReservationDate { get; set; }
+    public TimeOnly ReservationTime { get; set; }
+    public DateOnly ReservationDate { get; set; }
 }

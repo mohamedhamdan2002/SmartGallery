@@ -1,5 +1,4 @@
 ﻿using SmartGallery.Server.Data;
-using SmartGallery.Server.Models;
 using SmartGallery.Server.Repositories.Contracts;
 
 namespace SmartGallery.Server.Repositories;

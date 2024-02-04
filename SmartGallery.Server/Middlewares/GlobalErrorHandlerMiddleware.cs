@@ -18,29 +18,32 @@ public class GlobalErrorHandlerMiddleware : IMiddleware
         catch (Exception ex)
         {
             context.Response.ContentType = "application/json";
-            //context.Response.StatusCode = ex switch
-            //{
-            //    NotFoundException => StatusCodes.Status404NotFound,
-            //    BadRequestException => StatusCodes.Status400BadRequest,
-            //    _ => StatusCodes.Status500InternalServerError
-            //};
-            if (ex.GetType().Name == typeof(NotFoundException).Name)
+            var exceptionName = ex.GetType().Name;
+            context.Response.StatusCode = exceptionName switch
             {
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
-            }
-            else if (ex.GetType().Name == typeof(BadRequestException).Name)
-            {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            }
-            else
-            {
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            }
+                nameof(NotFoundException) => StatusCodes.Status404NotFound,
+                nameof(BadRequestException) => StatusCodes.Status400BadRequest,
+                _ => StatusCodes.Status500InternalServerError
+            };
+            // if (ex.GetType().Name == typeof(NotFoundException).Name)
+            // {
+            //     context.Response.StatusCode = StatusCodes.Status404NotFound;
+            // }
+            // else if (ex.GetType().Name == typeof(BadRequestException).Name)
+            // {
+            //     context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            // }
+            // else
+            // {
+            //     context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            // }
             // here we can use logger
             var json = new ErrorDetails
             {
                 StatusCode = context.Response.StatusCode,
-                Message = ex.Message
+                Message = context.Response.StatusCode !=
+                            StatusCodes.Status500InternalServerError ?
+                            ex.Message : "InternalServerError"
             }.ToString(); // here i override ToString to serialize object directly
 
             await context.Response.WriteAsync(json);

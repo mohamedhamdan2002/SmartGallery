@@ -178,7 +178,9 @@ namespace SmartGallery.Server.Migrations
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ServiceId = table.Column<int>(type: "int", nullable: false),
                     ProblemDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<string>(type: "VARCHAR(20)", maxLength: 20, nullable: false),
+                    ReservationTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    ReservationDate = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {

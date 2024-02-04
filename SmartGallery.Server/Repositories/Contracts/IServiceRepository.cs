@@ -1,7 +1,5 @@
 ﻿using SmartGallery.Server.Models;
-using SmartGallery.Server.Repositories.Contracts;
-
-namespace SmartGallery.Server;
+namespace SmartGallery.Server.Repositories.Contracts;
 
 public interface IServiceRepository : IRepository
 {
