@@ -1,4 +1,3 @@
-using SmartGallery.Server.Models;
 using SmartGallery.Shared.ViewModels.ReservationViewModels;
 
 namespace SmartGallery.Server.Services.Contracts;

@@ -8,20 +8,20 @@ namespace SmartGallery.Server.Services;
 
 public class ServiceService : IServiceService
 {
-    private readonly IRepositoryManager _repository;
+    private readonly IRepositoryManager _repositoryManager;
     private readonly IServiceRepository _serviceRepository;
 
     public ServiceService(IRepositoryManager repository)
     {
-        _repository = repository;
+        _repositoryManager = repository;
         _serviceRepository = repository.GetRepository<IServiceRepository>();
     }
 
     public async Task<ServiceViewModel> CreateServiceAsync(ServiceForCreationViewModel serviceForCreationViewModel)
     {
         var serviceEntity = ToService(serviceForCreationViewModel);
-        await _repository.GetRepository<IServiceRepository>().CreateServiceAsync(serviceEntity);
-        await _repository.SaveChangesAsync();
+        await _serviceRepository.CreateServiceAsync(serviceEntity);
+        await _repositoryManager.SaveChangesAsync();
         var serviceViewModel = ToServiceViewModel(serviceEntity);
         return serviceViewModel;
     }
@@ -40,7 +40,7 @@ public class ServiceService : IServiceService
 
     public async Task<IEnumerable<ServiceViewModel>> GetServicesAsync(bool trackChanges = false)
     {
-        var services = await _repository.GetRepository<IServiceRepository>().GetServicesAsync(trackChanges);
+        var services = await _serviceRepository.GetServicesAsync(trackChanges);
         var servicesViewModel = services.Select(service => ToServiceViewModel(service));
         return servicesViewModel;
     }
@@ -50,7 +50,7 @@ public class ServiceService : IServiceService
         var serviceEntity = await GetServiceAndCheckIfItExistAsync(id, trackChanges);
         serviceEntity.Name = serviceForUpdateViewModel.Name!;
         serviceEntity.Description = serviceForUpdateViewModel.Description!;
-        await _repository.SaveChangesAsync();
+        await _repositoryManager.SaveChangesAsync();
     }
     private ServiceViewModel ToServiceViewModel(Service service)
     {
@@ -70,7 +70,7 @@ public class ServiceService : IServiceService
     }
     private async Task<Service> GetServiceAndCheckIfItExistAsync(int id, bool trackChanges = false, params string[] includeProperties)
     {
-        var service = await _repository.GetRepository<IServiceRepository>().GetServiceByIdAsync(id, trackChanges, includeProperties);
+        var service = await _serviceRepository.GetServiceByIdAsync(id, trackChanges, includeProperties);
         if(service is null)
             throw new NotFoundException($"the service with id: {id} doesn't exist in the database.");
         return service;

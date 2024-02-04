@@ -1,6 +1,4 @@
-﻿using NuGet.Common;
-using SmartGallery.Server.Models;
-using SmartGallery.Shared.ViewModels.ServiceViewModels;
+﻿using SmartGallery.Shared.ViewModels.ServiceViewModels;
 
 namespace SmartGallery.Server.Services.Contracts;
 

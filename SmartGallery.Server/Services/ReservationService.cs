@@ -2,24 +2,25 @@ using SendGrid.Helpers.Errors.Model;
 using SmartGallery.Server.Models;
 using SmartGallery.Server.Repositories.Contracts;
 using SmartGallery.Server.Services.Contracts;
-using SmartGallery.Shared.DataTransferObjects.ServiceViewModels;
 using SmartGallery.Shared.ViewModels.ReservationViewModels;
 
 namespace SmartGallery.Server.Services;
 
 public class ReservationService : IReservationService
 {
-    private readonly IRepositoryManager _repository;
+    private readonly IRepositoryManager _repositoryManager;
+    private readonly IReservationRepository _reservationRepository;
     private readonly IUserService _userService;
 
     public ReservationService(IRepositoryManager repository, IUserService userService)
     {
-        _repository = repository;
+        _repositoryManager = repository;
+        _reservationRepository = _repositoryManager.GetRepository<IReservationRepository>();
         _userService = userService;
     }
     public async Task<IEnumerable<ReservationViewModel>> GetReservationsAsync(bool trackChanges = false)
     {
-        var reservations = await _repository.GetRepository<IReservationRepository>().GetReservationsAsync(trackChanges);
+        var reservations = await _reservationRepository.GetReservationsAsync(trackChanges);
         var reservationsViewModel = reservations.Select(reservation => ToReservationViewModel(reservation));
         return reservationsViewModel;
     }
@@ -35,8 +36,8 @@ public class ReservationService : IReservationService
         await CheckIfServiceExistsAsync(serviceId);
         await CheckIfCustomerExistsAsync(customerId);
         var reservationEntity = ToReservation(serviceId, customerId, reservationForCreationViewModel);
-        await _repository.GetRepository<IReservationRepository>().CreateReservationAsync(reservationEntity);
-        await _repository.SaveChangesAsync();
+        await _reservationRepository.CreateReservationAsync(reservationEntity);
+        await _repositoryManager.SaveChangesAsync();
         var reservationViewModel = ToReservationViewModel(reservationEntity);
         return reservationViewModel;
     }
@@ -47,7 +48,7 @@ public class ReservationService : IReservationService
         reservation.ReservationTime = reservationForUpdateViewModel.ReservationTime;
         reservation.ReservationDate = reservationForUpdateViewModel.ReservationDate;
         reservation.Status = reservationForUpdateViewModel.Status;
-        await _repository.SaveChangesAsync();
+        await _repositoryManager.SaveChangesAsync();
 
     }
     private ReservationViewModel ToReservationViewModel(Reservation reservation)
@@ -72,7 +73,7 @@ public class ReservationService : IReservationService
     }
     private async Task<Reservation> GetReservationAndCheckIfItExistAsync(int serviceId, string customerId, bool trackChanges = false, params string[] includeProperties)
     {
-        var reservation = await _repository.GetRepository<IReservationRepository>().GetReservationAsync(serviceId, customerId, trackChanges, includeProperties);
+        var reservation = await _reservationRepository.GetReservationAsync(serviceId, customerId, trackChanges, includeProperties);
         if(reservation is null)
             throw new NotFoundException($"the Reservation with serviceId: {serviceId} and customerId {customerId} doesn't exist in the database.");
         return reservation;
@@ -80,7 +81,7 @@ public class ReservationService : IReservationService
 
     private async Task CheckIfServiceExistsAsync(int serviceId)
     {
-        var isExist = await _repository.GetRepository<IServiceRepository>().CheckIfServiceExistAsync(serviceId);
+        var isExist = await _repositoryManager.GetRepository<IServiceRepository>().CheckIfServiceExistAsync(serviceId);
         if(!isExist)
             throw new NotFoundException($"the service with id: {serviceId} doesn't exist in the database.");
     }

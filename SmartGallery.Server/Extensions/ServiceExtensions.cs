@@ -57,10 +57,12 @@ public static class ServiceExtensions
         services.ConfigureEfCore(configuration);
         services.ConfigureIdentity();
         services.ConfigureAuthenticationSchema(configuration);
+        services.AddScoped<IServiceRepository, ServiceRepository>();
+        services.AddScoped<IReservationRepository, ReservationRepository>();
+        services.AddScoped<IRepositoryManager, RepositoryManager>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IServiceService, ServiceService>();
-        services.AddScoped<IServiceRepository, ServiceRepository>();
-        services.AddScoped<IRepositoryManager, RepositoryManager>();
+        services.AddScoped<IReservationService, ReservationService>();
         // this to configure the IMiddleware interface
         services.AddTransient<GlobalErrorHandlerMiddleware>();
     }
