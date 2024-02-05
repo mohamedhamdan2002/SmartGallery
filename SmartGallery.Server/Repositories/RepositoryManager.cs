@@ -13,7 +13,12 @@ public class RepositoryManager : IRepositoryManager
         _serviceProvider = serviceProvider;
         _context = context;
     }
-    public TRepository GetRepository<TRepository>() where TRepository : IRepository
+
+    public IServiceRepository Service => GetRepository<IServiceRepository>();
+
+    public IReservationRepository Reservation => GetRepository<IReservationRepository>();
+
+    private TRepository GetRepository<TRepository>() where TRepository : IRepository
         => (TRepository) _serviceProvider.GetRequiredService(typeof(TRepository));
 
     public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
