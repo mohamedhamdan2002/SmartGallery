@@ -1,12 +1,16 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SmartGallery.Server.Models;
 
-namespace SmartGallery.Server.Models;
+namespace SmartGallery.Server.Data;
 
 public class AppDbContext:IdentityDbContext<Customer>
 {
-	public AppDbContext(DbContextOptions options) :base(options){}
+    public DbSet<Service> Services { get; set; }
+    public DbSet<Reservation> Reservations { get; set; }
+	public DbSet<Review> Reviews { get; set; }
+    public AppDbContext(DbContextOptions options) :base(options){}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

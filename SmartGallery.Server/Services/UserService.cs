@@ -2,8 +2,10 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SmartGallery.Server.Models;
+using SmartGallery.Server.Services.Contracts;
 using SmartGallery.Shared;
 
 namespace SmartGallery.Server.Services;
@@ -107,6 +109,7 @@ public class UserService : IUserService
             IsSuccess = true,
         };
     }
+
+    public async Task<bool> CheckIfUserExistByIdAsync(string userId)
+        => await _userManager.Users.AnyAsync(user => user.Id == userId);
 }
-
-

@@ -1,0 +1,21 @@
+@hostRunOnHttp = http://localhost:5294/api
+@serviceId = 5
+GET {{hostRunOnHttp}}/Services/
+###
+GET {{hostRunOnHttp}}/services/{{serviceId}}
+###
+POST {{hostRunOnHttp}}/services/
+Content-Type: application/json
+
+{
+    "name": "Plumbing Service",
+    "description": "When you have a plumbing issue that needs professional attention, look no further than Handy."
+}
+###
+PUT {{hostRunOnHttp}}/services/{{serviceId}}
+Content-Type: application/json
+
+{
+    "name": "Plumbing Service upd",
+    "description": "When you have a plumbing issue that needs professional attention, look no further than Handy."
+}

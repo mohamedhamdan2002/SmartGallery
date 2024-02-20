@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using SmartGallery.Server.Data;
 using SmartGallery.Server.Models;
 using SmartGallery.Server.Repositories.Contracts;
 
 namespace SmartGallery.Server.Repositories;
 
-public abstract class BaseRepository<T> : IRepository where T : BaseEntity
+public abstract class BaseRepository<T> : IRepository where T : class
 {
     protected readonly AppDbContext _context;
     public BaseRepository(AppDbContext context)
@@ -27,4 +28,6 @@ public abstract class BaseRepository<T> : IRepository where T : BaseEntity
             query = query.AsNoTracking();
         return query;
     }
+    public async Task<bool> CheckIfExistByConditionAsync(Expression<Func<T, bool>> predicate)
+        => await _context.Set<T>().AnyAsync(predicate);
 }
