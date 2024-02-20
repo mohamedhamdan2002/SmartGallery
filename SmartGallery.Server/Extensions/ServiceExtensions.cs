@@ -3,12 +3,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using SmartGallery.Server.Data;
+using SmartGallery.Server.Middlewares;
 using SmartGallery.Server.Models;
 using SmartGallery.Server.Repositories;
 using SmartGallery.Server.Repositories.Contracts;
 using SmartGallery.Server.Services;
+using SmartGallery.Server.Services.Contracts;
 
-namespace SmartGallery.Server;
+namespace SmartGallery.Server.Extensions;
 public static class ServiceExtensions
 {
     private static void ConfigureEfCore(this IServiceCollection services, IConfiguration configuration)
@@ -44,21 +47,23 @@ public static class ServiceExtensions
                 ValidAudience = configuration[Constants.Audience],
                 ValidIssuer = configuration[Constants.Issuer],
                 RequireExpirationTime = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[Constants.Key])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[Constants.Key]!)),
                 ValidateIssuerSigningKey = true
             };
         });
     }
-    private static void ConfigureUserService(this IServiceCollection services)
-        => services.AddScoped<IUserService, UserService>();
-    private static void ConfigureIRepositoryManager(this IServiceCollection services)
-            => services.AddScoped<IRepositoryManager, RepositoryManager>();
-    public static void ConfigureAllRequiredServices(this IServiceCollection services, IConfiguration configuration) 
+    public static void ConfigureAllRequiredServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.ConfigureEfCore(configuration);
         services.ConfigureIdentity();
         services.ConfigureAuthenticationSchema(configuration);
-        services.ConfigureUserService();
-        services.ConfigureIRepositoryManager();
+        services.AddScoped<IServiceRepository, ServiceRepository>();
+        services.AddScoped<IReservationRepository, ReservationRepository>();
+        services.AddScoped<IRepositoryManager, RepositoryManager>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IServiceService, ServiceService>();
+        services.AddScoped<IReservationService, ReservationService>();
+        // this to configure the IMiddleware interface
+        services.AddTransient<GlobalErrorHandlerMiddleware>();
     }
 }

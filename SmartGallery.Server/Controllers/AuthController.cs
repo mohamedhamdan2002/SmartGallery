@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SmartGallery.Server.Services;
+using SmartGallery.Server.Services.Contracts;
 using SmartGallery.Shared;
 
 namespace SmartGallery.Server.Controllers;

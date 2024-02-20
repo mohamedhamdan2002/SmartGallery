@@ -2,8 +2,10 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SmartGallery.Server.Models;
+using SmartGallery.Server.Services.Contracts;
 using SmartGallery.Shared;
 
 namespace SmartGallery.Server.Services;
@@ -110,15 +112,17 @@ public class UserService : IUserService
             };
         }
         catch(Exception ex)
+
         {
             return new UserManagerResponse
             {
                 Message = "Fatal Error",
                 IsSuccess = true,
-                Errors = new List<string> { ex.Data.ToString() };
+                Errors = new List<string> { ex.Data.ToString() }
             };
         }
     }
+
+    public async Task<bool> CheckIfUserExistByIdAsync(string userId)
+        => await _userManager.Users.AnyAsync(user => user.Id == userId);
 }
-
-

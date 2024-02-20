@@ -1,4 +1,5 @@
-﻿using SmartGallery.Server;
+﻿using SmartGallery.Server.Extensions;
+using SmartGallery.Server.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+// this custom middleware
+app.UseMiddleware<GlobalErrorHandlerMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 
