@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using SmartGallery.Server.Services;
 using SmartGallery.Shared;
 
@@ -46,6 +47,16 @@ public class AuthController : ControllerBase
             return Ok(result);
         }
 
+        return BadRequest(result);
+    }
+    [HttpPost("Logout")]
+    public async Task<IActionResult> LogoutAsync()
+    {
+        var result = await _userService.LogoutUserAsync();
+        if(result.IsSuccess)
+        {
+            return Ok(result);
+        }
         return BadRequest(result);
     }
 }
