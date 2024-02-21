@@ -1,0 +1,66 @@
+﻿using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.JSInterop;
+using SmartGallery.Client.Helpers;
+using SmartGallery.Client.Services.Contracts;
+using SmartGallery.Shared;
+
+namespace SmartGallery.Client.Services;
+
+public class LoginService : ILoginService
+{
+    private readonly HttpClient _httpClient;
+    private readonly AuthenticationStateProvider _authenticationStateProvider;
+    private readonly ILocalStorageService _LocalStorageService;
+
+    public LoginService(HttpClient httpClient, ILocalStorageService localStorageService, AuthenticationStateProvider authenticationStateProvider)
+    {
+        _httpClient = httpClient;
+        _LocalStorageService = localStorageService;
+        _authenticationStateProvider = authenticationStateProvider;
+    }
+    public async Task<UserManagerResponse> LoginAsync(LoginViewModel loginModel)
+    {
+        var loginAsJson = JsonSerializer.Serialize(loginModel);
+        var response = await _httpClient.PostAsync("api/Auth/Login", new StringContent(loginAsJson, Encoding.UTF8, "application/json"));
+        var loginResult = JsonSerializer.Deserialize<UserManagerResponse>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        if (!response.IsSuccessStatusCode)
+        {
+            return loginResult!;
+        }
+
+        await _LocalStorageService.SetItemAsync("authToken", loginResult!.Message);
+        ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email!);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Message);
+
+        return loginResult;
+    }
+    //public async Task<UserManagerResponse> LoginAsync(LoginViewModel viewModel)
+    //{
+    //    var LoginObj = new StringContent(JsonSerializer.Serialize(viewModel), Encoding.UTF8, "application/json");
+
+    //    HttpResponseMessage responseMessage = await _httpClient.PostAsync("api/Auth/Login", LoginObj);
+    //    UserManagerResponse result = await responseMessage.Content.ReadFromJsonAsync<UserManagerResponse>() ?? new();
+
+    //    return result;
+    //}
+    public async Task<UserManagerResponse> RegisterAsync(RegisterViewModel registerModel)
+    {
+        var result = await _httpClient.PostAsJsonAsync("api/Auth/Register", registerModel);
+        if (!result.IsSuccessStatusCode)
+            return new UserManagerResponse { IsSuccess = true, Errors = null };
+        return new UserManagerResponse { IsSuccess = false, Errors = new List<string> { "Error occured" } };
+    }
+    public async Task LogoutAsync()
+    {
+        await _LocalStorageService.RemoveItemAsync("authToken");
+        ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
+        _httpClient.DefaultRequestHeaders.Authorization = null;
+    }
+}
+

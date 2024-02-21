@@ -102,12 +102,25 @@ public class UserService : IUserService
 
     public async Task<UserManagerResponse> LogoutUserAsync()
     {
-        await _signInManager.SignOutAsync();
-        return new UserManagerResponse
+        try
         {
-            Message = "User Logged Out Successfully",
-            IsSuccess = true,
-        };
+            await _signInManager.SignOutAsync();
+            return new UserManagerResponse
+            {
+                Message = "User Logged Out Successfully",
+                IsSuccess = true,
+            };
+        }
+        catch(Exception ex)
+
+        {
+            return new UserManagerResponse
+            {
+                Message = "Fatal Error",
+                IsSuccess = true,
+                Errors = new List<string> { ex.Data.ToString() }
+            };
+        }
     }
 
     public async Task<bool> CheckIfUserExistByIdAsync(string userId)

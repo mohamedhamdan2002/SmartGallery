@@ -20,12 +20,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 // this custom middleware
 app.UseMiddleware<GlobalErrorHandlerMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapFallbackToFile("Index.html");
 
 app.Run();
 
