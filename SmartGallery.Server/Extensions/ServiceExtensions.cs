@@ -44,6 +44,7 @@ public static class ServiceExtensions
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,
+                ValidateLifetime = true,
                 ValidAudience = configuration[Constants.Audience],
                 ValidIssuer = configuration[Constants.Issuer],
                 RequireExpirationTime = true,

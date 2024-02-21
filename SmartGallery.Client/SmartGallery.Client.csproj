@@ -10,6 +10,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartGallery.Shared\SmartGallery.Shared.csproj">
@@ -21,5 +22,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\Images\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Contracts\" />
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Services\" />
+    <None Remove="Services\Contracts\" />
+    <None Remove="Helpers\" />
   </ItemGroup>
 </Project>
