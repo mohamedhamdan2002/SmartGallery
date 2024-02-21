@@ -10,11 +10,6 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
     public ReservationRepository(AppDbContext context)
         : base(context) {}
 
-    public async Task CreateReservationAsync(Reservation reservation)
-        => await CreateAsync(reservation);
-    public void DeleteReservation(Reservation reservation)
-        => Delete(reservation);
-
     public async Task<Reservation?> GetReservationAsync(int serviceId, string customerId, bool trackChanges = false, params string[] includeProperties)
         => await GetByCondition(reservation =>
             reservation.ServiceId == serviceId &&

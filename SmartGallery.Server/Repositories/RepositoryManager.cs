@@ -18,7 +18,7 @@ public class RepositoryManager : IRepositoryManager
 
     public IReservationRepository Reservation => GetRepository<IReservationRepository>();
 
-    private TRepository GetRepository<TRepository>() where TRepository : IRepository
+    private TRepository GetRepository<TRepository>()
         => (TRepository) _serviceProvider.GetRequiredService(typeof(TRepository));
 
     public async Task SaveChangesAsync() => await _context.SaveChangesAsync();

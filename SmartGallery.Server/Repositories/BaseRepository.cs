@@ -7,14 +7,14 @@ using SmartGallery.Server.Repositories.Contracts;
 
 namespace SmartGallery.Server.Repositories;
 
-public abstract class BaseRepository<T> : IRepository where T : class
+public abstract class BaseRepository<T> : IRepository<T> where T : class
 {
     protected readonly AppDbContext _context;
     public BaseRepository(AppDbContext context)
         => _context = context;
-    protected async Task CreateAsync(T entity)
+    public async Task CreateAsync(T entity)
         => await _context.AddAsync(entity);
-    protected void Delete(T entity)
+    public void Delete(T entity)
         => _context.Remove(entity);
     protected IQueryable<T> GetAll(bool trackChanges = false)
         => !trackChanges ? _context.Set<T>().AsNoTracking() : _context.Set<T>();

@@ -33,7 +33,7 @@ public class ReservationService : IReservationService
         await CheckIfServiceExistsAsync(serviceId);
         await CheckIfCustomerExistsAsync(customerId);
         var reservationEntity = ToReservation(serviceId, customerId, reservationForCreationViewModel);
-        await _repository.Reservation.CreateReservationAsync(reservationEntity);
+        await _repository.Reservation.CreateAsync(reservationEntity);
         await _repository.SaveChangesAsync();
         return reservationEntity.ToViewModel();
     }
