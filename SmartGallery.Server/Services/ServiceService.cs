@@ -19,7 +19,7 @@ public class ServiceService : IServiceService
     public async Task<ServiceViewModel> CreateServiceAsync(ServiceForCreationViewModel serviceForCreationViewModel)
     {
         var serviceEntity = ToService(serviceForCreationViewModel);
-        await _repository.Service.CreateServiceAsync(serviceEntity);
+        await _repository.Service.CreateAsync(serviceEntity);
         await _repository.SaveChangesAsync();
         return serviceEntity.ToViewModel();
 
@@ -49,14 +49,6 @@ public class ServiceService : IServiceService
         serviceEntity.Name = serviceForUpdateViewModel.Name!;
         serviceEntity.Description = serviceForUpdateViewModel.Description!;
         await _repository.SaveChangesAsync();
-    }
-    private ServiceViewModel ToServiceViewModel(Service service)
-    {
-        return new ServiceViewModel(
-            Id: service.Id,
-            Name: service.Name,
-            Description: service.Description
-        );
     }
     private Service ToService(ServiceForCreationViewModel serviceForCreationViewModel)
     {

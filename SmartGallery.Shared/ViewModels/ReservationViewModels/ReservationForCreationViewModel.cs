@@ -2,6 +2,8 @@ namespace SmartGallery.Shared.ViewModels.ReservationViewModels;
 
 public record ReservationForCreationViewModel : ReservationForManipulationViewModel
 {
-    public string? ProblemDescription { get; init; }
+    //public string? CustomerId { get; init; }
+    //public int serviceId {  get; init; }
+    
 }
 

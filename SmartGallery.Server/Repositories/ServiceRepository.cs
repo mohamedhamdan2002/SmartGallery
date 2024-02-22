@@ -8,15 +8,10 @@ namespace SmartGallery.Server.Repositories;
 public class ServiceRepository : BaseRepository<Service>, IServiceRepository
 {
     public ServiceRepository(AppDbContext context)
-        : base(context) {}
+        : base(context) { }
 
     public async Task<bool> CheckIfServiceExistAsync(int id)
         => await CheckIfExistByConditionAsync(service => service.Id == id);
-    public async Task CreateServiceAsync(Service service)
-        => await CreateAsync(service);
-
-    public void DeleteService(Service service)
-        => Delete(service);
     public async Task<Service?> GetServiceByIdAsync(int id, bool trackChanges = false, params string[] includeProperties)
         => await GetByCondition(service => service.Id == id, trackChanges, includeProperties)
                 .FirstOrDefaultAsync();

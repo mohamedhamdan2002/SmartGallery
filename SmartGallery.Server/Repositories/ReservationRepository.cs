@@ -1,3 +1,5 @@
+using System;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using SmartGallery.Server.Data;
 using SmartGallery.Server.Models;
@@ -10,19 +12,25 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
     public ReservationRepository(AppDbContext context)
         : base(context) {}
 
-    public async Task CreateReservationAsync(Reservation reservation)
-        => await CreateAsync(reservation);
-    public void DeleteReservation(Reservation reservation)
-        => Delete(reservation);
+    public async Task<bool> CheckIfReservationExistAsync(int serviceId, string customerId)
+        => await CheckIfExistByConditionAsync(x => x.ServiceId == serviceId &&  x.CustomerId == customerId);
 
-    public async Task<Reservation?> GetReservationAsync(int serviceId, string customerId, bool trackChanges = false, params string[] includeProperties)
-        => await GetByCondition(reservation =>
+    public async Task<IEnumerable<TResult>> FindReservationsAsync<TResult>(Expression<Func<Reservation, bool>> predicate, Expression<Func<Reservation, TResult>> selector, bool trackChanges = false, params string[] includeProperties)
+        => await GetByCondition(predicate, trackChanges, includeProperties)
+            .Select(selector)
+            .ToListAsync();
+
+    public async Task<TResult?> GetReservationAsync<TResult>(int serviceId, string customerId, Expression<Func<Reservation, TResult>> selector, bool trackChanges = false, params string[] includeProperties)
+    {
+        var query = GetByCondition(reservation =>
             reservation.ServiceId == serviceId &&
             reservation.CustomerId == customerId,
-            trackChanges, includeProperties)
-            .SingleOrDefaultAsync();
+            trackChanges, includeProperties);
+            return await query.Select(selector).SingleOrDefaultAsync(); 
+    }
 
-    public async Task<IEnumerable<Reservation>> GetReservationsAsync(bool trackChanges = false)
-        => await GetAll(trackChanges)
-                .ToListAsync();
+    public async Task<IEnumerable<TResult>> GetReservationsAsync<TResult>(Expression<Func<Reservation, TResult>> selector, bool trackChanges = false, params string[] includeProperties)
+          => await GetAll(trackChanges, includeProperties).Select(selector).ToListAsync();
+
+
 }
