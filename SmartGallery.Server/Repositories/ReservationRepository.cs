@@ -12,6 +12,8 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
     public ReservationRepository(AppDbContext context)
         : base(context) {}
 
+    public async Task<bool> CheckIfReservationExistAsync(int serviceId, string customerId)
+        => await CheckIfExistByConditionAsync(x => x.ServiceId == serviceId &&  x.CustomerId == customerId);
 
     public async Task<IEnumerable<TResult>> FindReservationsAsync<TResult>(Expression<Func<Reservation, bool>> predicate, Expression<Func<Reservation, TResult>> selector, bool trackChanges = false, params string[] includeProperties)
         => await GetByCondition(predicate, trackChanges, includeProperties)

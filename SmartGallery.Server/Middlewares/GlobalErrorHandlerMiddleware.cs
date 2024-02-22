@@ -23,6 +23,7 @@ public class GlobalErrorHandlerMiddleware : IMiddleware
             {
                 nameof(NotFoundException) => StatusCodes.Status404NotFound,
                 nameof(BadRequestException) => StatusCodes.Status400BadRequest,
+                nameof(ConflictException) => StatusCodes.Status409Conflict,
                 _ => StatusCodes.Status500InternalServerError
             };
             // if (ex.GetType().Name == typeof(NotFoundException).Name)
