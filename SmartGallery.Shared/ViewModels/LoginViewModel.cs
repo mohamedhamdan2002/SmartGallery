@@ -12,10 +12,6 @@ public class LoginViewModel
     [StringLength(50, MinimumLength = 8)]
     [DataType(DataType.Password)]
     public string? Password { get; set; }
-    [Required]
-    [StringLength(200)]
-    public string? Address { get; set; }
-
     [Display(Name ="Remember Me?")]
     public bool RememberMe { get; set; }
     

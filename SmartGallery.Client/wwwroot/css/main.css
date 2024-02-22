@@ -117,7 +117,7 @@ header {
             }
 
 .login-form {
-    position: fixed;
+/*    position: fixed;*/
     top: -120%;
     left: 0;
     height: 100vh;
@@ -126,7 +126,6 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
 }
 
     .login-form.active {

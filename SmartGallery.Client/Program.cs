@@ -11,8 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthenticationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
-builder.Services.AddScoped<ILoginService, LoginService>();
-builder.Services.AddScoped(client => new HttpClient { BaseAddress = new Uri("http://localhost:7247") });
+builder.Services.AddHttpClient<ILoginService, LoginService>(client => client.BaseAddress = new Uri("http://localhost:7247"));
 
 // Add services to the container.
 builder.Services.AddRazorPages();

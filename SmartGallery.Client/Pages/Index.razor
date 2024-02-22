@@ -12,8 +12,7 @@
           href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet"
           href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
-          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
@@ -31,7 +30,15 @@
         </nav>
         <div class="icon">
             <i class="fas fa-search" onclick="showbar()" id="search-btn"></i>
-            <i class="fas fa-user" onclick="loginform()"></i>
+            <AuthorizeView>
+                <Authorized>
+                    Hello , @context.User.Identity!.Name
+                    @*<a href="Logout">Log Out</a>*@
+                </Authorized>
+                <NotAuthorized>
+                    <i class="fas fa-user" @onclick="NavigateToLogin"></i>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
         <form action="" class="search-form">
             <input type="search"
@@ -40,9 +47,7 @@
             <label for="search-bar" class="fas fa-search"></label>
         </form>
     </header>
-   
-        <Login />
-   
+      
     @*<div class="login-form">
         <i class="fas fa-times" id="form-close" onclick="hideform()"></i>
         <form action="">

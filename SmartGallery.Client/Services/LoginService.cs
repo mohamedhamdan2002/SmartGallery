@@ -26,19 +26,23 @@ public class LoginService : ILoginService
     public async Task<UserManagerResponse> LoginAsync(LoginViewModel loginModel)
     {
         var loginAsJson = JsonSerializer.Serialize(loginModel);
-        var response = await _httpClient.PostAsync("api/Auth/Login", new StringContent(loginAsJson, Encoding.UTF8, "application/json"));
-        var loginResult = JsonSerializer.Deserialize<UserManagerResponse>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-        if (!response.IsSuccessStatusCode)
-        {
-            return loginResult!;
-        }
+            var response = await _httpClient.PostAsJsonAsync("api/auth/login", loginModel);
 
-        await _LocalStorageService.SetItemAsync("authToken", loginResult!.Message);
-        ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email!);
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Message);
+            var loginResult = JsonSerializer.Deserialize<UserManagerResponse>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-        return loginResult;
+            if (!response.IsSuccessStatusCode)
+            {
+                return loginResult!;
+            }
+
+            await _LocalStorageService.SetItemAsync("authToken", loginResult!.Message);
+            ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email!);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Message);
+
+            return loginResult;
+
+
     }
     //public async Task<UserManagerResponse> LoginAsync(LoginViewModel viewModel)
     //{

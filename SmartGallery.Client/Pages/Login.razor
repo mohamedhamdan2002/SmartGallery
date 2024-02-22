@@ -1,41 +1,42 @@
-﻿
-@*<div class="login-form">
-    <i class="fas fa-times" id="form-close" onclick="hideform()"></i>
-    <EditForm Model="@viewModel" OnInvalidSubmit="HandleInValidSubmitAsync" OnValidSubmit="HandleValidSubmitAsync">
-        <h3>login</h3>
-        <div class="form-group">
-            <label>Email</label>
-            <InputText class="box" @bind-Value="@viewModel.Email" placeholder="Enter your email" />
-            <ValidationMessage For="@(() => viewModel.Email)" />
+﻿@page "/login"
+    <head>
+        <link rel="stylesheet" href="/css/main.css" />
+    </head>
+    <div class="login-form">
+        <EditForm Model="@viewModel" OnInvalidSubmit="HandleInValidSubmitAsync" OnValidSubmit="HandleValidSubmitAsync">
+            <h3>login</h3>
+            <div class="form-group">
+                <label>Email</label>
+                <InputText class="box" @bind-Value="@viewModel.Email" placeholder="Enter your email" />
+                <ValidationMessage For="@(() => viewModel.Email)" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <InputText class="box" @bind-Value="@viewModel.Password" type="password" placeholder="Enter your password" />
+                <ValidationMessage For="@(() => viewModel.Password)" />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn">Login Now</button>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="remember" @bind="@viewModel.RememberMe" />
+                    Remember me
+                </label>
+            </div>
+            <p>forget password? <a href="">click here</a></p>
+            <p>don't have acount? <a href="">sign up</a></p>
+            <div class="validation-summary-errors" style="color: red;" role="alert">
+                @if (validationMessages.Count > 0)
+                {
+                    <p>Please fix the following errors:</p>
+                    <ul>
+                        @foreach (string message in validationMessages)
+                        {
+                            <li>@message</li>
+                        }
+                    </ul>
+                }
+            </div>
+        </EditForm>
         </div>
-        <div class="form-group">
-            <label>Password</label>
-            <InputText class="box" @bind-Value="@viewModel.Password" type="password" placeholder="Enter your password" />
-            <ValidationMessage For="@(() => viewModel.Password)" />
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn">Login Now</button>
-        </div>
-        <div class="form-group">
-            <label>
-                <input type="checkbox" id="remember" @bind="@viewModel.RememberMe" />
-                Remember me
-            </label>
-        </div>
-        <p>forget password? <a href="">click here</a></p>
-        <p>don't have acount? <a href="">sign up</a></p>
-        <div class="validation-summary-errors" style="color: red;" role="alert">
-            @if (validationMessages.Count > 0)
-            {
-                <p>Please fix the following errors:</p>
-                <ul>
-                    @foreach (string message in validationMessages)
-                    {
-                        <li>@message</li>
-                    }
-                </ul>
-            }
-        </div>
-    </EditForm>
-</div>*@
- 

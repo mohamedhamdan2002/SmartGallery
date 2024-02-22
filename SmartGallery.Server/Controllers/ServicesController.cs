@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartGallery.Server.Services.Contracts;
 using SmartGallery.Shared.ViewModels.ServiceViewModels;
 
 namespace SmartGallery.Server.Controllers;
+[AllowAnonymous]
 [Route("api/[controller]")]
 [ApiController]
 public class ServicesController : ControllerBase
