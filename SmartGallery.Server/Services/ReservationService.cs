@@ -3,6 +3,7 @@ using SmartGallery.Server.Models;
 using SmartGallery.Server.Repositories.Contracts;
 using SmartGallery.Server.Services.Contracts;
 using SmartGallery.Shared.ViewModels.ReservationViewModels;
+using System.Linq.Expressions;
 
 namespace SmartGallery.Server.Services;
 
@@ -16,16 +17,39 @@ public class ReservationService : IReservationService
         _repository = repository;
         _userService = userService;
     }
-    public async Task<IEnumerable<ReservationViewModel>> GetReservationsAsync(bool trackChanges = false)
+    public async Task<IEnumerable<ReservationDetailsVM>> GetReservationsAsync(bool trackChanges = false)
     {
-        var reservations = await _repository.Reservation.GetReservationsAsync(trackChanges);
-        var reservationsViewModel = reservations.Select(reservation => reservation.ToViewModel());
+        var reservations = await _repository.Reservation.GetReservationsAsync(
+            x  => new
+            {
+                x.CustomerId,
+                x.Customer.Email,
+                x.ServiceId,
+                x.Service.Name,
+                x.ProblemDescription,
+                x.ReservationDate,
+                x.ReservationTime,
+                x.Status,
+            }, 
+            trackChanges: false,
+            "Customer", "Service"
+        );
+        var reservationsViewModel = reservations.Select(x => new ReservationDetailsVM(
+            x.ProblemDescription,
+            x.Status,
+            x.ReservationDate,
+            x.ReservationTime,
+            x.CustomerId,
+            x.Email!,
+            x.ServiceId,
+            x.Name
+        ));
         return reservationsViewModel;
     }
-    public async Task<ReservationViewModel> GetReservationAsync(int serviceId, string customerId, bool trackChanges = false, params string[] includeProperties)
+    public async Task<ReservationViewModel> GetReservationAsync(int serviceId, string customerId, bool trackChanges = false)
     {
-        var reservation = await GetReservationAndCheckIfItExistAsync(serviceId, customerId, trackChanges, includeProperties);
-        // should handle case if includeProperties
+        var reservation = await GetReservationAndCheckIfItExistAsync(serviceId, customerId, trackChanges);
+        
         return reservation.ToViewModel();
     }
     public async Task<ReservationViewModel> CreateReservationAsync(int serviceId, string customerId, ReservationForCreationViewModel reservationForCreationViewModel)
@@ -38,9 +62,10 @@ public class ReservationService : IReservationService
         return reservationEntity.ToViewModel();
     }
 
-    public async Task UpdateReservationAsync(int serviceId, string customerId, ReservationForUpdateViewModel reservationForUpdateViewModel, bool trackChanges = false)
+    public async Task UpdateReservationAsync(int serviceId, string customerId, ReservationForUpdateViewModel reservationForUpdateViewModel)
     {
-        var reservation = await GetReservationAndCheckIfItExistAsync(serviceId, customerId, trackChanges);
+        var reservation = await GetReservationAndCheckIfItExistAsync(serviceId, customerId, trackChanges: true);
+        reservation.ProblemDescription = reservationForUpdateViewModel.ProblemDescription!;
         reservation.ReservationTime = reservationForUpdateViewModel.ReservationTime;
         reservation.ReservationDate = reservationForUpdateViewModel.ReservationDate;
         reservation.Status = reservationForUpdateViewModel.Status;
@@ -78,5 +103,80 @@ public class ReservationService : IReservationService
         if(!isExist)
             throw new NotFoundException($"the customer with id: {customerId} doesn't exist in the database.");
     }
+
+    public async Task<IEnumerable<ReservationCustomerDetailsVM>> GetReservationsForServiceAsync(int serviceId)
+    {
+        await CheckIfServiceExistsAsync(serviceId);
+        var reservations = await _repository.Reservation
+            .FindReservationsAsync(
+                reservation => reservation.ServiceId == serviceId,
+                trackChanges: false,
+                selector: x => new
+                {
+                    x.CustomerId,
+                    x.Customer.PhoneNumber,
+                    x.Customer.Email,
+                    x.Customer.Address,
+                    x.ProblemDescription,
+                    x.ReservationDate,
+                    x.ReservationTime,
+                    x.Status,
+                },
+                includeProperties: "Customer"
+            );
+        List<ReservationCustomerDetailsVM> reservationsViewModel = new();
+        if(reservations is not null && reservations.Any())
+        {
+            reservationsViewModel = reservations.Select(
+                x => new ReservationCustomerDetailsVM(
+                    x.ProblemDescription,
+                    x.Status,
+                    x.ReservationDate,
+                    x.ReservationTime,
+                    x.CustomerId,
+                    x.Email!,
+                    x.PhoneNumber!,
+                    x.Address!
+                 )).ToList();
+        }
+        return reservationsViewModel;
+    }
+
+    public async Task<IEnumerable<ReservationServiceDetailsVM>> GetReservationsForCustomerAsync(string customerId)
+    {
+        await CheckIfCustomerExistsAsync(customerId);
+        var reservations = await _repository.Reservation
+            .FindReservationsAsync(
+                reservation => reservation.CustomerId == customerId,
+                selector: x => new
+                {
+                    x.ServiceId,
+                    x.Service.Name,
+                    x.Service.Description,
+                    x.ProblemDescription,
+                    x.ReservationDate,
+                    x.ReservationTime,
+                    x.Status,
+                },
+                trackChanges: false,
+                includeProperties: "Service"
+            );
+        List<ReservationServiceDetailsVM> reservationsViewModel = new();
+        if(reservations is not null && reservations.Any())
+        {
+            reservationsViewModel = reservations.Select(
+                x => new ReservationServiceDetailsVM(
+                    x.ProblemDescription,
+                    x.Status,
+                    x.ReservationDate,
+                    x.ReservationTime,
+                    x.ServiceId,
+                    x.Name
+                 )).ToList();
+                        
+        }
+        return reservationsViewModel;
+    }
+
 
 }

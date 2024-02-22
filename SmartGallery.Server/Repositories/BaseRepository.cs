@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
 using SmartGallery.Server.Data;
 using SmartGallery.Server.Models;
@@ -16,8 +17,16 @@ public abstract class BaseRepository<T> : IRepository<T> where T : class
         => await _context.AddAsync(entity);
     public void Delete(T entity)
         => _context.Remove(entity);
-    protected IQueryable<T> GetAll(bool trackChanges = false)
-        => !trackChanges ? _context.Set<T>().AsNoTracking() : _context.Set<T>();
+    protected IQueryable<T> GetAll(bool trackChanges = false, params string[] includeProperties)
+    {
+        IQueryable<T> query = _context.Set<T>();
+        if (includeProperties.Any())
+            foreach (var property in includeProperties)
+                query = query.Include(property);
+        if (!trackChanges)
+            query = query.AsNoTracking();
+        return query;
+    }
     protected IQueryable<T> GetByCondition(Expression<Func<T, bool>> predicate, bool trackChanges = false, params string[] includeProperties)
     {
         IQueryable<T> query = _context.Set<T>().Where(predicate);
