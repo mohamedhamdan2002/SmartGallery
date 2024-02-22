@@ -53,10 +53,19 @@ public static class ServiceExtensions
             };
         });
     }
+    private static void ConfigureCors(this IServiceCollection services)
+        => services.AddCors(option =>
+        {
+            option.AddPolicy(Constants.AppPolicy, builder =>
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader());
+        });
     public static void ConfigureAllRequiredServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.ConfigureEfCore(configuration);
         services.ConfigureIdentity();
+        services.ConfigureCors();
         services.ConfigureAuthenticationSchema(configuration);
         services.AddScoped<IServiceRepository, ServiceRepository>();
         services.AddScoped<IReservationRepository, ReservationRepository>();
