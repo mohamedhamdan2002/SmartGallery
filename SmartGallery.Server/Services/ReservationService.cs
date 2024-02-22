@@ -3,6 +3,7 @@ using SmartGallery.Server.Exceptions;
 using SmartGallery.Server.Models;
 using SmartGallery.Server.Repositories.Contracts;
 using SmartGallery.Server.Services.Contracts;
+using SmartGallery.Server.Utilities;
 using SmartGallery.Shared.ViewModels.ReservationViewModels;
 using System.Linq.Expressions;
 
@@ -22,49 +23,46 @@ public class ReservationService : IReservationService
     {
         var reservationsViewModel = await _repository.Reservation.GetReservationsAsync(
             x => new ReservationDetailsVM(
-            x.ProblemDescription,
-            x.Status,
-            x.ReservationDate,
-            x.ReservationTime,
-            x.CustomerId,
-            x.Customer.Email!,
-            x.ServiceId,
-            x.Service.Name), 
+                x.ProblemDescription,
+                x.Status,
+                x.ReservationDate,
+                x.ReservationTime,
+                x.CustomerId,
+                x.Customer.Email!,
+                x.ServiceId,
+                x.Service.Name
+            ), 
             trackChanges: false,
-            "Customer", "Service"
+            NavigationProperties.Customer,
+            NavigationProperties.Service
         );
         return reservationsViewModel;
     }
-    public async Task<ReservationViewModel> GetReservationAsync(int serviceId, string customerId)
+    public async Task<ReservationDetailsVM> GetReservationAsync(int serviceId, string customerId)
     {
-        var reservation = await GetReservationAndCheckIfItExistAsync(serviceId, customerId, trackChanges: false);
-        
-        return reservation.ToViewModel();
+        var reservation = await GetReservationAndCheckIfItExistAsync(
+            serviceId, 
+            customerId,
+            x => new ReservationDetailsVM(
+                x.ProblemDescription,
+                x.Status,
+                x.ReservationDate,
+                x.ReservationTime,
+                x.CustomerId,
+                x.Customer.Email!,
+                x.ServiceId,
+                x.Service.Name
+            ),
+            trackChanges: false);
+
+        return reservation;
     }
     public async Task<ReservationViewModel> CreateReservationAsync(int serviceId, string customerId, ReservationForCreationViewModel reservationForCreationViewModel)
     {
         await CheckIfServiceExistsAsync(serviceId);
         await CheckIfCustomerExistsAsync(customerId);
         await CheckIfReservationExistsAsync(serviceId, customerId);
-        var reservationEntity = ToReservation(serviceId, customerId, reservationForCreationViewModel);
-        await _repository.Reservation.CreateAsync(reservationEntity);
-        await _repository.SaveChangesAsync();
-        return reservationEntity.ToViewModel();
-    }
-
-    public async Task UpdateReservationAsync(int serviceId, string customerId, ReservationForUpdateViewModel reservationForUpdateViewModel)
-    {
-        var reservation = await GetReservationAndCheckIfItExistAsync(serviceId, customerId, trackChanges: true);
-        reservation.ProblemDescription = reservationForUpdateViewModel.ProblemDescription!;
-        reservation.ReservationTime = reservationForUpdateViewModel.ReservationTime;
-        reservation.ReservationDate = reservationForUpdateViewModel.ReservationDate;
-        reservation.Status = reservationForUpdateViewModel.Status;
-        await _repository.SaveChangesAsync();
-
-    }
-    private Reservation ToReservation(int serviceId, string customerId, ReservationForCreationViewModel reservationForCreationViewModel)
-    {
-        return new Reservation
+        var reservationEntity = new Reservation
         {
             CustomerId = customerId,
             ServiceId = serviceId,
@@ -72,10 +70,29 @@ public class ReservationService : IReservationService
             ReservationDate = reservationForCreationViewModel.ReservationDate,
             ReservationTime = reservationForCreationViewModel.ReservationTime
         };
+        await _repository.Reservation.CreateAsync(reservationEntity);
+        await _repository.SaveChangesAsync();
+        return reservationEntity.ToViewModel();
     }
-    private async Task<Reservation> GetReservationAndCheckIfItExistAsync(int serviceId, string customerId, bool trackChanges = false, params string[] includeProperties)
+
+    public async Task UpdateReservationAsync(int serviceId, string customerId, ReservationForUpdateViewModel reservationForUpdateViewModel)
     {
-        var reservation = await _repository.Reservation.GetReservationAsync(serviceId, customerId, trackChanges, includeProperties);
+        var reservation = await GetReservationAndCheckIfItExistAsync(
+            serviceId, 
+            customerId, 
+            reservation => reservation,
+            trackChanges: true
+            );
+        reservation.ProblemDescription = reservationForUpdateViewModel.ProblemDescription!;
+        reservation.ReservationTime = reservationForUpdateViewModel.ReservationTime;
+        reservation.ReservationDate = reservationForUpdateViewModel.ReservationDate;
+        reservation.Status = reservationForUpdateViewModel.Status;
+        await _repository.SaveChangesAsync();
+
+    }
+    private async Task<TResult> GetReservationAndCheckIfItExistAsync<TResult>(int serviceId, string customerId, Expression<Func<Reservation, TResult>> selector, bool trackChanges = false, params string[] includeProperties)
+    {
+        var reservation = await _repository.Reservation.GetReservationAsync(serviceId, customerId, selector, trackChanges, includeProperties);
         if(reservation is null)
             throw new NotFoundException($"the Reservation with serviceId: {serviceId} and customerId {customerId} doesn't exist in the database.");
         return reservation;
@@ -98,6 +115,7 @@ public class ReservationService : IReservationService
         var isExist = await _repository.Reservation.CheckIfReservationExistAsync(serviceId, customerId);
         if (isExist)
             throw new ConflictException($"A reservation with the same details already exists.");
+         
     }
 
     public async Task<IEnumerable<ReservationCustomerDetailsVM>> GetReservationsForServiceAsync(int serviceId)
@@ -117,7 +135,7 @@ public class ReservationService : IReservationService
                     x.Customer.PhoneNumber!,
                     x.Customer.Address!
                  ),
-                includeProperties: "Customer"
+                includeProperties: NavigationProperties.Customer
             );
         return reservationsViewModel;
     }
@@ -137,10 +155,9 @@ public class ReservationService : IReservationService
                     x.Service.Name
                  ),
                 trackChanges: false,
-                includeProperties: "Service"
+                includeProperties: NavigationProperties.Service
             );
         return reservationsViewModel;
     }
     
-
 }

@@ -39,4 +39,7 @@ public abstract class BaseRepository<T> : IRepository<T> where T : class
     }
     public async Task<bool> CheckIfExistByConditionAsync(Expression<Func<T, bool>> predicate)
         => await _context.Set<T>().AnyAsync(predicate);
+    public void Update(T entity)
+        => _context.Entry(entity).State = EntityState.Modified;
+    
 }
