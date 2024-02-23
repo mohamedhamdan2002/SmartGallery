@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartGallery.Server.Models;
 using SmartGallery.Server.Services.Contracts;
@@ -7,6 +8,7 @@ namespace SmartGallery.Server.Controllers;
 
 [Route("api/")]
 [ApiController]
+[Authorize(Roles ="Admin,User")]
 public class ReservationsController : ControllerBase
 {
     private readonly IReservationService _service;
@@ -15,6 +17,7 @@ public class ReservationsController : ControllerBase
         => _service = service;
 
     [HttpGet("reservations")]
+    [Authorize(Roles ="Admin")]
     public async Task<IActionResult> GetReservations([FromQuery] int serviceId, string? customerId)
     {
         if(serviceId is not default(int)  && customerId is not null)

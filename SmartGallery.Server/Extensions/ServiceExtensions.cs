@@ -29,7 +29,8 @@ public static class ServiceExtensions
             options.Password.RequireDigit = true;
             options.Password.RequireLowercase = true;
             options.Password.RequiredLength = 8;
-        }).AddEntityFrameworkStores<AppDbContext>()
+        }).AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
     }
     private static void ConfigureAuthenticationSchema(this IServiceCollection services, IConfiguration configuration)

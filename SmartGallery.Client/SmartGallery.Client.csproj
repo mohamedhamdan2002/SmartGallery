@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
+    <PackageReference Include="Blazored.FluentValidation" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartGallery.Shared\SmartGallery.Shared.csproj">
@@ -18,17 +19,54 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="wwwroot\Images\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\Images\" />
     <Folder Include="Services\" />
     <Folder Include="Services\Contracts\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Validators\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Services\" />
     <None Remove="Services\Contracts\" />
     <None Remove="Helpers\" />
+    <None Remove="Validators\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\images\video-1 %281%29.mp4" />
+    <Content Remove="wwwroot\images\g-2.jpg" />
+    <Content Remove="wwwroot\images\g-3.jpg" />
+    <Content Remove="wwwroot\images\g-1.jpg" />
+    <Content Remove="wwwroot\images\g-4.jpg" />
+    <Content Remove="wwwroot\images\g-5.jpg" />
+    <Content Remove="wwwroot\images\Home-maintenance.jpg" />
+    <Content Remove="wwwroot\images\g-7.jpg" />
+    <Content Remove="wwwroot\images\g-6.jpg" />
+    <Content Remove="wwwroot\images\p-6.jpg" />
+    <Content Remove="wwwroot\images\pic1.jpg" />
+    <Content Remove="wwwroot\images\pic3.jpg" />
+    <Content Remove="wwwroot\images\p-5.jpg" />
+    <Content Remove="wwwroot\images\g-8.jpg" />
+    <Content Remove="wwwroot\images\g-9.jpg" />
+    <Content Remove="wwwroot\images\pic2.jpg" />
+    <Content Remove="wwwroot\images\p-4.jpg" />
+    <Content Remove="wwwroot\images\p-1.jpg" />
+    <Content Remove="wwwroot\images\p-3.jpg" />
+    <Content Remove="wwwroot\images\video-1 %284%29.mp4" />
+    <Content Remove="wwwroot\images\pic4.jpg" />
+    <Content Remove="wwwroot\images\p-2.jpg" />
+    <Content Remove="wwwroot\images\gg-1.jpg" />
+    <Content Remove="wwwroot\images\gg-2.jpg" />
+    <Content Remove="wwwroot\images\book-img.svg" />
+    <Content Remove="wwwroot\images\vid-5.mp4" />
+    <Content Remove="wwwroot\images\video-1 %283%29.mp4" />
+    <Content Remove="wwwroot\images\vid-4.mp4" />
+    <Content Remove="wwwroot\images\gg-3.jpg" />
+    <Content Remove="wwwroot\images\gg-7.jpg" />
+    <Content Remove="wwwroot\images\video-1 %282%29.mp4" />
+    <Content Remove="wwwroot\images\vid-1.mp4" />
+    <Content Remove="wwwroot\images\gg-6.jpg" />
+    <Content Remove="wwwroot\images\gg-4.jpg" />
+    <Content Remove="wwwroot\images\vid-3.mp4" />
+    <Content Remove="wwwroot\images\contact-img.svg" />
+    <Content Remove="wwwroot\images\gg-5.jpg" />
   </ItemGroup>
 </Project>

@@ -16,27 +16,25 @@ public partial class Login
     public ILoginService _loginService { get; set; }
     [Inject]
     public NavigationManager _navigationManager { get; set; }
+    public string Error { get; set; }
+    public bool ShowErrors { get; set; }
     private async Task HandleValidSubmitAsync()
     {
+        ShowErrors = false;
         UserManagerResponse Response = await _loginService.LoginAsync(viewModel);
-
-        _navigationManager.NavigateTo("/");
-        await InvokeAsync(StateHasChanged);
-    }
-
-    private async Task HandleInValidSubmitAsync()
-    {
         validationMessages.Clear();
-        var validationContext = new ValidationContext(viewModel, null, null);
-        var validationResults = new List<ValidationResult>();
-        if (!Validator.TryValidateObject(viewModel, validationContext, validationResults, true))
+        if (!Response.IsSuccess)
         {
-            foreach (ValidationResult result in validationResults)
-            {
-                validationMessages.Add(result.ErrorMessage);
-            }
+            ShowErrors = true;
+            Error = Response.Message ?? " ";
+            validationMessages.Add(Response.Message);
+        }
+        else
+        {
+            _navigationManager.NavigateTo("/");
         }
         await InvokeAsync(StateHasChanged);
     }
+
 }
 

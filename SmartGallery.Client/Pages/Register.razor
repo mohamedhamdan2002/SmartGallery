@@ -1,12 +1,12 @@
-﻿@page "/login"
+﻿@page "/Register"
 @using Blazored.FluentValidation
 <head>
     <link rel="stylesheet" href="/css/main.css" />
 </head>
 <div class="login-form">
-    <EditForm Model="@viewModel" OnValidSubmit="HandleValidSubmitAsync"  >
+    <EditForm Model="@viewModel" OnValidSubmit="HandleRegistration">
         <FluentValidationValidator></FluentValidationValidator>
-        <h3>login</h3>
+        <h3>Register</h3>
         <div class="form-group">
             <label>Email</label>
             <InputText class="box" @bind-Value="@viewModel.Email" placeholder="Enter your email" />
@@ -18,21 +18,21 @@
             <ValidationMessage For="@(() => viewModel.Password)" />
         </div>
         <div class="form-group">
-            <button type="submit" class="btn">Login Now</button>
+            <label>Confirm Password</label>
+            <InputText class="box" @bind-Value="@viewModel.ConfirmPassword" type="password" placeholder="Enter your password" />
+            <ValidationMessage For="@(() => viewModel.ConfirmPassword)" />
         </div>
-        @if (ShowErrors)
-         {
-            <div class="validation-message">
-                @Error
-            </div>
-         }
         <div class="form-group">
-            <label>
-                <input type="checkbox" id="remember" @bind="@viewModel.RememberMe" />
-                Remember me
-            </label>
+            <label>Address</label>
+            <InputTextArea class="box" @bind-Value="@viewModel.Address" placeholder="Enter your Address" />
+            <ValidationMessage For="@(() => viewModel.Address)" />
         </div>
-        <p>forget password? <a href="">click here</a></p>
-        <p>don't have acount? <a href="/Register">sign up</a></p>
+        <div class="form-group">
+            <button type="submit" class="btn">Register Now</button>
+        </div>
+        @if(ShowErrors)
+        {
+            <div class="validation-message">@Error</div>
+        }
     </EditForm>
 </div>

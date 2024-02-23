@@ -26,19 +26,6 @@ public class GlobalErrorHandlerMiddleware : IMiddleware
                 nameof(ConflictException) => StatusCodes.Status409Conflict,
                 _ => StatusCodes.Status500InternalServerError
             };
-            // if (ex.GetType().Name == typeof(NotFoundException).Name)
-            // {
-            //     context.Response.StatusCode = StatusCodes.Status404NotFound;
-            // }
-            // else if (ex.GetType().Name == typeof(BadRequestException).Name)
-            // {
-            //     context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            // }
-            // else
-            // {
-            //     context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            // }
-            // here we can use logger
             var json = new ErrorDetails
             {
                 StatusCode = context.Response.StatusCode,

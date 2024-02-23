@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using NuGet.Packaging;
 using SmartGallery.Server.Models;
 using SmartGallery.Server.Services.Contracts;
 using SmartGallery.Shared;
@@ -44,6 +45,7 @@ public class UserService : IUserService
         var result = await _userManager.CreateAsync(identityUser,model.Password);
         if(result.Succeeded)
         {
+            await _userManager.AddToRoleAsync(identityUser, "User");
             return new UserManagerResponse
             {
                 Message = "User Created Successfully ",
@@ -63,7 +65,7 @@ public class UserService : IUserService
         SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password,
             model.RememberMe, false);
 
-        var user = _userManager.FindByEmailAsync(model.Email);
+        Customer user = await _userManager.FindByEmailAsync(model.Email) ?? new();
 
         if (!result.Succeeded)
         {
@@ -74,13 +76,17 @@ public class UserService : IUserService
             };
         }
 
-
-        var claims = new[]
-         {
+        var roles = await _userManager.GetRolesAsync(user);
+        var claims = new List<Claim>
+        {
                 new Claim("Email", model.Email),
-               new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-            };
+               new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
+        };
 
+        foreach(var role in roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
         var keyBuffer = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration[Constants.Key]));
 
         var token = new JwtSecurityToken(issuer: _configuration[Constants.Issuer],

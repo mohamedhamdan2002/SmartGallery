@@ -27,6 +27,7 @@ videobtn.forEach((slide) => {
         document.querySelector("#video-slider").src = src;
     });
 });
+
 var swiper = new Swiper(".review-slider", {
     spaceetween: 20,
     loop: true,

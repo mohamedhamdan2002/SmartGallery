@@ -37,7 +37,7 @@ public class LoginService : ILoginService
             }
 
             await _LocalStorageService.SetItemAsync("authToken", loginResult!.Message);
-            ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email!);
+            ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginResult.Message!);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Message);
 
             return loginResult;
@@ -57,8 +57,8 @@ public class LoginService : ILoginService
     {
         var result = await _httpClient.PostAsJsonAsync("api/Auth/Register", registerModel);
         if (!result.IsSuccessStatusCode)
-            return new UserManagerResponse { IsSuccess = true, Errors = null };
-        return new UserManagerResponse { IsSuccess = false, Errors = new List<string> { "Error occured" } };
+            return new UserManagerResponse { IsSuccess = false,Message="You Entered An Already Used Email Please Try Another One", Errors = null };
+        return new UserManagerResponse { IsSuccess = true, Errors = new List<string> { "Error occured" } };
     }
     public async Task LogoutAsync()
     {

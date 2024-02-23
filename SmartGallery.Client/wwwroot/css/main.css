@@ -692,3 +692,8 @@ section {
         .footer .Developed p span {
             color: var(--blue);
         }
+
+        .validation-message{
+            color:red;
+            font-size:15px;
+        }
