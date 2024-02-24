@@ -27,7 +27,12 @@ videobtn.forEach((slide) => {
         document.querySelector("#video-slider").src = src;
     });
 });
-
+window.scrollToSection = function (sectionId) {
+    var element = document.getElementById(sectionId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
 var swiper = new Swiper(".review-slider", {
     spaceetween: 20,
     loop: true,

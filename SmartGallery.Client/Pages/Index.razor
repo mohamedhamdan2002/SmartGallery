@@ -1,6 +1,6 @@
 ﻿@page "/"
 <head>
-
+    <link rel="stylesheet" href="/css/main.css" />
 </head>
     <header>
         <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
@@ -10,14 +10,14 @@
             <a href="#book">book</a>
             <a href="#packages">packages</a>
             <a href="#services">services</a>
-            <a href="#gallary">gallary</a>
             <a href="#review">review</a>
         </nav>
         <div class="icon">
             <AuthorizeView>
                 <Authorized>
-                    <i>Hello , @context.User.Identity.Name</i>
+                    <i>Hello , @(context.User.Identity!.Name)</i>
                     <i @onclick="LogoutAsync">Log Out</i>
+                    <i class="fas fa-user" @onclick="NavigateToProfile"></i>
                 </Authorized>
                 <NotAuthorized>
                     <i class="fas fa-user" @onclick="NavigateToLogin"></i>

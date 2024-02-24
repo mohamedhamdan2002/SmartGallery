@@ -31,6 +31,10 @@ public partial class Index
     {
         _navigationManager.NavigateTo("Login");
     }
+    private void NavigateToProfile()
+    {
+        _navigationManager.NavigateTo("Profile");
+    }
     private async Task LogoutAsync()
     {
         await _loginService.LogoutAsync();
@@ -40,6 +44,9 @@ public partial class Index
     {
         await JSRuntime.InvokeVoidAsync("showbar");
     }
-
+    async Task ScrollToSection(string sectionId)
+    {
+        await JSRuntime.InvokeVoidAsync("scrollToSection", sectionId);
+    }
 }
 

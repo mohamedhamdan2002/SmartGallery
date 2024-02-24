@@ -25,6 +25,7 @@
     <Folder Include="Validators\" />
     <Folder Include="Pages\Services\" />
     <Folder Include="Pages\Reservations\" />
+    <Folder Include="Pages\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Services\" />
@@ -33,6 +34,7 @@
     <None Remove="Validators\" />
     <None Remove="Pages\Services\" />
     <None Remove="Pages\Reservations\" />
+    <None Remove="Pages\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\images\video-1 %281%29.mp4" />
