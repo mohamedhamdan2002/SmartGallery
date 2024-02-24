@@ -23,12 +23,14 @@
     <Folder Include="Services\Contracts\" />
     <Folder Include="Helpers\" />
     <Folder Include="Validators\" />
+    <Folder Include="Pages\Services\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Services\" />
     <None Remove="Services\Contracts\" />
     <None Remove="Helpers\" />
     <None Remove="Validators\" />
+    <None Remove="Pages\Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\images\video-1 %281%29.mp4" />

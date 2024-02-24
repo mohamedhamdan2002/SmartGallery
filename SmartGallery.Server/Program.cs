@@ -25,7 +25,6 @@ app.UseStaticFiles();
 app.UseMiddleware<GlobalErrorHandlerMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
-DataSeeder.Initialize(builder.Services.BuildServiceProvider());
 
 app.MapControllers();
 app.MapFallbackToFile("Index.html");

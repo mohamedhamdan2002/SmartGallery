@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartGallery.Server.Data;
 
@@ -11,9 +12,11 @@ using SmartGallery.Server.Data;
 namespace SmartGallery.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240224161941_SeedData")]
+    partial class SeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,15 +54,15 @@ namespace SmartGallery.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6f2df951-22db-462e-808a-d225222d5e5e",
-                            ConcurrencyStamp = "96749580-cdd2-4d56-a251-8739661c211a",
+                            Id = "29be0170-fe61-40e7-8b9b-2f5d057d39f0",
+                            ConcurrencyStamp = "17af6e0e-3c5b-4d55-a39c-d4cf8a192f0f",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "8953d2c8-457d-46c8-bb9e-ecd8b980aaf6",
+                            ConcurrencyStamp = "ce5333bf-8133-4ebf-a2c6-a3747cf14cbc",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -250,16 +253,16 @@ namespace SmartGallery.Server.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "635333b9-dcbc-4a7e-ba51-da0b05d94e7e",
+                            ConcurrencyStamp = "a2f5eae5-7570-4681-965e-d969e0370268",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDLF7SsjTK7lZQR6i8PGmam7qB8OoYkAaP6R2uRul+OP/l7N4RXAV9IBGHjgA2tGjw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPNpUH1Kdoz8nX/NpVmaQWS8F1etmMcSEuPtJWj7/Mkk+A5+Wyw8PA/gJct7PmY6rg==",
                             PhoneNumber = "01018004723",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "e571b823-2224-4c1d-9fe7-bf8c4a7e3208",
+                            SecurityStamp = "cea01be5-ab05-45d5-a8c5-332af3fb72c8",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -324,12 +327,6 @@ namespace SmartGallery.Server.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Icon")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("fas fa-server");
 
                     b.Property<string>("Name")
                         .IsRequired()

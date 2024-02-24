@@ -3,6 +3,7 @@
 namespace SmartGallery.Server.Models;
 public class Service : BaseEntity
 {
+    public string Icon { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
@@ -10,6 +11,7 @@ public class Service : BaseEntity
     public ServiceViewModel ToViewModel()
     {
         return new ServiceViewModel (
+            Icon: this.Icon,
             Id: this.Id,
             Name: this.Name,
             Description: this.Description

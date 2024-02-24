@@ -1,6 +1,7 @@
 ﻿@page "/"
+<head>
 
-
+</head>
     <header>
         <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
         <a href="" class="logo"><span>L</span>ife <span>C</span>hanger</a>
@@ -16,7 +17,7 @@
             <i class="fas fa-search" @onclick="showbar" id="search-btn"></i>
             <AuthorizeView>
                 <Authorized>
-                    <i>Hello , @context.User.Identity!.Name</i>
+                    <i>Hello , @context.User.Identity.Name</i>
                     <i @onclick="LogoutAsync">Log Out</i>
                 </Authorized>
                 <NotAuthorized>
@@ -219,62 +220,18 @@
             <span>s</span>
         </h1>
         <div class="container">
-            <div class="box">
-                <i class="fas fa-home"></i>
-                <h3>House keeping</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-                    voluptate animi ut illo facilis debitis laudantium fugiat
-                    voluptatem, soluta et!
-                </p>
-            </div>
-            <div class="box">
-                <i class="fas fa-server"></i>
-                <h3>Electrical Maintenance</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-                    voluptate animi ut illo facilis debitis laudantium fugiat
-                    voluptatem, soluta et!
-                </p>
-            </div>
-            <div class="box">
-                <i class="fas fa-server"></i>
-                <h3>Sanitation maintenance</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-                    voluptate animi ut illo facilis debitis laudantium fugiat
-                    voluptatem, soluta et!
-                </p>
-            </div>
-            <div class="box">
-                <i class="fas fa-server"></i>
-                <h3>Furniture maintenance</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-                    voluptate animi ut illo facilis debitis laudantium fugiat
-                    voluptatem, soluta et!
-                </p>
-            </div>
-            <div class="box">
-                <i class="fas fa-server"></i>
-                <h3>Air conditioning maintenance</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-                    voluptate animi ut illo facilis debitis laudantium fugiat
-                    voluptatem, soluta et!
-                </p>
-            </div>
-            <div class="box">
-                <i class="fas fa-server"></i>
-                <h3>Maintenance of windows and doors</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-                    voluptate animi ut illo facilis debitis laudantium fugiat
-                    voluptatem, soluta et!
-                </p>
-            </div>
+            @foreach (ServiceViewModel service in services)
+             {
+                <div class="box">
+                    <i class="@service.Icon"></i>
+                    <h3>@service.Name</h3>
+                    <p>
+                        @service.Description
+                    </p>
+                </div>
+             }
         </div>
-    </section>
+        </section>
     <section class="gallary" id="gallary">
         <h1 class="heading">
             <span>g</span>

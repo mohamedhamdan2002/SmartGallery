@@ -1,67 +1,67 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using SmartGallery.Server.Data;
-using SmartGallery.Server.Models;
+﻿//using Microsoft.AspNetCore.Identity;
+//using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+//using SmartGallery.Server.Data;
+//using SmartGallery.Server.Models;
 
-namespace SmartGallery.Server.Utilities
-{
-	public class DataSeeder
-	{
-            public static void Initialize(IServiceProvider serviceProvider)
-            {
-                var context = serviceProvider.GetService<AppDbContext>();
+//namespace SmartGallery.Server.Utilities
+//{
+//	public class DataSeeder
+//	{
+//            public static async Task Initialize(IServiceProvider serviceProvider)
+//            {
+//                AppDbContext context = serviceProvider.GetService<AppDbContext>();
 
-                string[] roles = new string[] { "Admin", "User" };
+//                string[] roles = new string[] { "Admin", "User" };
 
-                foreach (string role in roles)
-                {
-                    var roleStore = new RoleStore<IdentityRole>(context);
+//                foreach (string role in roles)
+//                {
+//                    var roleStore = new RoleStore<IdentityRole>(context);
 
-                    if (!context.Roles.Any(r => r.Name == role))
-                    {
-                        roleStore.CreateAsync(new IdentityRole(role));
-                    }
-                }
-
-
-                Customer user = new Customer
-                {
-                    Email = "admin@gmail.com",
-                    NormalizedEmail = "ADMIN@GMAIL.COM",
-                    UserName = "Admin",
-                    NormalizedUserName = "ADMIN",
-                    PhoneNumber = "01018004723",
-                    EmailConfirmed = true,
-                    PhoneNumberConfirmed = true,
-                    SecurityStamp = Guid.NewGuid().ToString("D")
-                };
+//                    if (!context.Roles.Any(r => r.Name == role))
+//                    {
+//                        await roleStore.CreateAsync(new IdentityRole(role));
+//                    }
+//                }
 
 
-                if (!context.Users.Any(u => u.UserName == user.UserName))
-                {
-                    var password = new PasswordHasher<Customer>();
-                    var hashed = password.HashPassword(user, "Admin123!");
-                    user.PasswordHash = hashed;
+//                Customer user = new Customer
+//                {
+//                    Email = "admin@gmail.com",
+//                    NormalizedEmail = "ADMIN@GMAIL.COM",
+//                    UserName = "admin@gmail.com",
+//                    NormalizedUserName = "ADMIN@GMAIL.COM",
+//                    PhoneNumber = "01018004723",
+//                    EmailConfirmed = true,
+//                    PhoneNumberConfirmed = true,
+//                    SecurityStamp = Guid.NewGuid().ToString("D")
+//                };
 
-                    var userStore = new UserStore<Customer>(context);
-                    var result = userStore.CreateAsync(user);
 
-                }
+//                if (!context!.Users.Any(u => u.UserName == user.UserName))
+//                {
+//                    var password = new PasswordHasher<Customer>();
+//                    var hashed = password.HashPassword(user, "Admin123!");
+//                    user.PasswordHash = hashed;
 
-                 AssignRoles(serviceProvider, user.Email, roles);
+//                    var userStore = new UserStore<Customer>(context);
+//                    var result = userStore.CreateAsync(user);
 
-                 context.SaveChangesAsync();
-            }
+//                }
 
-            public static async Task<IdentityResult> AssignRoles(IServiceProvider services, string email, string[] roles)
-            {
-                UserManager<Customer> _userManager = services.GetService<UserManager<Customer>>();
-                Customer user = await _userManager.FindByEmailAsync(email);
-                var result = await _userManager.AddToRolesAsync(user, roles);
+//                 await AssignRoles(serviceProvider, user.Email, roles);
 
-                return result;
-            }
+//                 await context.SaveChangesAsync();
+//            }
 
-        }
-}
+//            public static async Task<IdentityResult> AssignRoles(IServiceProvider services, string email, string[] roles)
+//            {
+//                UserManager<Customer> _userManager = services!.GetService<UserManager<Customer>>();
+//                Customer user = await _userManager.FindByEmailAsync(email);
+//                var result = await _userManager.AddToRolesAsync(user, roles);
+
+//                return result;
+//            }
+
+//        }
+//}
 

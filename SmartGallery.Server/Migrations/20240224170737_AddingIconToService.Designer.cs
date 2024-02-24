@@ -12,8 +12,8 @@ using SmartGallery.Server.Data;
 namespace SmartGallery.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240223190500_SeedRoles")]
-    partial class SeedRoles
+    [Migration("20240224170737_AddingIconToService")]
+    partial class AddingIconToService
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,17 +54,17 @@ namespace SmartGallery.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d4e57360-abbd-453d-a83a-7988ede5c26e",
-                            ConcurrencyStamp = "042a628f-917c-4532-81fb-6bbf04429100",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            Id = "6f2df951-22db-462e-808a-d225222d5e5e",
+                            ConcurrencyStamp = "96749580-cdd2-4d56-a251-8739661c211a",
+                            Name = "User",
+                            NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "b5eafbdd-491b-4158-84df-ec424bfdebe7",
-                            ConcurrencyStamp = "00976709-5c65-4ab1-be78-42a7504bdf97",
-                            Name = "User",
-                            NormalizedName = "USER"
+                            Id = "1",
+                            ConcurrencyStamp = "8953d2c8-457d-46c8-bb9e-ecd8b980aaf6",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         });
                 });
 
@@ -153,6 +153,13 @@ namespace SmartGallery.Server.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -240,6 +247,25 @@ namespace SmartGallery.Server.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "635333b9-dcbc-4a7e-ba51-da0b05d94e7e",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDLF7SsjTK7lZQR6i8PGmam7qB8OoYkAaP6R2uRul+OP/l7N4RXAV9IBGHjgA2tGjw==",
+                            PhoneNumber = "01018004723",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "e571b823-2224-4c1d-9fe7-bf8c4a7e3208",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("SmartGallery.Server.Models.Reservation", b =>
@@ -301,6 +327,12 @@ namespace SmartGallery.Server.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("fas fa-server");
 
                     b.Property<string>("Name")
                         .IsRequired()

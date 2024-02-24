@@ -64,9 +64,14 @@ public class UserService : IUserService
     {
         SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password,
             model.RememberMe, false);
-
-        Customer user = await _userManager.FindByEmailAsync(model.Email) ?? new();
-
+        Customer user = new();
+        try { 
+        user = await _userManager.FindByEmailAsync(model.Email) ?? new();
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine("Exception", ex.Message);
+        }
         if (!result.Succeeded)
         {
             return new UserManagerResponse
@@ -80,7 +85,7 @@ public class UserService : IUserService
         var claims = new List<Claim>
         {
                 new Claim("Email", model.Email),
-               new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
+               new Claim(ClaimTypes.Name,user.Email.ToString())
         };
 
         foreach(var role in roles)
