@@ -1,0 +1,42 @@
+﻿@page "/AddReservation/{serviceId:int}"
+
+@using Blazored.FluentValidation
+<head>
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+<div class="login-form reservation-background">
+    <EditForm Model="@viewModel" OnValidSubmit="HandleValidSubmitAsync">
+        <FluentValidationValidator></FluentValidationValidator>
+        <h3>Reservation</h3>
+        <div class="form-group">
+            <label>Problem Description</label>
+            <InputTextArea class="box" @bind-Value="@viewModel.ProblemDescription" placeholder="Enter your Problem Description" />
+            <ValidationMessage For="@(() => viewModel.ProblemDescription)" />
+        </div>
+        <div class="form-group">
+            <label>Reservation Date</label>
+            <InputDate class="box" @bind-Value="@viewModel.ReservationDate" />
+            <ValidationMessage For="@(() => viewModel.ReservationDate)" />
+        </div>
+        <div class="form-group">
+            <label>Reservation Date</label>
+            <input type="time" class="box" @bind="@viewModel.ReservationTime" />
+            <ValidationMessage For="@(() => viewModel.ReservationDate)" />
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn">Submit your Reservation</button>
+        </div>
+        @if (isSuccess)
+        {
+            <div class="mt-5 fs-3 alert alert-success" role="alert">
+                @MessageToShow
+            </div>
+        }
+        @if(isFailed)
+        {
+            <div class="mt-5 fs-3 alert alert-danger" role="alert">
+                @MessageToShow
+            </div>
+        }
+    </EditForm>
+</div>

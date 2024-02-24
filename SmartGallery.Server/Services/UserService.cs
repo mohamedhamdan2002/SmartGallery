@@ -85,7 +85,8 @@ public class UserService : IUserService
         var claims = new List<Claim>
         {
                 new Claim("Email", model.Email),
-               new Claim(ClaimTypes.Name,user.Email.ToString())
+               new Claim(ClaimTypes.Name,user.Email.ToString()),
+               new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
         };
 
         foreach(var role in roles)

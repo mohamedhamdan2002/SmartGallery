@@ -8,7 +8,6 @@ namespace SmartGallery.Server.Controllers;
 
 [Route("api/")]
 [ApiController]
-[Authorize(Roles ="Admin,User")]
 public class ReservationsController : ControllerBase
 {
     private readonly IReservationService _service;
@@ -17,7 +16,6 @@ public class ReservationsController : ControllerBase
         => _service = service;
 
     [HttpGet("reservations")]
-    [Authorize(Roles ="Admin")]
     public async Task<IActionResult> GetReservations([FromQuery] int serviceId, string? customerId)
     {
         if(serviceId is not default(int)  && customerId is not null)
@@ -26,7 +24,7 @@ public class ReservationsController : ControllerBase
     }
 
     [HttpGet("service/{serviceId}/reservations")]
-    public async  Task<IActionResult> GetReservationsForService(int serviceId)
+    public async Task<IActionResult> GetReservationsForService(int serviceId)
         => Ok(await _service.GetReservationsForServiceAsync(serviceId));
 
     [HttpGet("customer/{customerId}/reservations")]

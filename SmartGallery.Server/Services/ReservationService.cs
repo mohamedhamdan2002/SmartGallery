@@ -57,6 +57,48 @@ public class ReservationService : IReservationService
 
         return reservation;
     }
+    public async Task<IEnumerable<ReservationCustomerDetailsVM>> GetReservationsForServiceAsync(int serviceId)
+    {
+        await CheckIfServiceExistsAsync(serviceId);
+        var reservationsViewModel = await _repository.Reservation
+            .FindReservationsAsync(
+                reservation => reservation.ServiceId == serviceId,
+                trackChanges: false,
+                selector: x => new ReservationCustomerDetailsVM(
+                    x.ProblemDescription,
+                    x.Status,
+                    x.ReservationDate,
+                    x.ReservationTime,
+                    x.CustomerId,
+                    x.Customer.Email!,
+                    x.Customer.PhoneNumber!,
+                    x.Customer.Address!
+                 ),
+                includeProperties: NavigationProperties.Customer
+            );
+        return reservationsViewModel;
+    }
+
+    public async Task<IEnumerable<ReservationServiceDetailsVM>> GetReservationsForCustomerAsync(string customerId)
+    {
+        await CheckIfCustomerExistsAsync(customerId);
+        var reservationsViewModel = await _repository.Reservation
+            .FindReservationsAsync(
+                reservation => reservation.CustomerId == customerId,
+                selector: x => new ReservationServiceDetailsVM(
+                    x.ProblemDescription,
+                    x.Status,
+                    x.ReservationDate,
+                    x.ReservationTime,
+                    x.ServiceId,
+                    x.Service.Name
+                 ),
+                trackChanges: false,
+                includeProperties: NavigationProperties.Service
+            );
+        return reservationsViewModel;
+    }
+
     public async Task<ReservationViewModel> CreateReservationAsync(int serviceId, string customerId, ReservationForCreationViewModel reservationForCreationViewModel)
     {
         await CheckIfServiceExistsAsync(serviceId);
@@ -116,48 +158,5 @@ public class ReservationService : IReservationService
         if (isExist)
             throw new ConflictException($"A reservation with the same details already exists.");
          
-    }
-
-    public async Task<IEnumerable<ReservationCustomerDetailsVM>> GetReservationsForServiceAsync(int serviceId)
-    {
-        await CheckIfServiceExistsAsync(serviceId);
-        var reservationsViewModel = await _repository.Reservation
-            .FindReservationsAsync(
-                reservation => reservation.ServiceId == serviceId,
-                trackChanges: false,
-                selector: x => new ReservationCustomerDetailsVM(
-                    x.ProblemDescription,
-                    x.Status,
-                    x.ReservationDate,
-                    x.ReservationTime,
-                    x.CustomerId,
-                    x.Customer.Email!,
-                    x.Customer.PhoneNumber!,
-                    x.Customer.Address!
-                 ),
-                includeProperties: NavigationProperties.Customer
-            );
-        return reservationsViewModel;
-    }
-
-    public async Task<IEnumerable<ReservationServiceDetailsVM>> GetReservationsForCustomerAsync(string customerId)
-    {
-        await CheckIfCustomerExistsAsync(customerId);
-        var reservationsViewModel = await _repository.Reservation
-            .FindReservationsAsync(
-                reservation => reservation.CustomerId == customerId,
-                selector: x => new ReservationServiceDetailsVM(
-                    x.ProblemDescription,
-                    x.Status,
-                    x.ReservationDate,
-                    x.ReservationTime,
-                    x.ServiceId,
-                    x.Service.Name
-                 ),
-                trackChanges: false,
-                includeProperties: NavigationProperties.Service
-            );
-        return reservationsViewModel;
-    }
-    
+    }    
 }

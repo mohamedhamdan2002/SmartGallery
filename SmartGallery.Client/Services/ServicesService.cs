@@ -40,13 +40,6 @@ public class ServicesService : IServicesService
 
     public async Task<IEnumerable<ServiceViewModel>?> GetServices()
     {
-        //Stream? ServicesStream = await _httpClient.GetStreamAsync("api/Services");
-        //if (ServicesStream is not null)
-        //{
-        //    ICollection<ServiceForManipulationViewModel> services = await JsonSerializer.DeserializeAsync<ICollection<ServiceForManipulationViewModel>>(ServicesStream,new JsonSerializerOptions() { PropertyNameCaseInsensitive = true})?? new List<ServiceForManipulationViewModel>();
-        //    return services;
-        //}
-        //return null;
         var Services = await JsonSerializer.DeserializeAsync<IEnumerable<ServiceViewModel>>
                            (await _httpClient.GetStreamAsync("api/Services"), new JsonSerializerOptions()
                            { PropertyNameCaseInsensitive = true }) ?? new List<ServiceViewModel>();

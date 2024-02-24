@@ -13,6 +13,7 @@ builder.Services.AddAuthenticationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 builder.Services.AddHttpClient<ILoginService, LoginService>(client => client.BaseAddress = new Uri("https://localhost:7247"));
 builder.Services.AddHttpClient<IServicesService, ServicesService>(client => client.BaseAddress = new Uri("https://localhost:7247"));
+builder.Services.AddHttpClient<IReservationsService, ReservationsService>(client => client.BaseAddress = new Uri("https://localhost:7247"));
 
 
 // Add services to the container.

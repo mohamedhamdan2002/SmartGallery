@@ -14,7 +14,6 @@
             <a href="#review">review</a>
         </nav>
         <div class="icon">
-            <i class="fas fa-search" @onclick="showbar" id="search-btn"></i>
             <AuthorizeView>
                 <Authorized>
                     <i>Hello , @context.User.Identity.Name</i>
@@ -228,6 +227,18 @@
                     <p>
                         @service.Description
                     </p>
+                    <AuthorizeView>
+                        <Authorized>
+                            <a href=@($"AddReservation/{service.Id}") type="button" class="reservation-btn-primary">Get Your Service Now</a>>
+                        </Authorized>
+
+                        <NotAuthorized>
+                            <div class="alert alert-warning" role="alert">
+                                Please login to access this service.
+                                <a href="/login" class="alert-link">Login</a>
+                            </div>
+                        </NotAuthorized>
+                    </AuthorizeView>
                 </div>
              }
         </div>
