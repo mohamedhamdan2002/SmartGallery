@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
+using MudBlazor.Services;
 using SmartGallery.Client.Data;
 using SmartGallery.Client.Helpers;
 using SmartGallery.Client.Services;
@@ -15,6 +16,7 @@ builder.Services.AddHttpClient<ILoginService, LoginService>(client => client.Bas
 builder.Services.AddHttpClient<IServicesService, ServicesService>(client => client.BaseAddress = new Uri("https://localhost:7247"));
 builder.Services.AddHttpClient<IReservationsService, ReservationsService>(client => client.BaseAddress = new Uri("https://localhost:7247"));
 
+builder.Services.AddMudServices();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

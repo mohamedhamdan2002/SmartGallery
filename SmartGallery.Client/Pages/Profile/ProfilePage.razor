@@ -1,25 +1,36 @@
 ﻿@page "/Profile"
-<header class="position-relative">
-    <div class="icon">
-        <i @onclick="NavigateToHome" class="fas fa-arrow-left" aria-hidden="true"></i>
-    </div>
-    <a class="logo"><span>L</span>ife <span>C</span>hanger</a>
-    <div class="icon">
-        <AuthorizeView>
-            <i>Hello , @(context.User.Identity!.Name)</i>
-            <i @onclick="LogoutAsync">Log Out</i>
-        </AuthorizeView>
-    </div>
-</header>
-<section>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title"> Reservation</h5>
-            <div class="card-footer">
-                <a href="@($"")" class="btn btn-primary">Details</a>
-                <a href="@($"")" class="btn btn-secondary">Edit</a>
-                @*<a class="btn btn-danger" @onclick="() => DeleteUniversity(university.Id)">Delete</a>*@
+    <div class="default-background">
+        <header class="position-relative">
+            <div class="icon">
+                <i @onclick="NavigateToHome" class="fas fa-arrow-left" aria-hidden="true"></i>
             </div>
+            <a class="logo"><span>L</span>ife <span>C</span>hanger</a>
+            <div class="icon">
+                <AuthorizeView>
+                    <i>Hello , @(context.User.Identity!.Name)</i>
+                    <i @onclick="LogoutAsync">Log Out</i>
+                </AuthorizeView>
+            </div>
+        </header>
+
+        <div class="card">
+            @foreach (ReservationServiceDetailsVM reservationViewModel in reservationsViewModel)
+            {
+                <section>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Reservation</h4>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"> @reservationViewModel.serviceName</h5>
+                            <h4 class="card-title"> Status : @reservationViewModel.Status.ToString()</h4>
+                            <div class="card-footer">
+                                <a href=@($"/ReservationEdit/{reservationViewModel.serviceId}/{userId}") class="reservation-btn-primary">Edit</a>
+                                <button @onclick="() => DeleteReservation(reservationViewModel.serviceId)" type="button" class="delete-btn-primary">Cancel Reservation</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            }
         </div>
     </div>
-</section>

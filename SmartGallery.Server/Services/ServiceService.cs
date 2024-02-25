@@ -25,9 +25,11 @@ public class ServiceService : IServiceService
 
     }
 
-    public Task DeleteServiceAsync(int id, bool trackChanges = false)
+    public async Task DeleteServiceAsync(int id, bool trackChanges = false)
     {
-        throw new NotImplementedException();
+        Service service = await GetServiceAndCheckIfItExistAsync(id);
+        _repository.Service.Delete(service);
+        await _repository.SaveChangesAsync();
     }
 
     public async Task<ServiceViewModel> GetServiceByIdAsync(int id, bool trackChanges = false, params string[] includeProperties)
@@ -65,6 +67,4 @@ public class ServiceService : IServiceService
             throw new NotFoundException($"the service with id: {id} doesn't exist in the database.");
         return service;
     }
-//     appDbContext.Entry(student).State = EntityState.Modified;
-// await _appDbContext.SaveChangesAsync();
 }

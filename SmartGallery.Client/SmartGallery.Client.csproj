@@ -12,6 +12,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
     <PackageReference Include="Blazored.FluentValidation" Version="2.1.0" />
+    <PackageReference Include="MudBlazor" Version="6.16.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartGallery.Shared\SmartGallery.Shared.csproj">
@@ -26,6 +27,7 @@
     <Folder Include="Pages\Services\" />
     <Folder Include="Pages\Reservations\" />
     <Folder Include="Pages\Profile\" />
+    <Folder Include="Pages\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Services\" />
@@ -35,6 +37,8 @@
     <None Remove="Pages\Services\" />
     <None Remove="Pages\Reservations\" />
     <None Remove="Pages\Profile\" />
+    <None Remove="Shared\CustomeMainLayout.razor.css" />
+    <None Remove="Pages\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\images\video-1 %281%29.mp4" />

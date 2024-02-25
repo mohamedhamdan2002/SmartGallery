@@ -12,4 +12,5 @@ public interface IReservationService
     Task<ReservationDetailsVM> GetReservationAsync(int serviceId, string customerId);
     Task<ReservationViewModel> CreateReservationAsync(int serviceId, string customerId, ReservationForCreationViewModel reservationForCreationViewModel);
     Task UpdateReservationAsync(int serviceId, string customerId, ReservationForUpdateViewModel reservationForUpdateViewModel);
+    Task DeleteReservationAsync(int serviceId, string customerId);
 }

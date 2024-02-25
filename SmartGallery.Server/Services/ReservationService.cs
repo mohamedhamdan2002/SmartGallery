@@ -158,5 +158,12 @@ public class ReservationService : IReservationService
         if (isExist)
             throw new ConflictException($"A reservation with the same details already exists.");
          
-    }    
+    }
+
+    public async Task DeleteReservationAsync(int serviceId, string customerId)
+    {
+        Reservation service = await GetReservationAndCheckIfItExistAsync(serviceId,customerId,e=>e);
+        _repository.Reservation.Delete(service);
+        await _repository.SaveChangesAsync();
+    }
 }

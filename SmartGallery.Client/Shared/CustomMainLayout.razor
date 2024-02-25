@@ -1,0 +1,31 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>MyOwnLogger</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <CustomNavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <header class="position-relative">
+                <div class="icon">
+                    <i @onclick="NavigateToHome" class="fas fa-arrow-left" aria-hidden="true"></i>
+                </div>
+                <a class="logo"><span>L</span>ife <span>C</span>hanger</a>
+                <div class="icon">
+                    <AuthorizeView>
+                        <i>Hello , @(context.User.Identity!.Name)</i>
+                        <i @onclick="LogoutAsync">Log Out</i>
+                    </AuthorizeView>
+                </div>
+            </header>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+

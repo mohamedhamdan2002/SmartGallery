@@ -32,5 +32,5 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
     public async Task<IEnumerable<TResult>> GetReservationsAsync<TResult>(Expression<Func<Reservation, TResult>> selector, bool trackChanges = false, params string[] includeProperties)
           => await GetAll(trackChanges, includeProperties).Select(selector).ToListAsync();
 
-
+    public async Task DeleteReservationAsync(Reservation reservation) => Delete(reservation);
 }
