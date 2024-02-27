@@ -33,21 +33,23 @@ window.scrollToSection = function (sectionId) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
-var swiper = new Swiper(".review-slider", {
-    spaceetween: 20,
-    loop: true,
-    autoplay: {
-        delay: 2500,
-    },
-    breakpoints: {
-        640: {
-            slidesPerView: 1,
+function initSwiper() {
+    var swiper = new Swiper(".review-slider", {
+        spaceetween: 20,
+        loop: true,
+        autoplay: {
+            delay: 2500,
         },
-        770: {
-            slidesPerView: 2,
+        breakpoints: {
+            640: {
+                slidesPerView: 1,
+            },
+            770: {
+                slidesPerView: 2,
+            },
+            1070: {
+                slidesPerView: 3,
+            },
         },
-        1070: {
-            slidesPerView: 3,
-        },
-    },
-});
+    });
+}
