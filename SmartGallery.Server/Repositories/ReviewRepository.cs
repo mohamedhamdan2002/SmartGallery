@@ -14,5 +14,8 @@ namespace SmartGallery.Server.Repositories
             => await GetByCondition(predicate, trackChanges, includeProperties)
                     .Select(selector)
                     .ToListAsync();
+        public async Task<IEnumerable<TResult>> GetReviewsAsync<TResult>(Expression<Func<Review, TResult>> selector, bool trackChanges = false, params string[] includeProperties)
+            => await GetAll(trackChanges, includeProperties).Select(selector).ToListAsync();
+
     }
 }

@@ -15,7 +15,8 @@ public class Reservation : BaseEntity
     public DateOnly ReservationDate { get; set; }
     public int ItemId { get; set; }
     public Item Item { get; set; } = null!;
-    
+    public ICollection<Review> Reviews { get; set; } = new List<Review>();
+
     public ReservationViewModel ToViewModel()
     {
         return new ReservationViewModel(

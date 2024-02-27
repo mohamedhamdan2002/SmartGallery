@@ -71,11 +71,13 @@ public static class ServiceExtensions
         services.AddScoped<IServiceRepository, ServiceRepository>();
         services.AddScoped<IReservationRepository, ReservationRepository>();
         services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<IReviewRepository, ReviewRepository>();
         services.AddScoped<IRepositoryManager, RepositoryManager>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IServiceService, ServiceService>();
         services.AddScoped<IReservationService, ReservationService>();
         services.AddScoped<IItemService, ItemService>();
+        services.AddScoped<IReviewService, ReviewService>();
         // this to configure the IMiddleware interface
         services.AddTransient<GlobalErrorHandlerMiddleware>();
     }

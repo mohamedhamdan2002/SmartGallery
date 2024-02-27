@@ -6,7 +6,6 @@ public class Service : BaseEntity
     public string Icon { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;
-    public ICollection<Review> Reviews { get; set; } = new List<Review>();
     public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
     public ICollection<Item> Items { get; set; } = new List<Item>();
     public ServiceViewModel ToViewModel()

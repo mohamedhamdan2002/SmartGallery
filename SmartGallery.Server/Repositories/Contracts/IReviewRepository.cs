@@ -10,4 +10,9 @@ public interface IReviewRepository : IRepository<Review>
             bool trackChanges = false, 
             params string[] includeProperties
         );
+    Task<IEnumerable<TResult>> GetReviewsAsync<TResult>(
+            Expression<Func<Review, TResult>> selector,
+            bool trackChanges = false,
+            params string[] includeProperties
+        );
 }

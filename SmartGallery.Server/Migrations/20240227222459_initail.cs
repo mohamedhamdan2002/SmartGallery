@@ -195,34 +195,6 @@ namespace SmartGallery.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reviews",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ServiceId = table.Column<int>(type: "int", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reviews", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Reviews_AspNetUsers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reviews_Services_ServiceId",
-                        column: x => x.ServiceId,
-                        principalTable: "Services",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Reservations",
                 columns: table => new
                 {
@@ -258,19 +230,47 @@ namespace SmartGallery.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReservationId = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reviews_AspNetUsers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Reservations_ReservationId",
+                        column: x => x.ReservationId,
+                        principalTable: "Reservations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "90a4c4b0-2e8b-4bc2-9d69-f5dac439c30b", "Admin", "ADMIN" },
-                    { "c2a87494-f49b-4fa0-a4f3-68a56bd35ec0", "04355127-4229-46d4-a42c-7ccc1aff1e27", "User", "USER" }
+                    { "1", "feae6691-bd74-4de8-9520-b5f900f81d76", "Admin", "ADMIN" },
+                    { "e64f6a36-f4a3-44d5-a2f8-b788621f3d3e", "12c30f2a-3b83-4802-a2b6-1dd847e00ad0", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, null, "da464528-c056-4dc0-8783-133cea06f242", "admin@gmail.com", true, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEK3n3GgslErisjr0/8a5XuOtqN0YK1y5anG30gYP7ZJzLdWHhAxtuGFZuBDIOcawNA==", "01018004723", true, "b1ad3d7d-7059-46e1-a7f5-8ee97058cfec", false, "admin@gmail.com" });
+                values: new object[] { "1", 0, null, "3d14e1b0-1546-4df3-a185-7803959ac76e", "admin@gmail.com", true, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEGgS17qKRt5AYSbKFML3l3pUiqxDefomLu3qItRXgEX9ixS8hKYds3MmkAb5gE+QrA==", "01018004723", true, "8d6333b8-cbc5-4fef-820f-276600df9019", false, "admin@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -342,9 +342,9 @@ namespace SmartGallery.Server.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_ServiceId",
+                name: "IX_Reviews_ReservationId",
                 table: "Reviews",
-                column: "ServiceId");
+                column: "ReservationId");
         }
 
         /// <inheritdoc />
@@ -366,19 +366,19 @@ namespace SmartGallery.Server.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Reservations");
-
-            migrationBuilder.DropTable(
                 name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Items");
+                name: "Reservations");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Items");
 
             migrationBuilder.DropTable(
                 name: "Services");

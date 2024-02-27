@@ -51,15 +51,15 @@ namespace SmartGallery.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c2a87494-f49b-4fa0-a4f3-68a56bd35ec0",
-                            ConcurrencyStamp = "04355127-4229-46d4-a42c-7ccc1aff1e27",
+                            Id = "e64f6a36-f4a3-44d5-a2f8-b788621f3d3e",
+                            ConcurrencyStamp = "12c30f2a-3b83-4802-a2b6-1dd847e00ad0",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "90a4c4b0-2e8b-4bc2-9d69-f5dac439c30b",
+                            ConcurrencyStamp = "feae6691-bd74-4de8-9520-b5f900f81d76",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -250,16 +250,16 @@ namespace SmartGallery.Server.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "da464528-c056-4dc0-8783-133cea06f242",
+                            ConcurrencyStamp = "3d14e1b0-1546-4df3-a185-7803959ac76e",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEK3n3GgslErisjr0/8a5XuOtqN0YK1y5anG30gYP7ZJzLdWHhAxtuGFZuBDIOcawNA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgS17qKRt5AYSbKFML3l3pUiqxDefomLu3qItRXgEX9ixS8hKYds3MmkAb5gE+QrA==",
                             PhoneNumber = "01018004723",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "b1ad3d7d-7059-46e1-a7f5-8ee97058cfec",
+                            SecurityStamp = "8d6333b8-cbc5-4fef-820f-276600df9019",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -349,14 +349,14 @@ namespace SmartGallery.Server.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServiceId")
+                    b.Property<int>("ReservationId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("ServiceId");
+                    b.HasIndex("ReservationId");
 
                     b.ToTable("Reviews", (string)null);
                 });
@@ -480,18 +480,18 @@ namespace SmartGallery.Server.Migrations
                     b.HasOne("SmartGallery.Server.Models.Customer", "Customer")
                         .WithMany("Reviews")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SmartGallery.Server.Models.Service", "Service")
+                    b.HasOne("SmartGallery.Server.Models.Reservation", "Reservation")
                         .WithMany("Reviews")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("ReservationId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Customer");
 
-                    b.Navigation("Service");
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("SmartGallery.Server.Models.Customer", b =>
@@ -506,13 +506,16 @@ namespace SmartGallery.Server.Migrations
                     b.Navigation("Reservations");
                 });
 
+            modelBuilder.Entity("SmartGallery.Server.Models.Reservation", b =>
+                {
+                    b.Navigation("Reviews");
+                });
+
             modelBuilder.Entity("SmartGallery.Server.Models.Service", b =>
                 {
                     b.Navigation("Items");
 
                     b.Navigation("Reservations");
-
-                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

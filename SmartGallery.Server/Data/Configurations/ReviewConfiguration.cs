@@ -10,15 +10,17 @@ public class ReviewConfiguration : IEntityTypeConfiguration<Review>
     {
         builder.HasKey(r => r.Id);
 
-        builder.HasOne(r => r.Service)
+        builder.HasOne(r => r.Reservation)
             .WithMany(s => s.Reviews)
-            .HasForeignKey(r => r.ServiceId)
-            .IsRequired();
+            .HasForeignKey(r => r.ReservationId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(r => r.Customer)
             .WithMany(c => c.Reviews)
             .HasForeignKey(r => r.CustomerId)
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.ToTable("Reviews");
     }

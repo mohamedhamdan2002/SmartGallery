@@ -2,6 +2,7 @@
 using SmartGallery.Server.Models;
 using SmartGallery.Server.Repositories.Contracts;
 using SmartGallery.Server.Services.Contracts;
+using SmartGallery.Server.Utilities;
 using SmartGallery.Shared.ViewModels.ReviewViewModels;
 
 namespace SmartGallery.Server.Services
@@ -16,27 +17,27 @@ namespace SmartGallery.Server.Services
             _repository = repository;
             _userService = userService;
         }
-        public async Task<ReviewViewModel> CreateReviewForService(int serviceId, string customerId, ReviewForCreationVM model)
+        public async Task<ReviewViewModel> CreateReviewForService(int reservationId, string customerId, ReviewForCreationVM model)
         {
             await CheckIfCustomerExistsAsync(customerId);
-            await CheckIfServiceExistsAsync(serviceId);
+            await CheckIfReservationExistsAsync(reservationId);
             var review = new Review
             {
-                ServiceId = serviceId,
+                ReservationId = reservationId,
                 CustomerId = customerId,
                 Rating = model.Rating,
                 Comment = model.Comment,
             };
             await _repository.Review.CreateAsync(review);
             await _repository.SaveChangesAsync();
-            var reviewViewModel = new ReviewViewModel(review.Id, customerId, serviceId, review.Rating, review.Comment);
+            var reviewViewModel = new ReviewViewModel(review.Id, customerId, reservationId, review.Rating, review.Comment);
             return reviewViewModel;
         }
-        private async Task CheckIfServiceExistsAsync(int serviceId)
+        private async Task CheckIfReservationExistsAsync(int reservationId)
         {
-            var isExist = await _repository.Service.CheckIfServiceExistAsync(serviceId);
+            var isExist = await _repository.Reservation.CheckIfReservationExistAsync(reservationId);
             if (!isExist)
-                throw new NotFoundException($"the service with id: {serviceId} doesn't exist in the database.");
+                throw new NotFoundException($"the service with id: {reservationId} doesn't exist in the database.");
         }
         private async Task CheckIfCustomerExistsAsync(string customerId)
         {
@@ -45,13 +46,20 @@ namespace SmartGallery.Server.Services
                 throw new NotFoundException($"the customer with id: {customerId} doesn't exist in the database.");
         }
 
-        //public async Task<IEnumerable<ReviewDetailsVM>> GetReviewsForService(int serviceId)
-        //{
-        //    await CheckIfServiceExistsAsync(serviceId);
-        //    var reviews = _repository.Review.FindReviewsAsync(
-        //            predicate: x => x.ServiceId == serviceId,
-        //            selector: x => 
-        //        )
-        //}
+        public async Task<IEnumerable<ReviewDetailsVM>> GetReviewsAsync()
+        {
+
+            var reviews = await _repository.Review.GetReviewsAsync(
+                    selector: x => new ReviewDetailsVM(
+                        x.Id,
+                        x.Customer.Email!,
+                        x.Rating,
+                        x.Comment!
+                    ),
+                    trackChanges: false,
+                    NavigationProperties.Customer
+                );
+            return reviews;   
+        }
     }
 }

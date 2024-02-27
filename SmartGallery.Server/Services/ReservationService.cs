@@ -197,9 +197,9 @@ public class ReservationService : IReservationService
     }
 
 
-    public async Task DeleteReservationAsync(int serviceId, string customerId)
+    public async Task DeleteReservationAsync(int id)
     {
-        Reservation service = await GetReservationAndCheckIfItExistAsync(serviceId,customerId,e=>e);
+        Reservation service = await GetReservationAndCheckIfItExistAsync(id,e=>e);
         _repository.Reservation.Delete(service);
         await _repository.SaveChangesAsync();
     }
