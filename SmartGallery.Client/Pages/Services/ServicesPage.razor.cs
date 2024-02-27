@@ -40,6 +40,8 @@ public partial class ServicesPage
         {
             await _servicesService.CreateService(viewModel);
             MessageToShow = "Service Created Successfully";
+            _navigationManager.NavigateTo("/admin/services");
+
         }
         else
         {
@@ -51,6 +53,7 @@ public partial class ServicesPage
 
             await _servicesService.UpdateService(serviceId, serviceForUpdateViewModel);
             MessageToShow = "Service Updated Successfully";
+            _navigationManager.NavigateTo("/admin/services");
         }
         isSuccess = true;
         await InvokeAsync(StateHasChanged);

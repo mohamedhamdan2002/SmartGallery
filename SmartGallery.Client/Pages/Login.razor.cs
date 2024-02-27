@@ -35,6 +35,15 @@ public partial class Login
         }
         await InvokeAsync(StateHasChanged);
     }
+    private async Task LogoutAsync()
+    {
+        await _loginService.LogoutAsync();
+        _navigationManager.NavigateTo("/");
+    }
+    private void NavigateToHome()
+    {
+        _navigationManager.NavigateTo("/");
+    }
 
 }
 
