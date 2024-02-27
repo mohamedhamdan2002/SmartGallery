@@ -8,6 +8,7 @@ using NuGet.Packaging;
 using SmartGallery.Server.Models;
 using SmartGallery.Server.Services.Contracts;
 using SmartGallery.Shared;
+using SmartGallery.Shared.ViewModels;
 
 namespace SmartGallery.Server.Services;
 
@@ -137,4 +138,26 @@ public class UserService : IUserService
 
     public async Task<bool> CheckIfUserExistByIdAsync(string userId)
         => await _userManager.Users.AnyAsync(user => user.Id == userId);
+
+
+    public List<CustomerViewModel>? GetAllUsers()
+    {
+        List<Customer> users = _userManager.Users.ToList();
+        List<CustomerViewModel> Customers = CustomerToCustomerViewModel(users);
+        if (users == null)
+        {
+            return null;
+        }
+
+        return Customers;
+    }
+    public List<CustomerViewModel> CustomerToCustomerViewModel(List<Customer> users)
+    {
+        List<CustomerViewModel> Customers = new();
+        foreach(Customer customer in users)
+        {
+            Customers.Add(new() { Id = customer.Id, Address = customer.Address, Email = customer.Email });
+        }
+        return Customers;
+    }
 }

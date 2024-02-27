@@ -8,6 +8,8 @@ using Microsoft.JSInterop;
 using SmartGallery.Client.Helpers;
 using SmartGallery.Client.Services.Contracts;
 using SmartGallery.Shared;
+using SmartGallery.Shared.ViewModels;
+using SmartGallery.Shared.ViewModels.ReservationViewModels;
 
 namespace SmartGallery.Client.Services;
 
@@ -65,6 +67,17 @@ public class LoginService : ILoginService
         await _LocalStorageService.RemoveItemAsync("authToken");
         ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
         _httpClient.DefaultRequestHeaders.Authorization = null;
+    }
+    public async Task<List<CustomerViewModel>?> GetUsers()
+    {
+        Stream? CustomersStream = await _httpClient.GetStreamAsync($"api/Auth/Users");
+        if (CustomersStream is not null)
+        {
+            List<CustomerViewModel> ReservationsForCustomer = await JsonSerializer.DeserializeAsync<List<CustomerViewModel>>(CustomersStream, new JsonSerializerOptions()
+            { PropertyNameCaseInsensitive = true }) ?? new List<CustomerViewModel>();
+            return ReservationsForCustomer;
+        }
+        return null;
     }
 }
 

@@ -1,12 +1,13 @@
 ﻿using SmartGallery.Shared;
+using SmartGallery.Shared.ViewModels;
 
 namespace SmartGallery.Client.Services.Contracts;
 
 public interface ILoginService
 {
     Task<UserManagerResponse> LoginAsync(LoginViewModel viewModel);
-    public Task<UserManagerResponse> RegisterAsync(RegisterViewModel registerModel);
-    public Task LogoutAsync();
-
+    Task<UserManagerResponse> RegisterAsync(RegisterViewModel registerModel);
+    Task LogoutAsync();
+    Task<List<CustomerViewModel>?> GetUsers();
 }
 

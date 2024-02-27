@@ -30,7 +30,7 @@ body {
     color: #fff;
 }
 
-header {
+.header {
     position: fixed;
     top: 0;
     left: 0;
@@ -43,39 +43,39 @@ header {
     padding: 2rem 9%;
 }
 
-    header .logo {
+    .header .logo {
         font-size: 2.5rem;
         font-weight: bolder;
         color: #fff;
         text-transform: uppercase;
     }
 
-        header .logo span {
+        .header .logo span {
             color: var(--blue);
         }
 
-    header .navbar a {
+    .header .navbar a {
         color: #fff;
         font-size: 2rem;
         margin: 0 0.8rem;
     }
 
-        header .navbar a:hover {
+        .header .navbar a:hover {
             color: var(--blue);
         }
 
-    header .icon i {
+    .header .icon i {
         font-size: 2.5rem;
         color: #fff;
         cursor: pointer;
         margin-right: 2rem;
     }
 
-        header .icon i:hover {
+        .header .icon i:hover {
             color: var(--blue);
         }
 
-    header .search-form {
+    .header .search-form {
         position: absolute;
         top: 100%;
         left: 0;
@@ -89,11 +89,11 @@ header {
         clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     }
 
-        header .search-form.active {
+        .header .search-form.active {
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
 
-        header .search-form #search-bar {
+        .header .search-form #search-bar {
             width: 100%;
             padding: 1rem;
             color: #333;
@@ -101,18 +101,18 @@ header {
             border-radius: 4rem;
         }
 
-            header .search-form #search-bar:focus {
+            .header .search-form #search-bar:focus {
                 outline: none;
             }
 
-        header .search-form label {
+        .header .search-form label {
             color: #fff;
             cursor: pointer;
             font-size: 3rem;
             margin-left: 1.5rem;
         }
 
-            header .search-form label:hover {
+            .header .search-form label:hover {
                 color: var(--blue);
             }
 
@@ -225,7 +225,7 @@ header {
         display: initial;
     }
     
-    header .navbar {
+    .header .navbar {
         position: absolute;
         top: 100%;
         left: 0;
@@ -236,11 +236,11 @@ header {
         clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     }
 
-        header .navbar.active {
+        .header .navbar.active {
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
 
-        header .navbar a {
+        .header .navbar a {
             display: block;
             border-radius: 0.5rem;
             padding: 1.5rem;

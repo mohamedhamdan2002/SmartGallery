@@ -1,36 +1,30 @@
-﻿@page "/Profile"
-    <div class="default-background">
-        <header class="position-relative">
-            <div class="icon">
-                <i @onclick="NavigateToHome" class="fas fa-arrow-left" aria-hidden="true"></i>
-            </div>
-            <a class="logo"><span>L</span>ife <span>C</span>hanger</a>
-            <div class="icon">
-                <AuthorizeView>
-                    <i>Hello , @(context.User.Identity!.Name)</i>
-                    <i @onclick="LogoutAsync">Log Out</i>
-                </AuthorizeView>
-            </div>
-        </header>
-
-        <div class="card">
-            @foreach (ReservationServiceDetailsVM reservationViewModel in reservationsViewModel)
-            {
-                <section>
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Reservation</h4>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title"> @reservationViewModel.serviceName</h5>
-                            <h4 class="card-title"> Status : @reservationViewModel.Status.ToString()</h4>
-                            <div class="card-footer">
-                                <a href=@($"/ReservationEdit/{reservationViewModel.serviceId}/{userId}") class="reservation-btn-primary">Edit</a>
-                                <button @onclick="() => DeleteReservation(reservationViewModel.serviceId)" type="button" class="delete-btn-primary">Cancel Reservation</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            }
-        </div>
-    </div>
+﻿@page "/Profile/{userId?}"
+@layout MudMainLayout
+<MudCard>
+    @foreach (ReservationServiceDetailsVM reservationViewModel in reservationsViewModel)
+    {
+        <MudCard Class="mb-5">
+            <MudCardHeader>
+                <MudText Typo="Typo.h3">
+                    Reservation
+                </MudText>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText Typo="Typo.h5">
+                    @reservationViewModel.serviceName
+                </MudText>
+                <MudText Typo="Typo.h4">
+                    Status : @reservationViewModel.Status.ToString()
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Class="me-3" OnClick="() =>NavigateToReservationEdit(reservationViewModel.serviceId)" Variant="Variant.Filled" Color="Color.Info">
+                    Edit
+                </MudButton>
+                <MudButton OnClick="() =>DeleteReservation(reservationViewModel.serviceId)"Variant="Variant.Filled" Color="Color.Error">
+                    Delete
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+     }
+</MudCard>

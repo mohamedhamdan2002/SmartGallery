@@ -5,7 +5,7 @@ namespace SmartGallery.Client.Services.Contracts;
 public interface IReservationsService
 {
     Task<IEnumerable<ReservationServiceDetailsVM>?> GetReservationsForCustomerByCustomerId(string id);
-    Task<IEnumerable<ReservationViewModel>?> GetReservationsForServiceByServiceId(int id);
+    Task<IEnumerable<ReservationCustomerDetailsVM>?> GetReservationsForServiceByServiceId(int id);
     Task<ReservationForCreationViewModel?> GetReservation(int serviceId, string customerId);
     Task<ReservationForUpdateViewModel?> UpdateReservation(int serviceId, string customerId, ReservationForUpdateViewModel reservationForUpdateViewModel);
 

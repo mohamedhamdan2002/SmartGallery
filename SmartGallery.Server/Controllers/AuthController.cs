@@ -21,7 +21,13 @@ public class AuthController : ControllerBase
         _userService = userService;
         //_mailService = mailService;
     }
+    [HttpGet("Users")]
+    public IActionResult GetUsers()
+    {
+        var result = _userService.GetAllUsers();
 
+        return Ok(result);
+    }
     [HttpPost("Register")]
     public async Task<IActionResult> RegisterAsync([FromBody] RegisterViewModel model)
     {

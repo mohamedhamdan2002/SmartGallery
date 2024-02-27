@@ -2,7 +2,7 @@
 <head>
     <link rel="stylesheet" href="/css/main.css" />
 </head>
-    <header>
+    <header class="header">
         <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
         <a href="" class="logo"><span>L</span>ife <span>C</span>hanger</a>
         <nav class="navbar">
@@ -15,7 +15,7 @@
         <div class="icon">
             <AuthorizeView>
                 <Authorized>
-                    <i>Hello , @(context.User.Identity!.Name)</i>
+                    <i>Hello , @((context.User.Identity!.Name).Split("@").First())</i>
                     <i @onclick="LogoutAsync">Log Out</i>
                     <i class="fas fa-user" @onclick="NavigateToProfile"></i>
                 </Authorized>

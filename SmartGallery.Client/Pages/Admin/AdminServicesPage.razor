@@ -1,0 +1,38 @@
+﻿@page "/admin/services"
+@layout MudMainLayout
+<MudCardActions>
+    <MudButton OnClick="AddService" Variant="Variant.Filled" Color="Color.Success">
+        Add Service
+    </MudButton>
+</MudCardActions>
+<MudCard>
+    @foreach(ServiceViewModel serviceViewModel in serviceViewModels)
+    { 
+        <MudCard Class="mb-5">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h5" Align="Align.Center">
+                        <i class="@serviceViewModel.Icon"></i>
+                    </MudText>
+                    <MudText Typo="Typo.h4">
+                        @serviceViewModel.Name
+                    </MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText Typo="Typo.h3">
+                    @serviceViewModel.Description
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Class="me-3" OnClick="() => NavigateToReservation(serviceViewModel.Id)" Variant="Variant.Filled" Color="Color.Info">
+                    Reservations
+                </MudButton>
+                <MudButton OnClick="()=> DeleteService(serviceViewModel.Id)" Variant="Variant.Filled" Color="Color.Error">
+                    Delete
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    }
+</MudCard>
+

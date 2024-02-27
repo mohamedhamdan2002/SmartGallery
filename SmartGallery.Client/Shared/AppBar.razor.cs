@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using SmartGallery.Client.Services.Contracts;
 
 namespace SmartGallery.Client.Shared
 {
@@ -13,12 +14,25 @@ namespace SmartGallery.Client.Shared
         public EventCallback OnSidebarToggled { get; set; }
         [Parameter]
         public EventCallback<MudTheme> OnThemeToggled { get; set; }
-
+        [Inject]
+        public ILoginService _loginService { get; set; }
+        [Inject]
+        public NavigationManager navigationManager { get; set; }
+        private async Task LogoutAsync()
+        {
+            await _loginService.LogoutAsync();
+            navigationManager.NavigateTo("/");
+        }
+        protected override void OnInitialized()
+        {
+            ToggleTheme();
+            base.OnInitialized();
+        }
         private async Task ToggleTheme()
         {
             _isLightMode = !_isLightMode;
 
-            _currentTheme = !_isLightMode ? GenerateDarkTheme() : new MudTheme();
+            _currentTheme = GenerateDarkTheme();
 
             await OnThemeToggled.InvokeAsync(_currentTheme);
         }

@@ -1,0 +1,45 @@
+﻿@page "/admin/reservations/{serviceId:int}"
+@layout MudMainLayout
+<MudCard>
+    @foreach(var reservation in reservationsViewModel)
+        {
+            DateTime? date = reservation.ReservationDate.ToDateTime(reservation.ReservationTime);
+            TimeSpan? time = reservation.ReservationTime.ToTimeSpan();
+
+        <MudCard Class="mb-5">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h3">
+                     Email:   @reservation.customerEmail
+                    </MudText>
+                    <MudText Typo="Typo.h4">
+                      Addres:  @reservation.Address
+                    </MudText>
+                    <MudText Typo="Typo.h5">
+                       Status: @reservation.Status.ToString()
+                    </MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText Typo="Typo.h3">
+                    @reservation.ProblemDescription
+                </MudText>
+                <div class="form-group">
+                    <MudDatePicker Label="Reservation Date" Editable="false" @bind-Date="date" Placeholder="Select Date" />
+                </div>
+                <div class="form-group">
+                    <MudTimePicker Editable="false" Label="Reservation Time" @bind-Time="time" />
+                </div>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Class="me-3" OnClick="()=> NavigateToReservationEdit(serviceId,reservation.customerId)" Variant="Variant.Filled" Color="Color.Info">
+                    Edit
+                </MudButton>
+                <MudButton OnClick="()=>
+                    DeleteReservation(serviceId,reservation.customerId)"Variant="Variant.Filled" Color="Color.Error">
+                    Delete
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+     }
+</MudCard>

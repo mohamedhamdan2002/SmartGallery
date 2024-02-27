@@ -45,13 +45,13 @@ namespace SmartGallery.Client.Services
             return null;
         }
 
-        public async Task<IEnumerable<ReservationViewModel>?> GetReservationsForServiceByServiceId(int id)
+        public async Task<IEnumerable<ReservationCustomerDetailsVM>?> GetReservationsForServiceByServiceId(int id)
         {
             Stream? ReservationsStream = await _httpClient.GetStreamAsync($"api/service/{id}/reservations");
             if (ReservationsStream is not null)
             {
-                IEnumerable<ReservationViewModel> ReservationsForServices = await JsonSerializer.DeserializeAsync<IEnumerable<ReservationViewModel>>(ReservationsStream, new JsonSerializerOptions()
-                { PropertyNameCaseInsensitive = true }) ?? new List<ReservationViewModel>();
+                IEnumerable<ReservationCustomerDetailsVM> ReservationsForServices = await JsonSerializer.DeserializeAsync<IEnumerable<ReservationCustomerDetailsVM>>(ReservationsStream, new JsonSerializerOptions()
+                { PropertyNameCaseInsensitive = true }) ?? new List<ReservationCustomerDetailsVM>();
                 return ReservationsForServices;
             }
             return null;
