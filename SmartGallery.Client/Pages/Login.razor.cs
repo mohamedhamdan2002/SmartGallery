@@ -21,6 +21,7 @@ public partial class Login
     private async Task HandleValidSubmitAsync()
     {
         ShowErrors = false;
+        await _loginService.LogoutAsync();
         UserManagerResponse Response = await _loginService.LoginAsync(viewModel);
         validationMessages.Clear();
         if (!Response.IsSuccess)
