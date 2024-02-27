@@ -1,0 +1,26 @@
+﻿@page "/admin/users"
+@layout MudMainLayout
+<MudCard>
+    @foreach (CustomerViewModel customerViewModel in CustomerViewModels)
+    {
+        <MudCard Class="mb-5">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h4" Align="Align.Center">
+                        <i class="@customerViewModel.Email"></i>
+                    </MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText Typo="Typo.h3">
+                    @customerViewModel.Email
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton OnClick="() => NavigateToReservation(customerViewModel.Id)" Variant="Variant.Filled" Color="Color.Info">
+                    Reservations
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    }
+</MudCard>

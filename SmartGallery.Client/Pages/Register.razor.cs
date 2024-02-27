@@ -32,6 +32,14 @@ public partial class Register
             Error = result.Message;
         }
     }
-   
+    private async Task LogoutAsync()
+    {
+        await _loginService.LogoutAsync();
+        _navigationManager.NavigateTo("/");
+    }
+    private void NavigateToHome()
+    {
+        _navigationManager.NavigateTo("/");
+    }
 }
 

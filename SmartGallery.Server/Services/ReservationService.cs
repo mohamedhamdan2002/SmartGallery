@@ -195,12 +195,12 @@ public class ReservationService : IReservationService
         if (!isExist)
             throw new NotFoundException($"the customer with id: {customerId} doesn't exist in the database.");
     }
-    //private async Task CheckIfReservationExistsAsync(int serviceId, string customerId)
-    //{
-    //    var isExist = await _repository.Reservation.CheckIfReservationExistAsync(serviceId, customerId);
-    //    if (isExist)
-    //        throw new ConflictException($"A reservation with the same details already exists.");
 
-    //}
- 
+
+    public async Task DeleteReservationAsync(int serviceId, string customerId)
+    {
+        Reservation service = await GetReservationAndCheckIfItExistAsync(serviceId,customerId,e=>e);
+        _repository.Reservation.Delete(service);
+        await _repository.SaveChangesAsync();
+    }
 }

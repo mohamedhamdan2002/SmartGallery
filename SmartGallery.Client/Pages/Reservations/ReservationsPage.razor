@@ -1,42 +1,63 @@
 ﻿@page "/AddReservation/{serviceId:int}"
-
+@page "/ReservationEdit/{serviceId:int}/{customerId}"
 @using Blazored.FluentValidation
 <head>
     <link rel="stylesheet" href="/css/main.css" />
 </head>
-<div class="login-form reservation-background">
-    <EditForm Model="@viewModel" OnValidSubmit="HandleValidSubmitAsync">
-        <FluentValidationValidator></FluentValidationValidator>
-        <h3>Reservation</h3>
-        <div class="form-group">
-            <label>Problem Description</label>
-            <InputTextArea class="box" @bind-Value="@viewModel.ProblemDescription" placeholder="Enter your Problem Description" />
-            <ValidationMessage For="@(() => viewModel.ProblemDescription)" />
+    <header class="header position-relative">
+        <div class="icon">
+            <i @onclick="NavigateToHome" class="fas fa-arrow-left" aria-hidden="true"></i>
         </div>
-        <div class="form-group">
-            <label>Reservation Date</label>
-            <InputDate class="box" @bind-Value="@viewModel.ReservationDate" />
-            <ValidationMessage For="@(() => viewModel.ReservationDate)" />
+        <a class="logo"><span>L</span>ife <span>C</span>hanger</a>
+        <div class="icon">
+            <AuthorizeView>
+                <i>Hello , @(context.User.Identity!.Name)</i>
+                <i @onclick="LogoutAsync">Log Out</i>
+            </AuthorizeView>
         </div>
-        <div class="form-group">
-            <label>Reservation Date</label>
-            <input type="time" class="box" @bind="@viewModel.ReservationTime" />
-            <ValidationMessage For="@(() => viewModel.ReservationDate)" />
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn">Submit your Reservation</button>
-        </div>
-        @if (isSuccess)
-        {
-            <div class="mt-5 fs-3 alert alert-success" role="alert">
-                @MessageToShow
+    </header>
+    <div class="login-form reservation-background">
+        <EditForm Model="@viewModel" OnValidSubmit="HandleValidSubmitAsync">
+            <FluentValidationValidator></FluentValidationValidator>
+            <h3>Reservation</h3>
+            <AuthorizeView Roles="Admin" Context="ChildContext">
+                <label>Status: </label>
+                <select class="form-select" value="@statusEnum">
+                    @foreach (var Type in Enum.GetValues(typeof(StatusEnum)))
+                    {
+                        <option value="@Type">@Type</option>
+                    }
+                </select>
+            </AuthorizeView>
+            <div class="form-group">
+                <label>Problem Description</label>
+                <InputTextArea class="box" @bind-Value="@viewModel.ProblemDescription" placeholder="Enter your Problem Description" />
+                <ValidationMessage For="@(() => viewModel.ProblemDescription)" />
             </div>
-        }
-        @if(isFailed)
-        {
-            <div class="mt-5 fs-3 alert alert-danger" role="alert">
-                @MessageToShow
+            <div class="form-group">
+                <label>Reservation Date</label>
+                <InputDate class="box" @bind-Value="@viewModel.ReservationDate" />
+                <ValidationMessage For="@(() => viewModel.ReservationDate)" />
             </div>
-        }
-    </EditForm>
-</div>
+            <div class="form-group">
+                <label>Reservation Date</label>
+                <input type="time" class="box" @bind="@viewModel.ReservationTime" />
+                <ValidationMessage For="@(() => viewModel.ReservationDate)" />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn">Submit your Reservation</button>
+            </div>
+            @if (isSuccess)
+            {
+                <div class="mt-5 fs-3 alert alert-success" role="alert">
+                    @MessageToShow
+                </div>
+            }
+            @if (isFailed)
+            {
+                <div class="mt-5 fs-3 alert alert-danger" role="alert">
+                    @MessageToShow
+                </div>
+            }
+        </EditForm>
+    </div>

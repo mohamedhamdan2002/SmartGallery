@@ -1,0 +1,17 @@
+﻿<MudAppBar Elevation="3">
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
+                   OnClick="async () => await OnSidebarToggled.InvokeAsync()" />
+    <MudSpacer />
+    <MudText Typo="Typo.h3">
+        <div class="icon">
+            <AuthorizeView>
+                <i>Hello , @((context.User.Identity!.Name).Split("@").First())</i>
+            </AuthorizeView>
+        </div>
+    </MudText>
+
+    <MudSpacer />
+    <MudButton @onclick="LogoutAsync" Variant="Variant.Filled" Color="Color.Inherit">
+        Logout
+    </MudButton>
+</MudAppBar>

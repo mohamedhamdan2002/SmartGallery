@@ -29,29 +29,29 @@ namespace SmartGallery.Client.Services
 
         public async Task DeleteReservation(string customerId, int serviceId)
         {
-            await _httpClient.DeleteAsync($"api/reservations/{serviceId}/{customerId}");
+            await _httpClient.DeleteAsync($"api/reservations?serviceId={serviceId}&customerId={customerId}");
         }
         
 
-        public async Task<IEnumerable<ReservationViewModel>?> GetReservationsForCustomerByCustomerId(string id)
+        public async Task<IEnumerable<ReservationServiceDetailsVM>?> GetReservationsForCustomerByCustomerId(string id)
         {
             Stream? ReservationsStream = await _httpClient.GetStreamAsync($"api/customer/{id}/reservations");
             if(ReservationsStream is not null)
             {
-                IEnumerable<ReservationViewModel> ReservationsForCustomer = await JsonSerializer.DeserializeAsync<IEnumerable<ReservationViewModel>>(ReservationsStream, new JsonSerializerOptions()
-                { PropertyNameCaseInsensitive = true }) ?? new List<ReservationViewModel>();
+                IEnumerable<ReservationServiceDetailsVM> ReservationsForCustomer = await JsonSerializer.DeserializeAsync<IEnumerable<ReservationServiceDetailsVM>>(ReservationsStream, new JsonSerializerOptions()
+                { PropertyNameCaseInsensitive = true }) ?? new List<ReservationServiceDetailsVM>();
                 return ReservationsForCustomer;
             }
             return null;
         }
 
-        public async Task<IEnumerable<ReservationViewModel>?> GetReservationsForServiceByServiceId(int id)
+        public async Task<IEnumerable<ReservationCustomerDetailsVM>?> GetReservationsForServiceByServiceId(int id)
         {
             Stream? ReservationsStream = await _httpClient.GetStreamAsync($"api/service/{id}/reservations");
             if (ReservationsStream is not null)
             {
-                IEnumerable<ReservationViewModel> ReservationsForServices = await JsonSerializer.DeserializeAsync<IEnumerable<ReservationViewModel>>(ReservationsStream, new JsonSerializerOptions()
-                { PropertyNameCaseInsensitive = true }) ?? new List<ReservationViewModel>();
+                IEnumerable<ReservationCustomerDetailsVM> ReservationsForServices = await JsonSerializer.DeserializeAsync<IEnumerable<ReservationCustomerDetailsVM>>(ReservationsStream, new JsonSerializerOptions()
+                { PropertyNameCaseInsensitive = true }) ?? new List<ReservationCustomerDetailsVM>();
                 return ReservationsForServices;
             }
             return null;
@@ -65,6 +65,18 @@ namespace SmartGallery.Client.Services
             else
                 return null;
         }
+        public async Task<ReservationForCreationViewModel?> GetReservation(int serviceId, string customerId)
+        {
+            var Result = await _httpClient.GetStreamAsync($"api/reservations?serviceId={serviceId}&customerId={customerId}");
+            if (Result is not null)
+            {
+                ReservationForCreationViewModel ReservationsForCustomer = await JsonSerializer.DeserializeAsync<ReservationForCreationViewModel>(Result, new JsonSerializerOptions()
+                { PropertyNameCaseInsensitive = true }) ?? new ReservationForCreationViewModel();
+                return ReservationsForCustomer;
+            }
+            return null;
+        }
+        
     }
 }
 

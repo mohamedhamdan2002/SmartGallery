@@ -1,2 +1,43 @@
-﻿<h3>Component1</h3>
-
+﻿@page "/AddService/{serviceId:int?}"
+<head>
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+<header class="header position-relative">
+    <div class="icon">
+        <i @onclick="NavigateToHome" class="fas fa-arrow-left" aria-hidden="true"></i>
+    </div>
+    <a class="logo"><span>L</span>ife <span>C</span>hanger</a>
+    <div class="icon">
+        <AuthorizeView>
+            <i>Hello , @(context.User.Identity!.Name)</i>
+            <i @onclick="LogoutAsync">Log Out</i>
+        </AuthorizeView>
+    </div>
+</header>
+<div class="login-form ">
+    <EditForm Model="@viewModel" OnValidSubmit="HandleValidSubmitAsync">
+        <h3>Service</h3>
+        <div class="form-group">
+            <label>Service Icon</label>
+            <InputText class="box" @bind-Value="@viewModel.Icon" placeholder="Enter Service Icon To Display" />
+            <ValidationMessage For="@(() => viewModel.Icon)" />
+        </div>
+        <div class="form-group">
+            <label>Service Name</label>
+            <InputText class="box" @bind-Value="@viewModel.Name" />
+        </div>
+        <div class="form-group">
+            <label>Service Description</label>
+            <InputTextArea class="box" @bind-Value="@viewModel.Description" />
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn">Add your Service</button>
+        </div>
+        @if (isSuccess)
+        {
+            <div class="mt-5 fs-3 alert alert-success" role="alert">
+                @MessageToShow
+            </div>
+        }
+    </EditForm>
+</div>

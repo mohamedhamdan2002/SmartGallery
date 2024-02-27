@@ -21,6 +21,7 @@ public partial class Login
     private async Task HandleValidSubmitAsync()
     {
         ShowErrors = false;
+        await _loginService.LogoutAsync();
         UserManagerResponse Response = await _loginService.LoginAsync(viewModel);
         validationMessages.Clear();
         if (!Response.IsSuccess)
@@ -34,6 +35,15 @@ public partial class Login
             _navigationManager.NavigateTo("/");
         }
         await InvokeAsync(StateHasChanged);
+    }
+    private async Task LogoutAsync()
+    {
+        await _loginService.LogoutAsync();
+        _navigationManager.NavigateTo("/");
+    }
+    private void NavigateToHome()
+    {
+        _navigationManager.NavigateTo("/");
     }
 
 }

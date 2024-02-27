@@ -1,0 +1,22 @@
+﻿<MudDrawer @bind-Open="SideBarOpen" Elevation="1">
+    <MudDrawerHeader>
+        <MudAvatar Color="Color.Transparent" Size="Size.Large" Image="assets/Logo-CodeMaze.png" />
+        <AuthorizeView>
+            <MudText Typo="Typo.h5" Color="Color.Primary" Style="margin-top:10px; margin-left:15px;">Hello , @((context.User.Identity!.Name))</MudText>
+        </AuthorizeView>
+    </MudDrawerHeader>
+    <MudNavMenu>
+        <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+        <AuthorizeView Roles="Admin">
+            <MudNavGroup Title="System" Icon="@Icons.Material.Filled.DashboardCustomize" Expanded="true">
+                <MudNavLink Href="/admin/services" Icon="@Icons.Material.Filled.Storage">Services</MudNavLink>
+                <MudNavLink Href="/admin/users" Icon="@Icons.Material.Filled.VerifiedUser">Users</MudNavLink>
+            </MudNavGroup>
+        </AuthorizeView>
+    </MudNavMenu>
+</MudDrawer>
+
+@code {
+    [Parameter]
+    public bool SideBarOpen { get; set; }
+}

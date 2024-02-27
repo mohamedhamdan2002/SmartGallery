@@ -19,4 +19,5 @@ public class ServiceRepository : BaseRepository<Service>, IServiceRepository
         => await GetAll(trackChanges)
                 .OrderBy(service => service.Name)
                 .ToListAsync();
+    public async Task DeleteServiceAsync(Service service) => Delete(service);
 }

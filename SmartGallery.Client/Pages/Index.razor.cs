@@ -16,6 +16,10 @@ public partial class Index
     [Inject] ILoginService _loginService { get; set; }
     [Inject] IServicesService _servicesService { get; set; }
     [Inject] IJSRuntime JSRuntime { get; set; }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("initSwiper", null);
+    }
     protected override async Task OnInitializedAsync()
     {
         services = (await _servicesService.GetServices()).ToList();

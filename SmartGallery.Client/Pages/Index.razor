@@ -2,517 +2,517 @@
 <head>
     <link rel="stylesheet" href="/css/main.css" />
 </head>
-    <header>
-        <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
-        <a href="" class="logo"><span>L</span>ife <span>C</span>hanger</a>
-        <nav class="navbar">
-            <a href="#home">home</a>
-            <a href="#book">book</a>
-            <a href="#packages">packages</a>
-            <a href="#services">services</a>
-            <a href="#review">review</a>
-        </nav>
-        <div class="icon">
-            <AuthorizeView>
-                <Authorized>
-                    <i>Hello , @(context.User.Identity!.Name)</i>
-                    <i @onclick="LogoutAsync">Log Out</i>
-                    <i class="fas fa-user" @onclick="NavigateToProfile"></i>
-                </Authorized>
-                <NotAuthorized>
-                    <i class="fas fa-user" @onclick="NavigateToLogin"></i>
-                </NotAuthorized>
-            </AuthorizeView>
-        </div>
-        <form action="" class="search-form">
-            <input type="search"
-                   id="search-bar"
-                   placeholder="What your looking for..." />
-            <label for="search-bar" class="fas fa-search"></label>
-        </form>
-    </header>
-    <!-------------------------------------------------------------------------------->
-    <!-------------------------------------------------------------------------------->
+<header class="header">
+    <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+    <a href="" class="logo"><span>L</span>ife <span>C</span>hanger</a>
+    <nav class="navbar">
+        <a href="#home">home</a>
+        <a href="#book">book</a>
+        <a href="#packages">packages</a>
+        <a href="#services">services</a>
+        <a href="#review">review</a>
+    </nav>
+    <div class="icon">
+        <AuthorizeView>
+            <Authorized>
+                <i>Hello , @((context.User.Identity!.Name).Split("@").First())</i>
+                <i @onclick="LogoutAsync">Log Out</i>
+                <i class="fas fa-user" @onclick="NavigateToProfile"></i>
+            </Authorized>
+            <NotAuthorized>
+                <i class="fas fa-user" @onclick="NavigateToLogin"></i>
+            </NotAuthorized>
+        </AuthorizeView>
+    </div>
+    <form action="" class="search-form">
+        <input type="search"
+               id="search-bar"
+               placeholder="What your looking for..." />
+        <label for="search-bar" class="fas fa-search"></label>
+    </form>
+</header>
+<!-------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------->
 
-    <section class="home" id="home">
-        <div class="content">
-            <h3>Life Changer For Easy life</h3>
-            <p>Fixing all the different problems at home</p>
-            <a href="#" class="btn">Discover More</a>
-        </div>
+<section class="home" id="home">
+    <div class="content">
+        <h3>Life Changer For Easy life</h3>
+        <p>Fixing all the different problems at home</p>
+        <a href="#" class="btn">Discover More</a>
+    </div>
 
-        <div class="controls">
-            <span class="video-btn blue" data-src="images/vid-1.mp4"></span>
-            <span class="video-btn" data-src="images/video-1 (1).mp4"></span>
-            <span class="video-btn" data-src="images/video-1 (3).mp4"></span>
-            <span class="video-btn" data-src="images/video-1 (4).mp4"></span>
-        </div>
-        <div class="video-container">
-            <video src="images/vid-1.mp4 "
-                   id="video-slider"
-                   loop
-                   autoplay
-                   muted></video>
-        </div>
-    </section>
+    <div class="controls">
+        <span class="video-btn blue" data-src="images/vid-1.mp4"></span>
+        <span class="video-btn" data-src="images/video-1 (1).mp4"></span>
+        <span class="video-btn" data-src="images/video-1 (3).mp4"></span>
+        <span class="video-btn" data-src="images/video-1 (4).mp4"></span>
+    </div>
+    <div class="video-container">
+        <video src="images/vid-1.mp4 "
+               id="video-slider"
+               loop
+               autoplay
+               muted></video>
+    </div>
+</section>
 
-    <!------------------------------------------------------------------------------------>
-    <!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
 
-    <section class="book" id="book">
-        <h1 class="heading">
-            <span>b</span>
-            <span>o</span>
-            <span>o</span>
-            <span>k</span>
-            &nbsp; &nbsp;
-            <span>n</span>
-            <span>o</span>
-            <span>w</span>
-        </h1>
+<section class="book" id="book">
+    <h1 class="heading">
+        <span>b</span>
+        <span>o</span>
+        <span>o</span>
+        <span>k</span>
+        &nbsp; &nbsp;
+        <span>n</span>
+        <span>o</span>
+        <span>w</span>
+    </h1>
 
-        <div class="customrow">
-            <div class="article">
-                <h2>About us</h2>
-                <p>
-                    In today's fast-paced world, managing a home can be a daunting task.
-                    From maintaining appliances to keeping the lawn in check, homeowners
-                    often find it challenging to keep up with the various aspects of
-                    home maintenance. This is where Life Changer comes in. Founded in
-                    2020, Life Changer is a revolutionary company that offers online
-                    home maintenance services, making it easier for homeowners to manage
-                    their homes more efficiently. Overview of Life Changer Life Changer
-                    is a technology-driven company that aims to simplify and streamline
-                    the process of home maintenance. The company offers a range of
-                    services, including appliance repair, lawn care, handyman work, and
-                    more. What sets Life Changer apart is its innovative approach to
-                    providing these services. The company has developed a cutting-edge
-                    platform that allows homeowners to book, track, and manage
-                    maintenance tasks online. This user-friendly platform enables
-                    homeowners to connect with experienced professionals, schedule
-                    appointments, and track the progress of their tasks in real-time.
-                </p>
-            </div>
-            <div class="image">
-                <img src="./images/Home-maintenance.jpg" alt="" />
+    <div class="customrow">
+        <div class="article">
+            <h2>About us</h2>
+            <p>
+                In today's fast-paced world, managing a home can be a daunting task.
+                From maintaining appliances to keeping the lawn in check, homeowners
+                often find it challenging to keep up with the various aspects of
+                home maintenance. This is where Life Changer comes in. Founded in
+                2020, Life Changer is a revolutionary company that offers online
+                home maintenance services, making it easier for homeowners to manage
+                their homes more efficiently. Overview of Life Changer Life Changer
+                is a technology-driven company that aims to simplify and streamline
+                the process of home maintenance. The company offers a range of
+                services, including appliance repair, lawn care, handyman work, and
+                more. What sets Life Changer apart is its innovative approach to
+                providing these services. The company has developed a cutting-edge
+                platform that allows homeowners to book, track, and manage
+                maintenance tasks online. This user-friendly platform enables
+                homeowners to connect with experienced professionals, schedule
+                appointments, and track the progress of their tasks in real-time.
+            </p>
+        </div>
+        <div class="image">
+            <img src="./images/Home-maintenance.jpg" alt="" />
+        </div>
+    </div>
+</section>
+<!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
+<section class="packages" id="packages">
+    <h1 class="heading">
+        <span>p</span>
+        <span>a</span>
+        <span>c</span>
+        <span>k</span>
+        <span>a</span>
+        <span>g</span>
+        <span>e</span>
+        <span>s</span>
+    </h1>
+    <div class="container">
+        <div class="box">
+            <div class="img"></div>
+            <img src="./images/p-1.jpg" alt="img" />
+            <h3><i class="fa-solid fa-location-dot"></i><span>Egypt</span></h3>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
+                asperiores ullam repudiandae.
+            </p>
+            <div class="star">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star"></i>
             </div>
         </div>
-    </section>
-    <!------------------------------------------------------------------------------------>
-    <!------------------------------------------------------------------------------------>
-    <section class="packages" id="packages">
-        <h1 class="heading">
-            <span>p</span>
-            <span>a</span>
-            <span>c</span>
-            <span>k</span>
-            <span>a</span>
-            <span>g</span>
-            <span>e</span>
-            <span>s</span>
-        </h1>
-        <div class="container">
-            <div class="box">
-                <div class="img"></div>
-                <img src="./images/p-1.jpg" alt="img" />
-                <h3><i class="fa-solid fa-location-dot"></i><span>Egypt</span></h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-                    asperiores ullam repudiandae.
-                </p>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/p-2.jpg" alt="img" />
-                <h3><i class="fa-solid fa-location-dot"></i><span>Sudan</span></h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-                    asperiores ullam repudiandae.
-                </p>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/p-3.jpg" alt="img" />
-                <h3>
-                    <i class="fa-solid fa-location-dot"></i><span>Saudi Arabia</span>
-                </h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-                    asperiores ullam repudiandae.
-                </p>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/p-4.jpg" alt="img" />
-                <h3><i class="fa-solid fa-location-dot"></i><span>Tunisia</span></h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-                    asperiores ullam repudiandae.
-                </p>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/p-5.jpg" alt="img" />
-                <h3><i class="fa-solid fa-location-dot"></i><span>Algeria</span></h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-                    asperiores ullam repudiandae.
-                </p>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/p-6.jpg" alt="img" />
-                <h3><i class="fa-solid fa-location-dot"></i><span>Libya</span></h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-                    asperiores ullam repudiandae.
-                </p>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
+        <div class="box">
+            <img src="./images/p-2.jpg" alt="img" />
+            <h3><i class="fa-solid fa-location-dot"></i><span>Sudan</span></h3>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
+                asperiores ullam repudiandae.
+            </p>
+            <div class="star">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star"></i>
             </div>
         </div>
-    </section>
-    <section class="services" id="services">
-        <h1 class="heading">
-            <span>s</span>
-            <span>e</span>
-            <span>r</span>
-            <span>v</span>
-            <span>i</span>
-            <span>c</span>
-            <span>e</span>
-            <span>s</span>
-        </h1>
-        <div class="container">
-            @foreach (ServiceViewModel service in services)
-             {
+        <div class="box">
+            <img src="./images/p-3.jpg" alt="img" />
+            <h3>
+                <i class="fa-solid fa-location-dot"></i><span>Saudi Arabia</span>
+            </h3>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
+                asperiores ullam repudiandae.
+            </p>
+            <div class="star">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star"></i>
+            </div>
+        </div>
+        <div class="box">
+            <img src="./images/p-4.jpg" alt="img" />
+            <h3><i class="fa-solid fa-location-dot"></i><span>Tunisia</span></h3>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
+                asperiores ullam repudiandae.
+            </p>
+            <div class="star">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star"></i>
+            </div>
+        </div>
+        <div class="box">
+            <img src="./images/p-5.jpg" alt="img" />
+            <h3><i class="fa-solid fa-location-dot"></i><span>Algeria</span></h3>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
+                asperiores ullam repudiandae.
+            </p>
+            <div class="star">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star"></i>
+            </div>
+        </div>
+        <div class="box">
+            <img src="./images/p-6.jpg" alt="img" />
+            <h3><i class="fa-solid fa-location-dot"></i><span>Libya</span></h3>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
+                asperiores ullam repudiandae.
+            </p>
+            <div class="star">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star"></i>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="services" id="services">
+    <h1 class="heading">
+        <span>s</span>
+        <span>e</span>
+        <span>r</span>
+        <span>v</span>
+        <span>i</span>
+        <span>c</span>
+        <span>e</span>
+        <span>s</span>
+    </h1>
+    <div class="container">
+        @foreach (ServiceViewModel service in services)
+        {
+            <div class="box">
+                <i class="@service.Icon"></i>
+                <h3>@service.Name</h3>
+                <p>
+                    @service.Description
+                </p>
+                <AuthorizeView>
+                    <Authorized>
+                        <a href=@($"AddReservation/{service.Id}") type="button" class="reservation-btn-primary">Get Your Service Now</a>>
+                    </Authorized>
+
+                    <NotAuthorized>
+                        <div class="alert alert-warning" role="alert">
+                            Please login to access this service.
+                            <a href="/login" class="alert-link">Login</a>
+                        </div>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        }
+    </div>
+</section>
+<section class="gallary" id="gallary">
+    <h1 class="heading">
+        <span>g</span>
+        <span>a</span>
+        <span>l</span>
+        <span>l</span>
+        <span>a</span>
+        <span>r</span>
+        <span>y</span>
+    </h1>
+    <div class="container">
+        <div class="box">
+            <img src="./images/g-1.jpg" alt="" />
+            <div class="content">
+                <h3>Name something</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
+                </p>
+                <a href="#" class="btn">see more</a>
+            </div>
+        </div>
+        <div class="box">
+            <img src="./images/g-2.jpg" alt="" />
+            <div class="content">
+                <h3>Name something</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
+                </p>
+                <a href="#" class="btn">see more</a>
+            </div>
+        </div>
+        <div class="box">
+            <img src="./images/g-3.jpg" alt="" />
+            <div class="content">
+                <h3>Name something</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
+                </p>
+                <a href="#" class="btn">see more</a>
+            </div>
+        </div>
+        <div class="box">
+            <img src="./images/g-4.jpg" alt="" />
+            <div class="content">
+                <h3>Name something</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
+                </p>
+                <a href="#" class="btn">see more</a>
+            </div>
+        </div>
+        <div class="box">
+            <img src="./images/g-5.jpg" alt="" />
+            <div class="content">
+                <h3>Name something</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
+                </p>
+                <a href="#" class="btn">see more</a>
+            </div>
+        </div>
+        <div class="box">
+            <img src="./images/g-6.jpg" alt="" />
+            <div class="content">
+                <h3>Name something</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
+                </p>
+                <a href="#" class="btn">see more</a>
+            </div>
+        </div>
+        <div class="box">
+            <img src="./images/g-7.jpg" alt="" />
+            <div class="content">
+                <h3>Name something</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
+                </p>
+                <a href="#" class="btn">see more</a>
+            </div>
+        </div>
+        <div class="box">
+            <img src="./images/g-8.jpg" alt="" />
+            <div class="content">
+                <h3>Name something</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
+                </p>
+                <a href="#" class="btn">see more</a>
+            </div>
+        </div>
+        <div class="box">
+            <img src="./images/g-9.jpg" alt="" />
+            <div class="content">
+                <h3>Name something</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
+                </p>
+                <a href="#" class="btn">see more</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="review" id="review">
+    <h1 class="heading">
+        <span>r</span>
+        <span>e</span>
+        <span>v</span>
+        <span>i</span>
+        <span>e</span>
+        <span>w</span>
+    </h1>
+    <div class="swiper review-slider">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
                 <div class="box">
-                    <i class="@service.Icon"></i>
-                    <h3>@service.Name</h3>
+                    <img src="./images/gg-7.jpg" alt="" />
+                    <h3>jack moe:</h3>
                     <p>
-                        @service.Description
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        Praesentium quas odio minus repellat vel quae accusantium ea quo
+                        dolores vero?
                     </p>
-                    <AuthorizeView>
-                        <Authorized>
-                            <a href=@($"AddReservation/{service.Id}") type="button" class="reservation-btn-primary">Get Your Service Now</a>>
-                        </Authorized>
-
-                        <NotAuthorized>
-                            <div class="alert alert-warning" role="alert">
-                                Please login to access this service.
-                                <a href="/login" class="alert-link">Login</a>
-                            </div>
-                        </NotAuthorized>
-                    </AuthorizeView>
-                </div>
-             }
-        </div>
-        </section>
-    <section class="gallary" id="gallary">
-        <h1 class="heading">
-            <span>g</span>
-            <span>a</span>
-            <span>l</span>
-            <span>l</span>
-            <span>a</span>
-            <span>r</span>
-            <span>y</span>
-        </h1>
-        <div class="container">
-            <div class="box">
-                <img src="./images/g-1.jpg" alt="" />
-                <div class="content">
-                    <h3>Name something</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
-                    </p>
-                    <a href="#" class="btn">see more</a>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/g-2.jpg" alt="" />
-                <div class="content">
-                    <h3>Name something</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
-                    </p>
-                    <a href="#" class="btn">see more</a>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/g-3.jpg" alt="" />
-                <div class="content">
-                    <h3>Name something</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
-                    </p>
-                    <a href="#" class="btn">see more</a>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/g-4.jpg" alt="" />
-                <div class="content">
-                    <h3>Name something</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
-                    </p>
-                    <a href="#" class="btn">see more</a>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/g-5.jpg" alt="" />
-                <div class="content">
-                    <h3>Name something</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
-                    </p>
-                    <a href="#" class="btn">see more</a>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/g-6.jpg" alt="" />
-                <div class="content">
-                    <h3>Name something</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
-                    </p>
-                    <a href="#" class="btn">see more</a>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/g-7.jpg" alt="" />
-                <div class="content">
-                    <h3>Name something</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
-                    </p>
-                    <a href="#" class="btn">see more</a>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/g-8.jpg" alt="" />
-                <div class="content">
-                    <h3>Name something</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
-                    </p>
-                    <a href="#" class="btn">see more</a>
-                </div>
-            </div>
-            <div class="box">
-                <img src="./images/g-9.jpg" alt="" />
-                <div class="content">
-                    <h3>Name something</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam!
-                    </p>
-                    <a href="#" class="btn">see more</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="review" id="review">
-        <h1 class="heading">
-            <span>r</span>
-            <span>e</span>
-            <span>v</span>
-            <span>i</span>
-            <span>e</span>
-            <span>w</span>
-        </h1>
-        <div class="swiper review-slider">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="box">
-                        <img src="./images/gg-7.jpg" alt="" />
-                        <h3>jack moe:</h3>
-                        <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Praesentium quas odio minus repellat vel quae accusantium ea quo
-                            dolores vero?
-                        </p>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                        </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="box">
-                        <img src="./images/gg-1.jpg" alt="" />
-                        <h3>jack moe:</h3>
-                        <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Praesentium quas odio minus repellat vel quae accusantium ea quo
-                            dolores vero?
-                        </p>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                        </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="box">
+                    <img src="./images/gg-1.jpg" alt="" />
+                    <h3>jack moe:</h3>
+                    <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        Praesentium quas odio minus repellat vel quae accusantium ea quo
+                        dolores vero?
+                    </p>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="box">
-                        <img src="./images/gg-2.jpg" alt="" />
-                        <h3>jack moe:</h3>
-                        <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Praesentium quas odio minus repellat vel quae accusantium ea quo
-                            dolores vero?
-                        </p>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                        </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="box">
+                    <img src="./images/gg-2.jpg" alt="" />
+                    <h3>jack moe:</h3>
+                    <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        Praesentium quas odio minus repellat vel quae accusantium ea quo
+                        dolores vero?
+                    </p>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="box">
-                        <img src="./images/gg-3.jpg" alt="" />
-                        <h3>jack moe:</h3>
-                        <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Praesentium quas odio minus repellat vel quae accusantium ea quo
-                            dolores vero?
-                        </p>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                        </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="box">
+                    <img src="./images/gg-3.jpg" alt="" />
+                    <h3>jack moe:</h3>
+                    <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        Praesentium quas odio minus repellat vel quae accusantium ea quo
+                        dolores vero?
+                    </p>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="box">
-                        <img src="./images/gg-4.jpg" alt="" />
-                        <h3>jack moe:</h3>
-                        <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Praesentium quas odio minus repellat vel quae accusantium ea quo
-                            dolores vero?
-                        </p>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                        </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="box">
+                    <img src="./images/gg-4.jpg" alt="" />
+                    <h3>jack moe:</h3>
+                    <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        Praesentium quas odio minus repellat vel quae accusantium ea quo
+                        dolores vero?
+                    </p>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="box">
-                        <img src="./images/gg-5.jpg" alt="" />
-                        <h3>jack moe:</h3>
-                        <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Praesentium quas odio minus repellat vel quae accusantium ea quo
-                            dolores vero?
-                        </p>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                        </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="box">
+                    <img src="./images/gg-5.jpg" alt="" />
+                    <h3>jack moe:</h3>
+                    <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        Praesentium quas odio minus repellat vel quae accusantium ea quo
+                        dolores vero?
+                    </p>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="box">
-                        <img src="./images/gg-6.jpg" alt="" />
-                        <h3>jack moe:</h3>
-                        <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Praesentium quas odio minus repellat vel quae accusantium ea quo
-                            dolores vero?
-                        </p>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                        </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="box">
+                    <img src="./images/gg-6.jpg" alt="" />
+                    <h3>jack moe:</h3>
+                    <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        Praesentium quas odio minus repellat vel quae accusantium ea quo
+                        dolores vero?
+                    </p>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <footer class="footer">
-        <div class="contect">
-            <div class="box-1">
-                <h3>Title</h3>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit harum
-                    iure nam. onsectetur adipisicing elit. Odit harum iure nam.
-                </p>
-                <input type="search" id="inp-search" placeholder="search" />
-                <label for="inp-search">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </label>
-            </div>
-            <div class="box-2">
-                <h3>branch</h3>
-                <div>
-                    <p>Egypt</p>
-                    <p>Sudan</p>
-                    <p>Saudi Arabia</p>
-                    <p>Tunisia</p>
-                    <p>Algeria</p>
-                    <p>Libya</p>
-                </div>
-            </div>
-            <div class="box-3">
-                <h3>links</h3>
-                <nav class="navbar">
-                    <a href="#home">home</a>
-                    <a href="#book">book</a>
-                    <a href="#packages">packages</a>
-                    <a href="#services">services</a>
-                    <a href="#gallary">gallary</a>
-                    <a href="#review">review</a>
-                </nav>
-            </div>
-            <div class="box-4">
-                <h3>Follow us</h3>
-                <p>
-                    <a href="#" class="one">facebook</a><i class="fa-brands fa-facebook"></i>
-                </p>
-                <p>
-                    <a href="#" class="two">instagram</a>
-                    <i class="fa-brands fa-instagram"></i>
-                </p>
-                <p>
-                    <a href="#" class="three">twiter</a>
-                    <i class="fa-brands fa-twitter"></i>
-                </p>
-                <p>
-                    <a href="#" class="four">linked</a>
-                    <i class="fa-brands fa-linkedin"></i>
-                </p>
+    </div>
+</section>
+<footer class="footer">
+    <div class="contect">
+        <div class="box-1">
+            <h3>Title</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit harum
+                iure nam. onsectetur adipisicing elit. Odit harum iure nam.
+            </p>
+            <input type="search" id="inp-search" placeholder="search" />
+            <label for="inp-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </label>
+        </div>
+        <div class="box-2">
+            <h3>branch</h3>
+            <div>
+                <p>Egypt</p>
+                <p>Sudan</p>
+                <p>Saudi Arabia</p>
+                <p>Tunisia</p>
+                <p>Algeria</p>
+                <p>Libya</p>
             </div>
         </div>
-        <div class="Developed">
-            <p>Developed by <span>Mohamed Alaa</span></p>
+        <div class="box-3">
+            <h3>links</h3>
+            <nav class="navbar">
+                <a href="#home">home</a>
+                <a href="#book">book</a>
+                <a href="#packages">packages</a>
+                <a href="#services">services</a>
+                <a href="#gallary">gallary</a>
+                <a href="#review">review</a>
+            </nav>
         </div>
-    </footer>
+        <div class="box-4">
+            <h3>Follow us</h3>
+            <p>
+                <a href="#" class="one">facebook</a><i class="fa-brands fa-facebook"></i>
+            </p>
+            <p>
+                <a href="#" class="two">instagram</a>
+                <i class="fa-brands fa-instagram"></i>
+            </p>
+            <p>
+                <a href="#" class="three">twiter</a>
+                <i class="fa-brands fa-twitter"></i>
+            </p>
+            <p>
+                <a href="#" class="four">linked</a>
+                <i class="fa-brands fa-linkedin"></i>
+            </p>
+        </div>
+    </div>
+    <div class="Developed">
+        <p>Developed by <span>Mohamed Alaa</span></p>
+    </div>
+</footer>

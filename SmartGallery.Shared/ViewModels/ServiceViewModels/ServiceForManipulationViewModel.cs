@@ -2,7 +2,7 @@
 
 public abstract record ServiceForManipulationViewModel
 {
-    public string? Icon { get; init; }
-    public string? Name { get; init; }
-    public string? Description { get; init; }
+    public string? Icon { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
 }
