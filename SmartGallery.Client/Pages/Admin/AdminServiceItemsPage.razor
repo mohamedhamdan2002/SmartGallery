@@ -1,6 +1,16 @@
-﻿<h3>Component1</h3>
-
-@code {
-
-}
-
+﻿@page "/AddServiceitem/{serviceId:int}"
+<head>
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+<header class="header position-relative">
+    <div class="icon">
+        <i @onclick="NavigateToHome" class="fas fa-arrow-left" aria-hidden="true"></i>
+    </div>
+    <a class="logo"><span>L</span>ife <span>C</span>hanger</a>
+    <div class="icon">
+        <AuthorizeView>
+            <i>Hello , @(context.User.Identity!.Name)</i>
+            <i @onclick="LogoutAsync">Log Out</i>
+        </AuthorizeView>
+    </div>
+</header>

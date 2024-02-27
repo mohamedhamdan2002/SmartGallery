@@ -33,6 +33,7 @@ public class ReservationsController : ControllerBase
     [HttpGet("customer/{customerId}/reservations")]
     public async Task<IActionResult> GetReservationsForCustomer(string customerId)
         => Ok(await _service.GetReservationsForCustomerAsync(customerId));
+
     [HttpPost("[controller]")]
     public async Task<IActionResult> CreateReservation([FromQuery] int serviceId, string customerId, [FromBody] ReservationForCreationViewModel model)
     {
@@ -58,11 +59,11 @@ public class ReservationsController : ControllerBase
         return NoContent();
     }
     [HttpDelete("reservations")]
-    public async Task<IActionResult> DeleteReservation([FromQuery] int serviceId,string customerId)
+    public async Task<IActionResult> DeleteReservation([FromQuery] int Id)
     {
-        if(serviceId is not default(int) && !string.IsNullOrEmpty(customerId))
+        if(Id is not default(int))
         {
-           await _service.DeleteReservationAsync(serviceId, customerId);
+           await _service.DeleteReservationAsync(Id);
            return NoContent();
         }
         return BadRequest("Delete isn't Completed Successfully");

@@ -1,4 +1,5 @@
-﻿using SmartGallery.Client.Services.Contracts;
+﻿using Microsoft.AspNetCore.Components;
+using SmartGallery.Client.Services.Contracts;
 
 namespace SmartGallery.Client.Pages.Admin;
 

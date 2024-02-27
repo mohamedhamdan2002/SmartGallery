@@ -57,26 +57,34 @@ namespace SmartGallery.Client.Services
             return null;
         }
 
-        public async Task<ReservationForUpdateViewModel?> UpdateReservation(int serviceId,string customerId, ReservationForUpdateViewModel reservationForUpdateViewModel)
+        public async Task UpdateReservationAsync(int id, ReservationForUpdateViewModel reservationForUpdateViewModel)
         {
-            var Result = await _httpClient.PutAsJsonAsync($"api/reservations?serviceId={serviceId}&customerId={customerId}", reservationForUpdateViewModel);
-            if (Result.IsSuccessStatusCode)
-                return reservationForUpdateViewModel;
-            else
-                return null;
+            await _httpClient.PutAsJsonAsync($"api/reservations/{id}", reservationForUpdateViewModel);
         }
-        public async Task<ReservationForCreationViewModel?> GetReservation(int serviceId, string customerId)
+        public async Task<IEnumerable<ReservationDetailsVM>> GetReservationAsync(int serviceId, string customerId)
         {
             var Result = await _httpClient.GetStreamAsync($"api/reservations?serviceId={serviceId}&customerId={customerId}");
             if (Result is not null)
             {
-                ReservationForCreationViewModel ReservationsForCustomer = await JsonSerializer.DeserializeAsync<ReservationForCreationViewModel>(Result, new JsonSerializerOptions()
-                { PropertyNameCaseInsensitive = true }) ?? new ReservationForCreationViewModel();
+                IEnumerable<ReservationDetailsVM> ReservationsForCustomer = await JsonSerializer.DeserializeAsync<IEnumerable<ReservationDetailsVM>>(Result, new JsonSerializerOptions()
+                { PropertyNameCaseInsensitive = true }) ?? new List<ReservationDetailsVM>();
                 return ReservationsForCustomer;
             }
             return null;
         }
-        
+
+        public async Task<ReservationDetailsVM?> GetReservationByIdAsync(int id)
+        {
+            var ServiceObj = await _httpClient.GetStreamAsync($"api/reservations/{id}");
+            if (ServiceObj is not null)
+            {
+                var Service = await JsonSerializer.DeserializeAsync<ReservationDetailsVM>
+                (ServiceObj, new JsonSerializerOptions()
+                { PropertyNameCaseInsensitive = true });
+                return Service!;
+            }
+            return null;
+        }
     }
 }
 

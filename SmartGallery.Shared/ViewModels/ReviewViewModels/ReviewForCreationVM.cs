@@ -1,7 +1,8 @@
 ﻿namespace SmartGallery.Shared.ViewModels.ReviewViewModels
 {
-    public record ReviewForCreationVM(
-            int Rating,
-            string Comment
-        );
+    public record ReviewForCreationVM
+    {
+    public int Rating { get; set; }
+    public string? Comment { get; set; } 
+    }
 }
