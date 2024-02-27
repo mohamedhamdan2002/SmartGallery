@@ -8,7 +8,7 @@ public class ReviewConfiguration : IEntityTypeConfiguration<Review>
 {
     public void Configure(EntityTypeBuilder<Review> builder)
     {
-        builder.HasKey(r => new { r.CustomerId, r.ServiceId });
+        builder.HasKey(r => r.Id);
 
         builder.HasOne(r => r.Service)
             .WithMany(s => s.Reviews)

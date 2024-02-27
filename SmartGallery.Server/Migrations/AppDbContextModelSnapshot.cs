@@ -51,15 +51,15 @@ namespace SmartGallery.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6f2df951-22db-462e-808a-d225222d5e5e",
-                            ConcurrencyStamp = "96749580-cdd2-4d56-a251-8739661c211a",
+                            Id = "c2a87494-f49b-4fa0-a4f3-68a56bd35ec0",
+                            ConcurrencyStamp = "04355127-4229-46d4-a42c-7ccc1aff1e27",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "8953d2c8-457d-46c8-bb9e-ecd8b980aaf6",
+                            ConcurrencyStamp = "90a4c4b0-2e8b-4bc2-9d69-f5dac439c30b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -250,27 +250,56 @@ namespace SmartGallery.Server.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "635333b9-dcbc-4a7e-ba51-da0b05d94e7e",
+                            ConcurrencyStamp = "da464528-c056-4dc0-8783-133cea06f242",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDLF7SsjTK7lZQR6i8PGmam7qB8OoYkAaP6R2uRul+OP/l7N4RXAV9IBGHjgA2tGjw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK3n3GgslErisjr0/8a5XuOtqN0YK1y5anG30gYP7ZJzLdWHhAxtuGFZuBDIOcawNA==",
                             PhoneNumber = "01018004723",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "e571b823-2224-4c1d-9fe7-bf8c4a7e3208",
+                            SecurityStamp = "b1ad3d7d-7059-46e1-a7f5-8ee97058cfec",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
                 });
 
-            modelBuilder.Entity("SmartGallery.Server.Models.Reservation", b =>
+            modelBuilder.Entity("SmartGallery.Server.Models.Item", b =>
                 {
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("Items", (string)null);
+                });
+
+            modelBuilder.Entity("SmartGallery.Server.Models.Reservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ItemId")
                         .HasColumnType("int");
 
                     b.Property<string>("ProblemDescription")
@@ -283,12 +312,19 @@ namespace SmartGallery.Server.Migrations
                     b.Property<TimeSpan>("ReservationTime")
                         .HasColumnType("time");
 
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("VARCHAR");
 
-                    b.HasKey("CustomerId", "ServiceId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ItemId");
 
                     b.HasIndex("ServiceId");
 
@@ -297,16 +333,28 @@ namespace SmartGallery.Server.Migrations
 
             modelBuilder.Entity("SmartGallery.Server.Models.Review", b =>
                 {
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ServiceId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CustomerId", "ServiceId");
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("ServiceId");
 
@@ -391,6 +439,17 @@ namespace SmartGallery.Server.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SmartGallery.Server.Models.Item", b =>
+                {
+                    b.HasOne("SmartGallery.Server.Models.Service", "Service")
+                        .WithMany("Items")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("SmartGallery.Server.Models.Reservation", b =>
                 {
                     b.HasOne("SmartGallery.Server.Models.Customer", "Customer")
@@ -399,6 +458,10 @@ namespace SmartGallery.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SmartGallery.Server.Models.Item", "Item")
+                        .WithMany("Reservations")
+                        .HasForeignKey("ItemId");
+
                     b.HasOne("SmartGallery.Server.Models.Service", "Service")
                         .WithMany("Reservations")
                         .HasForeignKey("ServiceId")
@@ -406,6 +469,8 @@ namespace SmartGallery.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Item");
 
                     b.Navigation("Service");
                 });
@@ -436,8 +501,15 @@ namespace SmartGallery.Server.Migrations
                     b.Navigation("Reviews");
                 });
 
+            modelBuilder.Entity("SmartGallery.Server.Models.Item", b =>
+                {
+                    b.Navigation("Reservations");
+                });
+
             modelBuilder.Entity("SmartGallery.Server.Models.Service", b =>
                 {
+                    b.Navigation("Items");
+
                     b.Navigation("Reservations");
 
                     b.Navigation("Reviews");
