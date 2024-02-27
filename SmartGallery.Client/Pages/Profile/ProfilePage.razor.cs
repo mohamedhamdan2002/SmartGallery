@@ -37,9 +37,13 @@ public partial class ProfilePage
         reservationsViewModel = (await _reservationsService.GetReservationsForCustomerByCustomerId(userId))?.ToList() ?? new();
         await InvokeAsync(StateHasChanged);
     }
-    private async Task NavigateToReservationEdit(int serviceId)
+    private void NavigateToReservationEdit(int Id)
     {
-        _navigationManager.NavigateTo($"/ReservationEdit/{serviceId}/{userId}");
+        _navigationManager.NavigateTo($"/ReservationEdit/{Id}");
+    }
+    private void NavigateToReview(int Id)
+    {
+        _navigationManager.NavigateTo($"/AddReview/{Id}");
     }
 
 }

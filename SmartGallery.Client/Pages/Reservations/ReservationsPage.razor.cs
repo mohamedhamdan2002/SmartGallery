@@ -13,12 +13,12 @@ public partial class ReservationsPage
     [Parameter]
     public int serviceId { get; set; }
     [Parameter]
-    public string? customerId { get; set; } = null;
+    public int Id { get; set; }
 
     StatusEnum statusEnum { get; set; } = StatusEnum.Pending;
     bool isSuccess { get; set; }
     bool isFailed { get; set; }
-    public ReservationForCreationViewModel viewModel { get; set; } = new();
+    public ReservationDetailsVM viewModel { get; set; } = new();
     [Inject] IReservationsService _reservationsService { get; set; }
     [Inject] ILoginService _loginService { get; set; }
     [Inject] NavigationManager _navigationManager { get; set; }
@@ -26,17 +26,17 @@ public partial class ReservationsPage
     public string MessageToShow { get; set; } = " ";
     protected override async Task OnInitializedAsync()
     {
-        if(customerId is not null)
+        if(Id is not default(int))
         {
-            viewModel = await _reservationsService.GetReservation(serviceId, customerId) ?? new();
+            viewModel = await _reservationsService.GetReservationByIdAsync(Id);
         }
         await base.OnInitializedAsync();
     }
     public async Task HandleValidSubmitAsync()
     {
-        if (customerId is not null)
+        if (Id is not default(int))
         {
-            await _reservationsService.UpdateReservation(serviceId, customerId, new()
+            await _reservationsService.UpdateReservationAsync(Id, new()
             {
                 ProblemDescription = viewModel.ProblemDescription,
                 ReservationDate = viewModel.ReservationDate,
@@ -52,7 +52,12 @@ public partial class ReservationsPage
             var user = authenticationState.User;
             string userId = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? "";
 
-            var response = await _reservationsService.CreateReservation(serviceId,userId,viewModel);
+            var response = await _reservationsService.CreateReservation(serviceId, userId, new()
+            {
+                ProblemDescription = viewModel.ProblemDescription,
+                ReservationDate = viewModel.ReservationDate,
+                ReservationTime = viewModel.ReservationTime,
+            });
             if (response is not null)
             {
                 isSuccess = true;

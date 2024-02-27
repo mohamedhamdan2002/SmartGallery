@@ -1,11 +1,11 @@
-﻿using SmartGallery.Shared.ViewModels.ServiceViewModels;
+﻿using SmartGallery.Shared.ViewModels.ReviewViewModels;
 
 namespace SmartGallery.Client.Services.Contracts;
 
 public interface IReviewsService
 {
-    Task<IEnumerable<ServiceViewModel>?> GetReviewsAsync();
-    Task CreateReview(ServiceForCreationViewModel reviewForCreationViewModel);
+    Task<IEnumerable<ReviewDetailsVM>?> GetReviewsAsync();
+    Task CreateReview(ReviewForCreationVM reviewForCreationViewModel);
     Task DeleteReview(int id);
 }
 

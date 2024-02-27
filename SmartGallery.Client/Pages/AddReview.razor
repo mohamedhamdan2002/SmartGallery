@@ -1,4 +1,4 @@
-﻿@page "/AddServiceitem/{ReservationId:int}"
+﻿@page "/AddReview/{ReservationId:int}"
 <head>
     <link rel="stylesheet" href="/css/main.css" />
 </head>
@@ -14,3 +14,20 @@
         </AuthorizeView>
     </div>
 </header>
+<div class="login-form ">
+    <EditForm Model="@viewModel" OnValidSubmit="HandleValidSubmitAsync">
+        <h3>Service</h3>
+        <div class="form-group">
+            <label>Your Opinion About Our Experience</label>
+            <InputText class="box" @bind-Value="@viewModel.Comment" placeholder="Enter Your Review" />
+        </div>
+        <div class="d-flex flex-column align-center">
+            <MudRating @bind-SelectedValue="selectedVal" HoveredValueChanged="HandleHoveredValueChanged" />
+            <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@LabelText</MudText>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn">Add your Service</button>
+        </div>
+
+    </EditForm>
+</div>

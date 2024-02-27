@@ -18,11 +18,14 @@
                 </MudText>
             </MudCardContent>
             <MudCardActions>
-                <MudButton Class="me-3" OnClick="() =>NavigateToReservationEdit(reservationViewModel.serviceId)" Variant="Variant.Filled" Color="Color.Info">
+                <MudButton Class="me-3" OnClick="() =>NavigateToReservationEdit(reservationViewModel.Id)" Variant="Variant.Filled" Color="Color.Info">
                     Edit
                 </MudButton>
-                <MudButton OnClick="() =>DeleteReservation(reservationViewModel.serviceId)"Variant="Variant.Filled" Color="Color.Error">
+                <MudButton OnClick="() =>DeleteReservation(reservationViewModel.Id)" Variant="Variant.Filled" Color="Color.Error">
                     Delete
+                </MudButton>
+                <MudButton OnClick="() =>NavigateToReview(reservationViewModel.Id)"Variant="Variant.Filled" Color="Color.Warning">
+                    Rate It
                 </MudButton>
             </MudCardActions>
         </MudCard>

@@ -33,6 +33,7 @@ public class ReservationsController : ControllerBase
     [HttpGet("customer/{customerId}/reservations")]
     public async Task<IActionResult> GetReservationsForCustomer(string customerId)
         => Ok(await _service.GetReservationsForCustomerAsync(customerId));
+
     [HttpPost("[controller]")]
     public async Task<IActionResult> CreateReservation([FromQuery] int serviceId, string customerId, [FromBody] ReservationForCreationViewModel model)
     {
