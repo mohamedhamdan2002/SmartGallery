@@ -18,6 +18,9 @@ public class RepositoryManager : IRepositoryManager
 
     public IReservationRepository Reservation => GetRepository<IReservationRepository>();
 
+    public IItemRepository Item => GetRepository<IItemRepository>();
+    public IReviewRepository Review => GetRepository<IReviewRepository>();
+
     private TRepository GetRepository<TRepository>()
         => (TRepository) _serviceProvider.GetRequiredService(typeof(TRepository));
 

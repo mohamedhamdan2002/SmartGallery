@@ -9,7 +9,7 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
 {
     public void Configure(EntityTypeBuilder<Reservation> builder)
     {
-        builder.HasKey(r => new { r.CustomerId, r.ServiceId });
+        builder.HasKey(r => r.Id);
 
         builder.Property(r => r.ReservationDate)
             .HasColumnType("date")
@@ -42,6 +42,11 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
             .WithMany(c => c.Reservations)
             .HasForeignKey(r => r.CustomerId)
             .IsRequired();
+
+        builder.HasOne(r => r.Item)
+            .WithMany(i => i.Reservations)
+            .HasForeignKey(r => r.ItemId)
+            .IsRequired(false);
 
         builder.ToTable("Reservations");
     }

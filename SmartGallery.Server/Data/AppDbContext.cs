@@ -12,6 +12,7 @@ public class AppDbContext:IdentityDbContext<Customer>
 {
     public DbSet<Service> Services { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
+    public DbSet<Item> Items { get; set; }
 	public DbSet<Review> Reviews { get; set; }
     public AppDbContext(DbContextOptions options) :base(options){}
 

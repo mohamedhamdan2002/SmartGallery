@@ -18,10 +18,13 @@ public class ReservationsController : ControllerBase
     [HttpGet("reservations")]
     public async Task<IActionResult> GetReservations([FromQuery] int serviceId, string? customerId)
     {
-        if(serviceId is not default(int)  && customerId is not null)
+        if (serviceId is not default(int) && customerId is not null)
             return Ok(await _service.GetReservationAsync(serviceId, customerId));
         return Ok(await _service.GetReservationsAsync());
     }
+    [HttpGet("reservations/{id:int}")]
+    public async Task<IActionResult> GetReservationById(int id)
+    => Ok(await _service.GetReservationByIdAsync(id));
 
     [HttpGet("service/{serviceId}/reservations")]
     public async Task<IActionResult> GetReservationsForService(int serviceId)
@@ -42,8 +45,8 @@ public class ReservationsController : ControllerBase
         var reservationViewModel = await _service.CreateReservationAsync(serviceId, customerId, model);
         return Ok(reservationViewModel);
     }
-    [HttpPut("[controller]")]
-    public async Task<IActionResult> UpdateReservation([FromQuery] int serviceId, string customerId, [FromBody] ReservationForUpdateViewModel model)
+    [HttpPut("[controller]/{id:int}")]
+    public async Task<IActionResult> UpdateReservation(int id, [FromBody] ReservationForUpdateViewModel model)
     {
         if (model is null)
             return BadRequest("ReservationForUpdateViewModel object is null");
@@ -51,7 +54,7 @@ public class ReservationsController : ControllerBase
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);
 
-        await _service.UpdateReservationAsync(serviceId, customerId, model);
+        await _service.UpdateReservationAsync(id, model);
         return NoContent();
     }
     [HttpDelete("reservations")]
